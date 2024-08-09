@@ -1,0 +1,107 @@
+/* Generale */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Colore di sfondo neutro */
+    color: #333; /* Colore del testo scuro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Intestazione */
+header {
+    background: #333; /* Colore di sfondo dell'intestazione scuro */
+    color: #fff; /* Colore del testo chiaro */
+    padding: 10px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+/* Contenuto principale */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Link */
+a {
+    color: #007bff; /* Colore blu per i link */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Moduli */
+form {
+    background: #fff; /* Colore di sfondo del modulo bianco */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    background: #007bff; /* Colore di sfondo blu per il pulsante di invio */
+    color: #fff; /* Colore del testo chiaro */
+    border: none;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: #0056b3; /* Colore di sfondo blu scuro al passaggio del mouse */
+}
+
+/* Intestazione del modulo */
+h2 {
+    color: #333; /* Colore del testo scuro */
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Pagine */
+.home, .login, .register {
+    padding: 20px;
+}
+
+.home {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login, .register {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+    background: #333; /* Colore di sfondo del footer scuro */
+    color: #fff; /* Colore del testo chiaro */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
