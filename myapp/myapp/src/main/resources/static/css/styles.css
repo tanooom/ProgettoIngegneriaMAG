@@ -67,7 +67,7 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-    background: #0056b3; /* Colore di sfondo blu scuro al passaggio del mouse */
+    background: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
 }
 
 /* Intestazione del modulo */
@@ -93,6 +93,40 @@ h2 {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.registration-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;               /* Abilita Flexbox */
+    justify-content: center;    /* Centra orizzontalmente gli elementi */
+    align-items: center;        /* Opzionale: centra verticalmente gli elementi */
+    flex-direction: row;     /* Dispone gli elementi in colonna, se necessario */
+    gap: 10px;                  /* Spazio tra i pulsanti */
+    padding: 20px;              /* Spazio interno per il contenitore */
+}
+
+/* Pulsanti */
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+}
+
+.button:hover {
+    background-color: #025cbd; /* Colore di sfondo al passaggio del mouse */
 }
 
 /* Footer */

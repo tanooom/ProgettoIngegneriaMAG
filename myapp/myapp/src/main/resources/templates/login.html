@@ -8,12 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>Login</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        </nav>
+        <h1>Accedi!</h1>
     </header>
     <div class="container">
         <form action="/login" method="post">
@@ -21,6 +16,11 @@
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
+    </div>
+    <div>
+        <p class="registration-info">Non hai un account?
+            <a href="/register">Registrati</a>
+        </p>
     </div>
     <footer>
         <p>&copy; 2024 MyApp</p>
