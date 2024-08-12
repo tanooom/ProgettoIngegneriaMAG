@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioca Storia</title>
+</head>
+<body>
+    <h1 id="titoloStoria"></h1>
+    <div id="scenario"></div>
+    <div id="opzioni"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const storiaId = params.get('storiaId');
+
+        function caricaScenario() {
+            fetch(`/api/gioca/${storiaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('titoloStoria').innerText = data.titolo;
+                    document.getElementById('scenario').innerText = data.scenarioCorrente.descrizione;
+
+                    const opzioniDiv = document.getElementById('opzioni');
+                    opzioniDiv.innerHTML = '';
+                    data.scenarioCorrente.opzioni.forEach(opzione => {
+                        const button = document.createElement('button');
+                        button.innerText = opzione.descrizione;
+                        button.onclick = () => faiScelta(opzione.id);
+                        opzioniDiv.appendChild(button);
+                    });
+                });
+        }
+
+        function faiScelta(opzioneId) {
+            fetch(`/api/gioca/${storiaId}/scelta/${opzioneId}`, {
+                method: 'POST'
+            }).then(() => caricaScenario());
+        }
+
+        caricaScenario();
+    </script>
+</body>
+</html>

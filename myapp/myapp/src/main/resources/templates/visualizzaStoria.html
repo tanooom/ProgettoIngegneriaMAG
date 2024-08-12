@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioca Storia</title>
+</head>
+<body>
+    <h1>Storie Disponibili</h1>
+    <div id="storie"></div>
+
+    <script>
+        // Esempio di fetch per ottenere le storie dal server
+        fetch('/api/storie')
+            .then(response => response.json())
+            .then(storie => {
+                const storieDiv = document.getElementById('storie');
+                storie.forEach(storia => {
+                    const storiaDiv = document.createElement('div');
+                    storiaDiv.innerHTML = `
+                        <h2>${storia.titolo}</h2>
+                        <button onclick="giocaStoria('${storia.id}')">Gioca</button>
+                        <button onclick="riprendiStoria('${storia.id}')">Riprendi</button>
+                    `;
+                    storieDiv.appendChild(storiaDiv);
+                });
+            });
+
+        function giocaStoria(storiaId) {
+            window.location.href = `/gioca.html?storiaId=${storiaId}`;
+        }
+
+        function riprendiStoria(storiaId) {
+            window.location.href = `/riprendi.html?storiaId=${storiaId}`;
+        }
+    </script>
+</body>
+</html>
