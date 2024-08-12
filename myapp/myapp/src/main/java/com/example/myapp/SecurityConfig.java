@@ -20,11 +20,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/css/**", "/js/**", "/images/**","/", "/login", "/register").permitAll() // Permettere l'accesso senza autenticazione
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/accesso", "/login", "/register").permitAll() // Permettere l'accesso senza autenticazione
                 .anyRequest().authenticated()
             )
             .formLogin((form) -> form
-                .loginPage("/login")
+                .loginPage("/accesso")
                 .permitAll()
             )
             .logout((logout) -> logout.permitAll());

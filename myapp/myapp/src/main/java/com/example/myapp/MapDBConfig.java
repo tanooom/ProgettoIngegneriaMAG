@@ -29,7 +29,7 @@ public class MapDBConfig {
                 db.close();
                 System.out.println("Database chiuso con successo.");
             } catch (Exception e) {
-                System.err.println("Errore durante la chiusura del database:");
+                System.err.println("Errore durante la chiusura del database: " + e.getMessage());
             }
         }
     }
