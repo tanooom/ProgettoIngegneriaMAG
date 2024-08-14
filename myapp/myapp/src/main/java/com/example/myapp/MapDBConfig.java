@@ -4,6 +4,7 @@ import javax.annotation.PreDestroy;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.mapdb.HTreeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,6 +21,15 @@ public class MapDBConfig {
                 .transactionEnable()     // Abilita le transazioni
                 .make();
         return db;
+    }
+
+        @Bean
+    public HTreeMap<String, String> userMap(DB db) {
+        // Creazione della mappa HTreeMap per memorizzare le coppie chiave-valore
+        return db.hashMap("userMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
     }
 
     @PreDestroy
