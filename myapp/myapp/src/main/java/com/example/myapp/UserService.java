@@ -15,18 +15,24 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(String username, String password) {
+    public void registerUser(String username, String password, String nome, String cognome, String mail) {
         String encodedPassword = passwordEncoder.encode(password);
-        userMap.put(username, encodedPassword);
+        // Salva i dati dell'utente come valore
+        String userData = encodedPassword + ";" + nome + ";" + cognome + ";" + mail;
+        // Usa lo username come chiave e userData come valore
+        userMap.put(username, userData);
     }
 
     public String getEncodedPassword(String username) {
-        return userMap.get(username);
+        String userData = userMap.get(username);
+        if (userData != null) {
+            return userData.split(";")[0]; // Estrae la password codificata
+        }
+        return null;
     }
+    
 
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }
-
-

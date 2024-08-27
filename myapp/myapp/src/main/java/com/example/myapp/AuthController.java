@@ -1,6 +1,9 @@
 package com.example.myapp;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,17 +11,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
 
-    private UserService userService;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password) {
-        userService.registerUser(username, password);
-        return "redirect:/login";
+    public String register(@RequestParam String username, @RequestParam String password, 
+                           @RequestParam String nome, @RequestParam String cognome, 
+                           @RequestParam String mail) {
+        userService.registerUser(username, password, nome, cognome, mail);
+        
+        // Autentica automaticamente l'utente dopo la registrazione
+        autoLogin(username, password);
+
+        return "redirect:/registrationSuccess";
+    }
+
+    // Metodo per autenticare automaticamente l'utente
+    private void autoLogin(String username, String password) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @PostMapping("/login")
@@ -30,4 +47,3 @@ public class AuthController {
         return "redirect:/login?error";
     }
 }
-
