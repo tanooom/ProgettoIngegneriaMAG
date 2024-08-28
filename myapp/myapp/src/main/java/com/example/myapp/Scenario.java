@@ -15,6 +15,8 @@ public class Scenario {
         this.opzioni = new ArrayList<>();
     }
 
+    //da aggiungere scenari precedenti e scenari successivi e la storia a cui appartiene
+
     // Metodi per aggiungere opzioni
     public void aggiungiOpzione(Opzione opzione) {
         this.opzioni.add(opzione);
