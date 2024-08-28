@@ -31,4 +31,10 @@ public class UserController {
         model.addAttribute("username", username);
         return "registrationSuccess";
     }
+
+    public class ResourceNotFoundException extends RuntimeException {
+        public ResourceNotFoundException(String message) {
+            super(message);
+        }
+    }
 }

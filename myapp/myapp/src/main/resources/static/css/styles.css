@@ -51,6 +51,10 @@ form {
 form input[type="text"],
 form input[type="password"],
 form input[type="email"],
+form input[type="nome"],
+form input[type="cognome"],
+form input[type="user"],
+form input[type="mail"],
 form input[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -102,10 +106,10 @@ h2 {
 }
 
 .container {
-    display: flex;               /* Abilita Flexbox */
+    display: flex;              /* Abilita Flexbox */
     justify-content: center;    /* Centra orizzontalmente gli elementi */
-    align-items: center;        /* Opzionale: centra verticalmente gli elementi */
-    flex-direction: row;     /* Dispone gli elementi in colonna, se necessario */
+    align-items: center;        /* Centra verticalmente gli elementi */
+    flex-direction: row;        /* Dispone gli elementi in colonna */
     gap: 10px;                  /* Spazio tra i pulsanti */
     padding: 20px;              /* Spazio interno per il contenitore */
 }

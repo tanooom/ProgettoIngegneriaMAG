@@ -11,4 +11,3 @@ public class RegistrationController {
         return "registrationSuccess"; // Questa è la vista (es. registrationSuccess.html)
     }
 }
-

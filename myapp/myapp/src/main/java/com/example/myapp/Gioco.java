@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gioco {
+    
     private final Storia storia;
     private Scenario scenarioCorrente;
     private final List<String> inventario;
@@ -42,4 +43,3 @@ public class Gioco {
         return this.storia;
     }
 }
-

@@ -23,7 +23,7 @@ public class MapDBConfig {
         return db;
     }
 
-        @Bean
+    @Bean
     public HTreeMap<String, String> userMap(DB db) {
         // Creazione della mappa HTreeMap per memorizzare le coppie chiave-valore
         return db.hashMap("userMap")

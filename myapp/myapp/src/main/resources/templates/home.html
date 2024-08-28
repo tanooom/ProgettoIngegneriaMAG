@@ -8,13 +8,13 @@
 </head>
 <body>
     <header>
-        <h1>Benvenuto nella Home Page!</h1>
+        <h1>Benvenuto, ${user.nome} ${user.cognome}!</h1>
         <nav>
             <a href="/">Home</a>
+            <a href="/logout">Logout</a>
         </nav>
     </header>
     <div class="container">
-        <!-- Pulsanti per navigare alle altre pagine -->
         <a href="/visualizzaStoria" class="button">Visualizza Storia</a>
         <a href="/giocaStoria" class="button">Gioca Storia</a>
     </div>

@@ -42,8 +42,11 @@ public class AuthController {
     public String login(@RequestParam String username, @RequestParam String password) {
         String encodedPassword = userService.getEncodedPassword(username);
         if (encodedPassword != null && userService.checkPassword(password, encodedPassword)) {
+            autoLogin(username, password);
             return "redirect:/home";
         }
+        // Log per capire perché il login fallisce
+        System.out.println("Login failed for user: " + username);
         return "redirect:/login?error";
     }
 }

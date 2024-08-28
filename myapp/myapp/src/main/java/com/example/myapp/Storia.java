@@ -19,4 +19,3 @@ public class Storia {
         return scenarioIniziale;
     }
 }
-
