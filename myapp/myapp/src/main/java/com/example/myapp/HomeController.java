@@ -24,12 +24,18 @@ public class HomeController {
         String username = auth.getName();
         User user = userService.getUser(username);
         model.addAttribute("user", user);  // Passa l'utente alla vista
-        return "home";
+        return "home"; // Restituisce home.html
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        SecurityContextHolder.clearContext(); // Pulisce il contesto di sicurezza
+        return "redirect:/login?logout"; // Reindirizza al login
     }
 
     @GetMapping("/visualizzaStoria")

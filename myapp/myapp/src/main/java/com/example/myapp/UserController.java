@@ -13,6 +13,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthService authService; // Aggiungi AuthService
+
     @GetMapping("/register")
     public String showRegistrationForm() {
         return "register";  // Questo restituirà il template register.html
@@ -32,9 +35,15 @@ public class UserController {
 
         // Registra l'utente usando il metodo register
         userService.register(user);
-        
+
+        // Autentica automaticamente l'utente dopo la registrazione
+        authService.autoLogin(username, password); // Usa AuthService
+
+        // Passa i dati per la visualizzazione nella pagina di successo
+        model.addAttribute("nome", nome);
+        model.addAttribute("cognome", cognome);
         model.addAttribute("username", username);
-        return "registrationSuccess";
+        return "registrationSuccess"; // Reindirizza a registrationSuccess.html
     }
 
     public class ResourceNotFoundException extends RuntimeException {

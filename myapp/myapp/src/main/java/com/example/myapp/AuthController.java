@@ -1,9 +1,5 @@
 package com.example.myapp;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
+    private final AuthService authService; // Aggiungi AuthService
 
-    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
+        this.authService = authService; // Inizializza AuthService
     }
 
     @PostMapping("/register")
@@ -29,28 +25,20 @@ public class AuthController {
         
         // Registra l'utente usando il metodo register
         userService.register(user);
-        
+
         // Autentica automaticamente l'utente dopo la registrazione
-        autoLogin(username, password);
+        authService.autoLogin(username, password); // Usa AuthService
 
         return "redirect:/registrationSuccess";
-    }
-
-    // Metodo per autenticare automaticamente l'utente
-    private void autoLogin(String username, String password) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
         String encodedPassword = userService.getEncodedPassword(username);
         if (encodedPassword != null && userService.checkPassword(password, encodedPassword)) {
-            autoLogin(username, password);
+            authService.autoLogin(username, password); // Usa AuthService
             return "redirect:/home";
         }
-        // Log per capire perché il login fallisce
         System.out.println("Login failed for user: " + username);
         return "redirect:/login?error";
     }
