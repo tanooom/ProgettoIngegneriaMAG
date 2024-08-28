@@ -27,7 +27,12 @@ public class UserController {
             @RequestParam String mail,
             Model model) {
 
-        userService.registerUser(username, password, nome, cognome, mail);
+        // Crea un nuovo oggetto User
+        User user = new User(username, password, nome, cognome, mail);
+
+        // Registra l'utente usando il metodo register
+        userService.register(user);
+        
         model.addAttribute("username", username);
         return "registrationSuccess";
     }

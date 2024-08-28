@@ -23,7 +23,12 @@ public class AuthController {
     public String register(@RequestParam String username, @RequestParam String password, 
                            @RequestParam String nome, @RequestParam String cognome, 
                            @RequestParam String mail) {
-        userService.registerUser(username, password, nome, cognome, mail);
+        
+        // Crea un nuovo oggetto User
+        User user = new User(username, password, nome, cognome, mail);
+        
+        // Registra l'utente usando il metodo register
+        userService.register(user);
         
         // Autentica automaticamente l'utente dopo la registrazione
         autoLogin(username, password);

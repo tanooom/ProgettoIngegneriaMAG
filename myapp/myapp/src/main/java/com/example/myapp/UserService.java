@@ -1,7 +1,6 @@
 package com.example.myapp;
 
 import org.mapdb.HTreeMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,42 +8,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService{
-
-    @Autowired
-    private UserRepository userRepository;
+public class UserService implements UserDetailsService {
 
     private final HTreeMap<String, String> userMap;
-
-    @Autowired
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(HTreeMap<String, String> userMap, PasswordEncoder passwordEncoder) {
+    public UserService(HTreeMap<String, String> userMap, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.userMap = userMap;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
-    public void registerUser(String username, String password, String nome, String cognome, String mail) {
-        String encodedPassword = passwordEncoder.encode(password);
-        // Salva i dati dell'utente come valore
-        String userData = encodedPassword + ";" + nome + ";" + cognome + ";" + mail;
-        // Usa lo username come chiave e userData come valore
-        userMap.put(username, userData);
-    }
-
-    public String getEncodedPassword(String username) {
-        String userData = userMap.get(username);
-        if (userData != null) {
-            return userData.split(";")[0]; // Estrae la password codificata
-        }
-        return null;
-    }
-    
-    public boolean checkPassword(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
-    }
-
-    // Metodo per ottenere tutte le informazioni dell'utente
+    // Metodo per ottenere tutte le informazioni dell'utente da MapDB
     public User getUser(String username) {
         String userData = userMap.get(username);
         if (userData != null) {
@@ -59,13 +35,33 @@ public class UserService implements UserDetailsService{
         return getUser(username);
     }
 
+    // Metodo per registrare un utente in MapDB
     public User register(User user) {
+        // Codifica della password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Salva utente in MapDB
+        userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
+                user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
+
+        // Salva utente in JPA (opzionale, se vuoi persistenza nel database relazionale)
         return userRepository.save(user);
     }
 
+    public String getEncodedPassword(String username) {
+        User user = getUser(username);
+        if (user != null) {
+            return user.getPassword();
+        }
+        return null;
+    }
+
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return getUser(username);
     }
 
     @Override
@@ -75,9 +71,9 @@ public class UserService implements UserDetailsService{
             throw new UsernameNotFoundException("User not found: " + username);
         }
         return org.springframework.security.core.userdetails.User.builder()
-            .username(user.getUsername())
-            .password(user.getPassword())
-            .roles("USER") // Modifica i ruoli in base alla tua logica
-            .build();
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .roles("USER")
+                .build();
     }
 }

@@ -4,14 +4,16 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -39,6 +41,14 @@ public class User implements UserDetails {
         this.nome = nome;
         this.cognome = cognome;
         this.mail = mail;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
