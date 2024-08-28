@@ -17,8 +17,9 @@ public class UserController {
     private AuthService authService; // Aggiungi AuthService
 
     @GetMapping("/register")
-    public String showRegistrationForm() {
-        return "register";  // Questo restituirà il template register.html
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register"; // Nome del file register.html
     }
 
     @PostMapping("/user/register")
@@ -44,6 +45,11 @@ public class UserController {
         model.addAttribute("cognome", cognome);
         model.addAttribute("username", username);
         return "registrationSuccess"; // Reindirizza a registrationSuccess.html
+    }
+
+    @GetMapping("/registrationSuccess")
+    public String registrationSuccess() {
+        return "registrationSuccess"; // Nome del file registrationSuccess.html
     }
 
     public class ResourceNotFoundException extends RuntimeException {

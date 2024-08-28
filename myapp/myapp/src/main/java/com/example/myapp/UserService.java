@@ -40,12 +40,16 @@ public class UserService implements UserDetailsService {
         // Codifica della password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Salva utente in MapDB
-        userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
-                user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
-
-        // Salva utente in JPA (opzionale, se vuoi persistenza nel database relazionale)
-        return userRepository.save(user);
+        try {
+            // Salva utente in MapDB
+            userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
+                    user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
+            // Salva utente in JPA (opzionale, se vuoi persistenza nel database relazionale)
+            return userRepository.save(user);
+        } catch (Exception e) {
+            // Gestisci l'eccezione (puoi anche loggare qui)
+            throw new RuntimeException("Errore durante la registrazione dell'utente", e);
+        }
     }
 
     public String getEncodedPassword(String username) {
@@ -75,5 +79,9 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles("USER")
                 .build();
+    }
+
+    public void save(User user) {
+        userRepository.save(user); // Salva l'utente nel database
     }
 }
