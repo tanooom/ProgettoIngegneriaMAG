@@ -13,7 +13,7 @@ public class Storia{
     private final int lunghezza; // Numero di scenari
     private final String stato; // Stato della storia
 
-    public Storia(String titolo, Scenario scenarioIniziale, String username, int lunghezza, String stato) {
+    public Storia(int id, String titolo, Scenario scenarioIniziale, String username, int lunghezza, String stato) {
         this.titolo = titolo;
         this.scenarioIniziale = scenarioIniziale;
         this.finali = new ArrayList<>();
@@ -64,6 +64,9 @@ public class Storia{
         return stato; 
     }
 
+    public String getTitolo(){
+        return titolo;
+    }
 
 }
 

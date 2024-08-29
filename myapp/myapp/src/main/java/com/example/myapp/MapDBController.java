@@ -18,13 +18,13 @@ public class MapDBController {
 
     @PostMapping("/put")
     public String put(@RequestParam String key, @RequestParam String value) {
-        mapDBService.put(key, value);
+        mapDBService.putUser(key, value);
         return "Value added successfully!";
     }
 
     @GetMapping("/get")
     public String get(@RequestParam String key) {
-        return mapDBService.get(key);
+        return mapDBService.getUser(key);
     }
 
     // Endpoint per esportare i dati in JSON

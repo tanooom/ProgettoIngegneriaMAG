@@ -15,8 +15,8 @@ public class ScriviStoria {
     private final Map<Integer, Storia> storie = new HashMap<>();
     private int nextStoriaId = 1;
 
-    public Storia creaStoria(String titolo, Scenario scenarioIniziale, String username, String stato, int lunghezza){
-        Storia storia = new Storia(titolo, scenarioIniziale, username,lunghezza, stato);
+    public Storia creaStoria(int id, String titolo, Scenario scenarioIniziale, String username, String stato, int lunghezza){
+        Storia storia = new Storia(id, titolo, scenarioIniziale, username,lunghezza, stato);
         storia.setId(nextStoriaId++);
         storie.put(storia.getId(), storia);
         salvaStoria(storia);
