@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
             // Salva utente in MapDB
             userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
                     user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
-            // Salva utente in JPA (opzionale, se vuoi persistenza nel database relazionale)
+            // Salva utente in JPA [opzionale, se vuoi persistenza nel database relazionale]
             return userRepository.save(user);
         } catch (Exception e) {
             // Gestisci l'eccezione (puoi anche loggare qui)

@@ -14,13 +14,13 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private AuthService authService; // Aggiungi AuthService
+    private AuthService authService;
 
     // Mostra il modulo di registrazione
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Utente());
-        return "register"; // Nome del file register.html
+        return "register";
     }
 
     // Gestisce la registrazione dell'utente
