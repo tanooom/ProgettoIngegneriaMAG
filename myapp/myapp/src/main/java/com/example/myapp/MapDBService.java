@@ -22,38 +22,64 @@ public class MapDBService {
     @Autowired
     private DB db;
 
-    private HTreeMap<String, String> map;
+    private HTreeMap<Integer, Storia> storieMap; // Mappa per le storie
+    private HTreeMap<String, String> userMap; // Mappa per gli utenti
 
     @PostConstruct
     public void init() {
-        map = db.hashMap("userMap")
-                 .keySerializer(org.mapdb.Serializer.STRING)
-                 .valueSerializer(org.mapdb.Serializer.STRING)
-                 .createOrOpen();
+        // Inizializzazione della mappa delle storie
+        storieMap = db.hashMap("storieMap")
+                      .keySerializer(org.mapdb.Serializer.INTEGER)
+                      .valueSerializer(org.mapdb.Serializer.JAVA)
+                      .createOrOpen();
+
+        // Inizializzazione della mappa degli utenti
+        userMap = db.hashMap("userMap")
+                    .keySerializer(org.mapdb.Serializer.STRING)
+                    .valueSerializer(org.mapdb.Serializer.STRING)
+                    .createOrOpen();
     }
 
-    public void put(String key, String value) {
-        map.put(key, value);
+    // Metodo per salvare una storia
+    public void salvaStoria(Storia storia) {
+        if (storia.getId() == 0) {
+            throw new IllegalArgumentException("La storia deve avere un ID valido.");
+        }
+        storieMap.put(storia.getId(), storia);
+        db.commit(); // Commit dei cambiamenti al database
     }
 
-    public String get(String key) {
-        return map.get(key);
+    // Metodo per ottenere una storia per ID
+    public Storia getStoriaById(int id) {
+        return storieMap.get(id);
     }
 
     // Metodo per esportare i dati in un file JSON
     public void exportToJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> mapData = new HashMap<>(map); // Copiamo i dati dalla mappa
-        objectMapper.writeValue(new File(filePath), mapData);
+
+        // Esporta la mappa delle storie
+        Map<Integer, Storia> storieData = new HashMap<>(storieMap);
+        objectMapper.writeValue(new File(filePath), storieData);
     }
 
     // Metodo per importare i dati da un file JSON
     public void importFromJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+
         // Specifica il tipo con TypeReference
-        Map<String, String> importedData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, String>>() {});
-        map.putAll(importedData); // Importiamo i dati nella mappa
+        Map<Integer, Storia> importedData = objectMapper.readValue(new File(filePath), new TypeReference<Map<Integer, Storia>>() {});
+        storieMap.putAll(importedData); // Importiamo i dati nella mappa
         db.commit(); // Committiamo i dati al database
+    }
+
+    // Metodo per gestire gli utenti
+    public void putUser(String key, String value) {
+        userMap.put(key, value);
+    }
+
+    public String getUser(String key) {
+        return userMap.get(key);
     }
 
     @PreDestroy
