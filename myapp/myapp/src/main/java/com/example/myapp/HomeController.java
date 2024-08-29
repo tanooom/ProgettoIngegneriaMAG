@@ -22,7 +22,7 @@ public class HomeController {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User user = userService.getUser(username);
+        Utente user = userService.getUser(username);
         model.addAttribute("user", user);  // Passa l'utente alla vista
         return "home"; // Restituisce home.html
     }

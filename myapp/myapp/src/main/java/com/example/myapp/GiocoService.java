@@ -17,12 +17,12 @@ public class GiocoService {
         return new ArrayList<>(); // Restituisci una nuova lista di storie, qui come esempio vuoto
     }
 
-    public Gioco caricaGioco(int storiaId, User user) {
+    public Gioco caricaGioco(int storiaId, Utente user) {
         // Modifica: potresti voler aggiungere logiche specifiche legate all'utente qui
         return giochiAttivi.getOrDefault(storiaId, inizializzaNuovoGioco(storiaId));
     }
 
-    public void faiScelta(int storiaId, int opzioneId, User user) {
+    public void faiScelta(int storiaId, int opzioneId, Utente user) {
         Gioco gioco = giochiAttivi.get(storiaId);
         if (gioco != null) {
             Opzione opzione = gioco.getScenarioCorrente().getOpzioni().stream()

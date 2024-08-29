@@ -15,17 +15,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "users")
-public class User implements UserDetails {
+@Table(name = "utenti")
+public class Utente implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Aggiunta della chiave primaria
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
     
     private String nome;
@@ -33,9 +33,9 @@ public class User implements UserDetails {
     private String mail;
 
     // Costruttori, getter e setter
-    public User() {}
+    public Utente() {}
 
-    public User(String username, String password, String nome, String cognome, String mail) {
+    public Utente(String username, String password, String nome, String cognome, String mail) {
         this.username = username;
         this.password = password;
         this.nome = nome;

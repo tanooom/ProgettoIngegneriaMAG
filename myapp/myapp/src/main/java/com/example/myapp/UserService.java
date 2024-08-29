@@ -21,22 +21,22 @@ public class UserService implements UserDetailsService {
     }
 
     // Metodo per ottenere tutte le informazioni dell'utente da MapDB
-    public User getUser(String username) {
+    public Utente getUser(String username) {
         String userData = userMap.get(username);
         if (userData != null) {
             String[] data = userData.split(";");
-            return new User(username, data[0], data[1], data[2], data[3]); // username, password, nome, cognome, mail
+            return new Utente(username, data[0], data[1], data[2], data[3]); // username, password, nome, cognome, mail
         }
         return null;
     }
 
     // Restituisci i dati dell'utente in formato JSON
-    public User getUserData(String username) {
+    public Utente getUserData(String username) {
         return getUser(username);
     }
 
     // Metodo per registrare un utente in MapDB
-    public User register(User user) {
+    public Utente register(Utente user) {
         // Codifica della password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
     }
 
     public String getEncodedPassword(String username) {
-        User user = getUser(username);
+        Utente user = getUser(username);
         if (user != null) {
             return user.getPassword();
         }
@@ -64,13 +64,13 @@ public class UserService implements UserDetailsService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
-    public User findByUsername(String username) {
+    public Utente findByUsername(String username) {
         return getUser(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
+        Utente user = findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
@@ -81,7 +81,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public void save(User user) {
+    public void save(Utente user) {
         userRepository.save(user); // Salva l'utente nel database
     }
 }

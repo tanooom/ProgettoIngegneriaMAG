@@ -30,7 +30,7 @@ public class GiocoController {
     public Gioco caricaScenario(@PathVariable int storiaId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User user = userService.getUser(username);
+        Utente user = userService.getUser(username);
         
         // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
         return giocoService.caricaGioco(storiaId, user);
@@ -40,7 +40,7 @@ public class GiocoController {
     public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User user = userService.getUser(username);
+        Utente user = userService.getUser(username);
         
         // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
         giocoService.faiScelta(storiaId, opzioneId, user);

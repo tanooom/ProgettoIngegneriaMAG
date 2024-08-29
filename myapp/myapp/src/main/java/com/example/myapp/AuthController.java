@@ -21,7 +21,7 @@ public class AuthController {
                            @RequestParam String mail) {
         
         // Crea un nuovo oggetto User
-        User user = new User(username, password, nome, cognome, mail);
+        Utente user = new Utente(username, password, nome, cognome, mail);
         
         // Registra l'utente usando il metodo register
         userService.register(user);

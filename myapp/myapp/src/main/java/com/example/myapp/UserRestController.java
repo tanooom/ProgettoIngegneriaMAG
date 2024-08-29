@@ -12,8 +12,8 @@ public class UserRestController {
     private UserService userService;
 
     @GetMapping("/api/users/{username}")
-    public User getUser(@PathVariable String username) {
-        User user = userService.getUser(username);
+    public Utente getUser(@PathVariable String username) {
+        Utente user = userService.getUser(username);
         if (user == null) {
             throw new ResourceNotFoundException("User not found"); // Crea una classe di eccezione per gestire questo caso
         }

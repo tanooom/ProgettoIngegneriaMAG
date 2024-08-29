@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new Utente());
         return "register"; // Nome del file register.html
     }
 
@@ -32,7 +32,7 @@ public class UserController {
             Model model) {
 
         // Crea un nuovo oggetto User
-        User user = new User(username, password, nome, cognome, mail);
+        Utente user = new Utente(username, password, nome, cognome, mail);
 
         // Registra l'utente usando il metodo register
         userService.register(user);
