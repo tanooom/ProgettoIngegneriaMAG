@@ -143,3 +143,18 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+/* visualizzaStoria */
+.storia-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5cm;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.storia-box h2 {
+    margin: 0;
+}

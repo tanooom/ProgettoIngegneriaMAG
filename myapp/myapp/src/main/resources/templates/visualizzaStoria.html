@@ -3,29 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gioca Storia</title>
+    <title>Storie Disponibili</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h1>Storie Disponibili</h1>
-    <div id="storie"></div>
-    <!--fare la ricerca tramite filtri o parole chiave-->
-    
+    <header>
+        <h1>Storie Disponibili</h1>
+        <div>
+            <input type="text" id="searchInput" placeholder="Cerca per titolo..." oninput="filterStorie()">
+            <select id="filterUsername" onchange="filterStorie()">
+                <option value="">Filtra per username</option>
+                <!-- Popola con gli username disponibili -->
+            </select>
+            <select id="filterLunghezza" onchange="filterStorie()">
+                <option value="">Filtra per lunghezza</option>
+                <option value="0-5">0-5 scenari</option>
+                <option value="5-10">5-10 scenari</option>
+                <option value="10+">10+ scenari</option>
+            </select>
+            <select id="filterStato" onchange="filterStorie()">
+                <option value="">Filtra per stato</option>
+                <option value="non_iniziato">Non iniziato</option>
+                <option value="in_corso">In corso</option>
+                <option value="concluso">Concluso</option>
+            </select>
+        </div>
+    </header>
+
+    <div id="storieContainer"></div>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
     <script>
-        // Esempio di fetch per ottenere le storie dal server
+        let storie = [];
+
+        // Fetch delle storie
         fetch('/api/storie')
             .then(response => response.json())
-            .then(storie => {
-                const storieDiv = document.getElementById('storie');
-                storie.forEach(storia => {
-                    const storiaDiv = document.createElement('div');
-                    storiaDiv.innerHTML = `
-                        <h2>${storia.titolo}</h2>
-                        <button onclick="giocaStoria('${storia.id}')">Gioca</button>
-                        <button onclick="riprendiStoria('${storia.id}')">Riprendi</button>
-                    `;
-                    storieDiv.appendChild(storiaDiv);
-                });
+            .then(data => {
+                storie = data;
+                displayStorie(storie);
             });
+
+        // Funzione per visualizzare le storie
+        function displayStorie(storieDaVisualizzare) {
+            const container = document.getElementById('storieContainer');
+            container.innerHTML = ''; // Svuota il container
+
+            storieDaVisualizzare.forEach(storia => {
+                const storiaDiv = document.createElement('div');
+                storiaDiv.className = 'storia-box'; // Assicurati di definire uno stile per 'storia-box' nel tuo CSS
+
+                storiaDiv.innerHTML = `
+                    <h2>${storia.titolo}</h2>
+                    <p>${storia.descrizione}</p>
+                    <p><strong>Primo Scenario:</strong> ${storia.scenarioIniziale.descrizione}</p>
+                    <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
+                    ${storia.giocata ? `<button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
+                                       <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>` : ''}
+                `;
+                container.appendChild(storiaDiv);
+            });
+        }
+
+        // Funzione per filtrare le storie in base ai filtri applicati
+        function filterStorie() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const username = document.getElementById('filterUsername').value;
+            const lunghezza = document.getElementById('filterLunghezza').value;
+            const stato = document.getElementById('filterStato').value;
+
+            const storieFiltrate = storie.filter(storia => {
+                return (storia.titolo.toLowerCase().includes(searchTerm) || !searchTerm) &&
+                       (storia.username === username || !username) &&
+                       (storia.lunghezza === lunghezza || !lunghezza) &&
+                       (storia.stato === stato || !stato);
+            });
+
+            displayStorie(storieFiltrate);
+        }
 
         function giocaStoria(storiaId) {
             window.location.href = `/gioca.html?storiaId=${storiaId}`;
@@ -33,6 +91,23 @@
 
         function riprendiStoria(storiaId) {
             window.location.href = `/riprendi.html?storiaId=${storiaId}`;
+        }
+
+        function eliminaPartita(storiaId) {
+            if (confirm("Sei sicuro di voler eliminare la partita?")) {
+                fetch(`/api/eliminaPartita/${storiaId}`, {
+                    method: 'DELETE'
+                }).then(() => {
+                    alert('Partita eliminata con successo');
+                    // Ricarica le storie dopo l'eliminazione
+                    fetch('/api/storie')
+                        .then(response => response.json())
+                        .then(data => {
+                            storie = data;
+                            filterStorie();
+                        });
+                });
+            }
         }
     </script>
 </body>

@@ -13,11 +13,6 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/accesso")
-    public String accesso() {
-        return "accesso"; 
-    }
-
     @GetMapping("/home") //qui potrebbe volerci solo "/"
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -43,8 +38,8 @@ public class HomeController {
         return "visualizzaStoria";
     }
 
-    @GetMapping("/giocaStoria")
-    public String giocaStoria() {
-        return "giocaStoria";
+    @GetMapping("/scriviStoria")
+    public String scriviStoria() {
+        return "scriviStoria";
     }
 }

@@ -23,8 +23,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/accesso", "/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**", "/registrationSuccess").permitAll()
-                .anyRequest().authenticated()
+                //.requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**", "/registrationSuccess").permitAll()
+                //.anyRequest().authenticated()
+                .anyRequest().permitAll() // TEMPORANEO -> Permette l'accesso a tutte le richieste senza autenticazione
+
             )
             .formLogin(login -> login
                 .loginPage("/login")
