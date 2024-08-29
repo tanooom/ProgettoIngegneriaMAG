@@ -1,6 +1,5 @@
 package com.example.myapp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +10,25 @@ import org.springframework.stereotype.Service;
 public class GiocoService {
 
     private final Map<Integer, Gioco> giochiAttivi = new HashMap<>();
+    private final StoriaController storiaController;
+
+    // Costruttore
+    public GiocoService(StoriaController storiaController) {
+        this.storiaController = storiaController;
+    }
 
     public List<Storia> getStorieDisponibili() {
-        // Restituisce un elenco di storie disponibili
-        return new ArrayList<>(); // Restituisci una nuova lista di storie, qui come esempio vuoto
+        // Recupera le storie disponibili tramite il controller
+        return storiaController.getStorieDisponibili(null, null, null, null);
     }
 
     public Gioco caricaGioco(int storiaId, Utente user) {
-        // Modifica: potresti voler aggiungere logiche specifiche legate all'utente qui
-        return giochiAttivi.getOrDefault(storiaId, inizializzaNuovoGioco(storiaId));
+        // Recupera la storia in base allo storiaId
+        Storia storia = storiaController.getStoriaById(storiaId); // Implementa questo metodo per recuperare la storia
+    
+        // Restituisci il gioco attivo o inizializza un nuovo gioco con i dettagli della storia recuperata
+        return giochiAttivi.getOrDefault(storiaId, 
+            inizializzaNuovoGioco(storiaId, storia.getUsername(), storia.getLunghezza(), storia.getStato()));
     }
 
     public void faiScelta(int storiaId, int opzioneId, Utente user) {
@@ -35,14 +44,15 @@ public class GiocoService {
         }
     }
 
-    private Gioco inizializzaNuovoGioco(int storiaId) {
-        // Carica la storia e inizializza un nuovo gioco
-        String titoloStoria = "Nome della Storia"; //da modificare
-        int scenarioId = 1; //da modificare
-        String scenarioDescrizione = "Descrizione dello Scenario"; //da modificare
+    private Gioco inizializzaNuovoGioco(int storiaId, String username, int lunghezza, String stato) {
+        // TODO: modificare il caricamento della storia
+        String titoloStoria = "Nome della Storia";
+        int scenarioId = 1;
+        String scenarioDescrizione = "Descrizione dello Scenario";
 
+        // Inizializza un nuovo gioco
         Scenario scenario = new Scenario(scenarioId, scenarioDescrizione);
-        Storia storia = new Storia(titoloStoria, scenario); // Recupera la storia dal database
+        Storia storia = new Storia(storiaId, titoloStoria, scenario, username, lunghezza, stato); // Recupera la storia dal database
         Gioco nuovoGioco = new Gioco(storia);
         giochiAttivi.put(storiaId, nuovoGioco);
         return nuovoGioco;

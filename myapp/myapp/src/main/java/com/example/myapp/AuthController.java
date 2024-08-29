@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     private final UserService userService;
-    private final AuthService authService; // Aggiungi AuthService
+    private final AuthService authService;
 
     public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
-        this.authService = authService; // Inizializza AuthService
+        this.authService = authService;
     }
 
     @PostMapping("/register")
@@ -27,7 +27,7 @@ public class AuthController {
         userService.register(user);
 
         // Autentica automaticamente l'utente dopo la registrazione
-        authService.autoLogin(username, password); // Usa AuthService
+        authService.autoLogin(username, password);
 
         return "redirect:/registrationSuccess";
     }
@@ -36,7 +36,7 @@ public class AuthController {
     public String login(@RequestParam String username, @RequestParam String password) {
         String encodedPassword = userService.getEncodedPassword(username);
         if (encodedPassword != null && userService.checkPassword(password, encodedPassword)) {
-            authService.autoLogin(username, password); // Usa AuthService
+            authService.autoLogin(username, password);
             return "redirect:/home";
         }
         System.out.println("Login failed for user: " + username);

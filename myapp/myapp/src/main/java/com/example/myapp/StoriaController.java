@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class StoriaController {
 
-    private final List<Storia> tutteLeStorie = new ArrayList<>(); // TODO: da popolare con le storie dal database
+    // TODO: da popolare con le storie dal database
+    private final List<Storia> tutteLeStorie = new ArrayList<>(); 
     
     public List<Storia> getStorieDisponibili(String searchTerm, String username, String lunghezza, String stato) {
         return tutteLeStorie.stream()

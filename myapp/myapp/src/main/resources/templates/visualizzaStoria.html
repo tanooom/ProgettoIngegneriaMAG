@@ -13,7 +13,7 @@
             <input type="text" id="searchInput" placeholder="Cerca per titolo..." oninput="filterStorie()">
             <select id="filterUsername" onchange="filterStorie()">
                 <option value="">Filtra per username</option>
-                <!-- Popola con gli username disponibili -->
+                <!-- TODO: Popola con gli username disponibili -->
             </select>
             <select id="filterLunghezza" onchange="filterStorie()">
                 <option value="">Filtra per lunghezza</option>
@@ -54,7 +54,7 @@
 
             storieDaVisualizzare.forEach(storia => {
                 const storiaDiv = document.createElement('div');
-                storiaDiv.className = 'storia-box'; // Assicurati di definire uno stile per 'storia-box' nel tuo CSS
+                storiaDiv.className = 'storia-box';
 
                 storiaDiv.innerHTML = `
                     <h2>${storia.titolo}</h2>

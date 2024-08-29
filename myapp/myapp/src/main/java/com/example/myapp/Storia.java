@@ -3,7 +3,7 @@ package com.example.myapp;
 public class Storia {
     private final int id;
     private final String titolo;
-    private final Scenario scenarioIniziale; //Scenario di partenza
+    private final Scenario scenarioIniziale;
     private final String username; // Username dello scrittore
     private final int lunghezza; // Numero di scenari
     private final String stato; // Stato della storia
