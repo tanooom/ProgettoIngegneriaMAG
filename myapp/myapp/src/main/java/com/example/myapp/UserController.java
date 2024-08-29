@@ -16,12 +16,14 @@ public class UserController {
     @Autowired
     private AuthService authService; // Aggiungi AuthService
 
+    // Mostra il modulo di registrazione
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Utente());
         return "register"; // Nome del file register.html
     }
 
+    // Gestisce la registrazione dell'utente
     @PostMapping("/user/register")
     public String registerUser(
             @RequestParam String username, 
@@ -34,17 +36,26 @@ public class UserController {
         // Crea un nuovo oggetto User
         Utente user = new Utente(username, password, nome, cognome, mail);
 
-        // Registra l'utente usando il metodo register
-        userService.register(user);
+        try {
+            // Registra l'utente usando il metodo register
+            userService.register(user);
 
-        // Autentica automaticamente l'utente dopo la registrazione
-        authService.autoLogin(username, password); // Usa AuthService
+            // Autentica automaticamente l'utente dopo la registrazione
+            authService.autoLogin(username, password);
 
-        // Passa i dati per la visualizzazione nella pagina di successo
-        model.addAttribute("nome", nome);
-        model.addAttribute("cognome", cognome);
-        model.addAttribute("username", username);
-        return "registrationSuccess"; // Reindirizza a registrationSuccess.html
+            // Passa i dati per la visualizzazione nella pagina di successo
+            model.addAttribute("nome", nome);
+            model.addAttribute("cognome", cognome);
+            model.addAttribute("username", username);
+
+            // Reindirizza a registrationSuccess.html
+            return "registrationSuccess";
+
+        } catch (Exception e) {
+            // Gestisce eventuali eccezioni durante la registrazione
+            model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
+            return "register"; // Torna al modulo di registrazione con un messaggio di errore
+        }
     }
 
     @GetMapping("/registrationSuccess")
@@ -52,6 +63,7 @@ public class UserController {
         return "registrationSuccess"; // Nome del file registrationSuccess.html
     }
 
+    // Classe di eccezione personalizzata per la gestione delle risorse non trovate
     public class ResourceNotFoundException extends RuntimeException {
         public ResourceNotFoundException(String message) {
             super(message);
