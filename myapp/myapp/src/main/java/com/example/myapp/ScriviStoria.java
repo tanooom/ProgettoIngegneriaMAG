@@ -1,8 +1,8 @@
 package com.example.myapp;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +76,7 @@ public class ScriviStoria {
     }
 
     private void salvaStoria(Storia storia) {
-        mapDBService.salvaStoria(storia);
+        mapDBService.saveStory(storia);
     }
 
     public Storia getStoria(int storiaId) {

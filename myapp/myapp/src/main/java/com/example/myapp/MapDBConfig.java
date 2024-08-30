@@ -16,17 +16,62 @@ public class MapDBConfig {
     @Bean
     public DB mapDB() {
         // Configurazione del database MapDB su file
-        db = DBMaker.fileDB("userdb.db")
-                .checksumHeaderBypass()  // Bypass del controllo dell'intestazione
-                .transactionEnable()     // Abilita le transazioni
+        db = DBMaker.fileDB("generaldb.db")  // Nome del database
+                .checksumHeaderBypass()      // Bypass del controllo dell'intestazione
+                .transactionEnable()         // Abilita le transazioni
                 .make();
         return db;
     }
 
     @Bean
     public HTreeMap<String, String> userMap(DB db) {
-        // Creazione della mappa HTreeMap per memorizzare le coppie chiave-valore
+        // Creazione della mappa HTreeMap per gli Utenti
         return db.hashMap("userMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
+    }
+
+    @Bean
+    public HTreeMap<String, String> storyMap(DB db) {
+        // Creazione della mappa HTreeMap per le Storie
+        return db.hashMap("storyMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
+    }
+
+    @Bean
+    public HTreeMap<String, String> scenarioMap(DB db) {
+        // Creazione della mappa HTreeMap per gli Scenari
+        return db.hashMap("scenarioMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
+    }
+
+    @Bean
+    public HTreeMap<String, String> inventoryMap(DB db) {
+        // Creazione della mappa HTreeMap per l'Inventario
+        return db.hashMap("inventoryMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
+    }
+
+    @Bean
+    public HTreeMap<String, String> optionMap(DB db) {
+        // Creazione della mappa HTreeMap per le Opzioni (azioni possibili in uno scenario)
+        return db.hashMap("optionMap")
+                .keySerializer(org.mapdb.Serializer.STRING)
+                .valueSerializer(org.mapdb.Serializer.STRING)
+                .createOrOpen();
+    }
+
+    @Bean
+    public HTreeMap<String, String> matchMap(DB db) {
+        // Creazione della mappa HTreeMap per le Partite (unione tra storia e utenti)
+        return db.hashMap("matchMap")
                 .keySerializer(org.mapdb.Serializer.STRING)
                 .valueSerializer(org.mapdb.Serializer.STRING)
                 .createOrOpen();
