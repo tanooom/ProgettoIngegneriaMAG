@@ -2,12 +2,14 @@ package com.example.myapp;
 
 import java.io.IOException;
 
+//import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/mapdb")
@@ -28,13 +30,16 @@ public class MapDBController {
         return mapDBService.getUser(key);
     }
 
-    // Endpoint per gestire le storie
-    /*@PostMapping("/putStory")
-    public String putStory(@RequestParam int id, @RequestParam String title) {
-        Storia storia = new Storia(id, title);
+    public String putStory(@RequestParam int id, 
+                        @RequestParam String title, 
+                        @RequestParam Scenario scenarioIniziale, 
+                        @RequestParam String username, 
+                        @RequestParam int lunghezza, 
+                        @RequestParam String stato) {
+        Storia storia = new Storia(id, title, scenarioIniziale, username, lunghezza, stato);
         mapDBService.saveStory(storia);
         return "Storia aggiunta con successo!";
-    }*/
+    }
 
     @GetMapping("/getStory")
     public Storia getStory(@RequestParam int id) {
@@ -55,12 +60,18 @@ public class MapDBController {
     }
 
     // Endpoint per gestire le opzioni
-    /*@PostMapping("/putOption")
-    public String putOption(@RequestParam int id, @RequestParam String description) {
-        Opzione opzione = new Opzione(id, description);
+    @PostMapping("/putOption")
+    public String putOption(@RequestParam int id, 
+                            @RequestParam String description, 
+                            @RequestParam Scenario scenarioSuccessivo,
+                            @RequestParam boolean richiedeOggetto, 
+                            @RequestParam String oggettoRichiesto, 
+                            @RequestParam boolean richiedeIndovinello, 
+                            @RequestParam String indovinello) {
+        Opzione opzione = new Opzione(description, scenarioSuccessivo, richiedeOggetto, oggettoRichiesto, id, richiedeIndovinello, indovinello);
         mapDBService.saveOption(opzione);
         return "Opzione aggiunta con successo!";
-    }*/
+    }
 
     @GetMapping("/getOption")
     public Opzione getOption(@RequestParam int id) {
