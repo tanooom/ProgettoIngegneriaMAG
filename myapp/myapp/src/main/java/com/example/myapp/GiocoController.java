@@ -1,6 +1,8 @@
 package com.example.myapp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,13 +29,19 @@ public class GiocoController {
     }
 
     @GetMapping("/gioca/{storiaId}")
-    public Gioco caricaScenario(@PathVariable int storiaId) {
+    public Map<String, Object> caricaScenario(@PathVariable int storiaId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        
-        // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
-        return giocoService.caricaGioco(storiaId, user);
+
+        Gioco gioco = giocoService.caricaGioco(storiaId, user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("titolo", gioco.getStoria().getTitolo());
+        response.put("scenarioCorrente", gioco.getScenarioCorrente());
+        response.put("inventario", gioco.getInventario());
+
+        return response;
     }
 
     @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")

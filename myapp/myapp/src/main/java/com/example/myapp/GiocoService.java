@@ -23,12 +23,29 @@ public class GiocoService {
     }
 
     public Gioco caricaGioco(int storiaId, Utente user) {
-        // Recupera la storia in base allo storiaId
-        Storia storia = storiaController.getStoriaById(storiaId); // Implementa questo metodo per recuperare la storia
-    
-        // Restituisci il gioco attivo o inizializza un nuovo gioco con i dettagli della storia recuperata
-        return giochiAttivi.getOrDefault(storiaId, 
-            inizializzaNuovoGioco(storiaId, storia.getUsername(), storia.getLunghezza(), storia.getStato()));
+        // Controlla se esiste già un gioco attivo per questa storia
+        Gioco gioco = giochiAttivi.get(storiaId);
+        if (gioco == null) {
+            // Recupera la storia dal controller
+            Storia storia = storiaController.getStoriaById(storiaId);
+            // Inizializza un nuovo gioco con la storia recuperata
+            gioco = new Gioco(storia, user.getUsername());
+            giochiAttivi.put(storiaId, gioco);
+        }
+        return gioco;
+    }
+
+    public void terminaGioco(int storiaId) {
+        Gioco gioco = giochiAttivi.get(storiaId);
+        if (gioco != null) {
+            gioco.terminaGioco();
+            // Rimuovi la partita dalle partite attive
+            giochiAttivi.remove(storiaId);
+        }
+    }
+
+    public Gioco getGioco(int storiaId) {
+        return giochiAttivi.get(storiaId);
     }
 
     public void faiScelta(int storiaId, int opzioneId, Utente user) {
@@ -44,6 +61,7 @@ public class GiocoService {
         }
     }
 
+    /* TODO: serve questo metodo?
     private Gioco inizializzaNuovoGioco(int storiaId, String username, int lunghezza, String stato) {
         // TODO: modificare il caricamento della storia
         String titoloStoria = "Nome della Storia";
@@ -53,8 +71,9 @@ public class GiocoService {
         // Inizializza un nuovo gioco
         Scenario scenario = new Scenario(scenarioId, scenarioDescrizione);
         Storia storia = new Storia(storiaId, titoloStoria, scenario, username, lunghezza, stato); // Recupera la storia dal database
-        Gioco nuovoGioco = new Gioco(storia);
+        Gioco nuovoGioco = new Gioco(storia, username); // Passa anche username
         giochiAttivi.put(storiaId, nuovoGioco);
         return nuovoGioco;
     }
+    */
 }

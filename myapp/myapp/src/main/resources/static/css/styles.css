@@ -145,16 +145,131 @@ footer {
 }
 
 /* visualizzaStoria */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    margin: 20px auto;          /* Distanza dal margine superiore e inferiore, centra orizzontalmente */
+    width: 80%;                 /* Larghezza del box rispetto al contenitore principale */
+    max-width: 800px;           /* Larghezza massima del box */
+    border: 1px solid #333;     /* Bordo grigio attorno al box */
+    border-radius: 8px;         /* Bordi arrotondati */
+    background-color: #fff;     /* Colore di sfondo bianco */
+    box-shadow: 0 0 10px #333; /* Leggera ombreggiatura */
+}
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 600px) {
+    .search-box {
+        flex-direction: column;    /* Dispone gli elementi in colonna sui dispositivi piccoli */
+        gap: 5px;                  /* Riduce lo spazio tra gli elementi */
+    }
+}
+
+.search-container input[type="text"],
+.search-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 150px;
+}
+
+.search-container select {
+    width: auto;
+}
+
+.search-button {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.search-button:hover {
+    background-color: #025cbd;
+}
+
+/* Stile per le storie */
 .storia-box {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    height: 5cm;
     border: 1px solid #ccc;
-    margin: 10px 0;
-    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .storia-box h2 {
+    margin: 0 0 10px 0;
+}
+
+.storia-box p {
+    margin: 0 0 10px 0;
+}
+
+.storia-box button {
+    align-self: flex-start;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Contenuto dell'header */
+.header-content {
+    display: flex;
+    align-items: center;  /* Allinea verticalmente la freccia e il titolo */
+    justify-content: space-between; /* Centra orizzontalmente il contenuto */
+    padding: 0 20px; /* Spazio interno ai lati */
+}
+
+/* Pulsante di ritorno */
+.back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; /* Colore di sfondo blu */
+    border: none;              /* Nessun bordo */
+    cursor: pointer;           /* Cambia il cursore quando si passa sopra */
+    padding: 10px;             /* Spazio interno per il pulsante */
+    border-radius: 4px;        /* Bordo arrotondato */
+}
+
+.back-button img {
+    width: 24px;  /* Larghezza dell'immagine della freccia */
+    height: 24px; /* Altezza dell'immagine della freccia */
+}
+
+.back-button:hover {
+    background-color: #025cbd; /* Scurisci il blu al passaggio del mouse */
+}
+
+/* Header */
+header {
+    background: #333; /* Colore di sfondo dell'intestazione scuro */
+    color: #fff; /* Colore del testo chiaro */
+    padding: 10px 20px; /* Spazio interno */
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
     margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
+    text-align: center; /* Centra il titolo */
+    color: white;  /* Assicurati che il colore del titolo sia bianco */
 }

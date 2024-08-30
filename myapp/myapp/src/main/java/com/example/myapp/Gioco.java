@@ -8,12 +8,16 @@ public class Gioco {
     private final Storia storia;
     private Scenario scenarioCorrente;
     private final List<String> inventario;
+    private final String username; // Aggiunta per tenere traccia dell'utente
+    private boolean inCorso; // Stato della partita (in corso o terminata)
 
     // Costruttore
-    public Gioco(Storia storia) {
+    public Gioco(Storia storia, String username) {
         this.storia = storia;
         this.scenarioCorrente = storia.getScenarioIniziale();
         this.inventario = new ArrayList<>();
+        this.username = username;
+        this.inCorso = true; // La partita inizia in corso
     }
 
     // Metodo per fare una scelta
@@ -41,5 +45,17 @@ public class Gioco {
 
     public Storia getStoria() {
         return this.storia;
+    }
+
+    public String getUsername() {
+        return username; // Getter per ottenere l'username
+    }
+
+    public boolean isInCorso() {
+        return inCorso; // Getter per ottenere lo stato della partita
+    }
+
+    public void terminaGioco() {
+        this.inCorso = false; // Metodo per terminare la partita
     }
 }

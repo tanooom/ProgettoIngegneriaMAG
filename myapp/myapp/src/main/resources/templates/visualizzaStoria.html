@@ -8,33 +8,38 @@
 </head>
 <body>
     <header>
-        <h1>Storie Disponibili</h1>
-        <div>
-            <input type="text" id="searchInput" placeholder="Cerca per titolo..." oninput="filterStorie()">
-            <select id="filterUsername" onchange="filterStorie()">
-                <option value="">Filtra per username</option>
-                <!-- TODO: Popola con gli username disponibili -->
-            </select>
-            <select id="filterLunghezza" onchange="filterStorie()">
-                <option value="">Filtra per lunghezza</option>
-                <option value="0-5">0-5 scenari</option>
-                <option value="5-10">5-10 scenari</option>
-                <option value="10+">10+ scenari</option>
-            </select>
-            <select id="filterStato" onchange="filterStorie()">
-                <option value="">Filtra per stato</option>
-                <option value="non_iniziato">Non iniziato</option>
-                <option value="in_corso">In corso</option>
-                <option value="concluso">Concluso</option>
-            </select>
+        <div class="header-content">
+            <button class="back-button" onclick="history.back()">
+                <img src="/images/arrow.png" alt="Indietro">
+            </button>
+            <h1>Storie Disponibili</h1>
         </div>
     </header>
 
-    <div id="storieContainer"></div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Cerca per titolo..." oninput="filterStorie()">
+        <select id="filterUsername" onchange="filterStorie()">
+            <option value="">Filtra per username</option>
+            <!-- TODO: Popola con gli username disponibili -->
+        </select>
+        <select id="filterLunghezza" onchange="filterStorie()">
+            <option value="">Filtra per lunghezza</option>
+            <option value="0-5">0-5 scenari</option>
+            <option value="5-10">5-10 scenari</option>
+            <option value="10+">10+ scenari</option>
+        </select>
+        <select id="filterStato" onchange="filterStorie()">
+            <option value="">Filtra per stato</option>
+            <option value="non_iniziato">Non iniziato</option>
+            <option value="in_corso">In corso</option>
+            <option value="concluso">Concluso</option>
+        </select>
+        <button class="search-button" onclick="filterStorie()">
+            <img src="/images/search-icon.png" alt="Cerca">
+        </button>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 MyApp</p>
-    </footer>
+    <div id="storieContainer"></div>
 
     <script>
         let storie = [];
@@ -110,5 +115,10 @@
             }
         }
     </script>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
 </body>
 </html>

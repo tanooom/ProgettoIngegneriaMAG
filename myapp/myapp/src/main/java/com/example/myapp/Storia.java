@@ -18,7 +18,7 @@ public class Storia{
         this.scenarioIniziale = scenarioIniziale;
         this.finali = new ArrayList<>();
         this.scenari = new ArrayList<>();
-        aggiungiScenario(scenarioIniziale);
+        this.scenari.add(scenarioIniziale); // Aggiungi direttamente lo scenario iniziale alla lista
         this.username = username;
         this.lunghezza = lunghezza;
         this.stato = stato;
@@ -69,4 +69,3 @@ public class Storia{
     }
 
 }
-

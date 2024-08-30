@@ -4,31 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gioca Storia</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="history.back()">
+                <img src="/images/arrow.png" alt="Indietro">
+            </button>
+            <h1>Storia "titolo"</titolo></h1>
+        </div>
+    </header>
+
     <h1 id="titoloStoria"></h1>
     <div id="scenario"></div>
     <div id="opzioni"></div>
+    <div id="inventario"></div>
+
+    
     <script>
         const params = new URLSearchParams(window.location.search);
         const storiaId = params.get('storiaId');
 
         function caricaScenario() {
-            fetch(`/api/gioca/${storiaId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('titoloStoria').innerText = data.titolo;
-                    document.getElementById('scenario').innerText = data.scenarioCorrente.descrizione;
+        fetch(`/api/gioca/${storiaId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('titoloStoria').innerText = data.titolo;
+                document.getElementById('scenario').innerText = data.scenarioCorrente.descrizione;
 
-                    const opzioniDiv = document.getElementById('opzioni');
-                    opzioniDiv.innerHTML = '';
-                    data.scenarioCorrente.opzioni.forEach(opzione => {
-                        const button = document.createElement('button');
-                        button.innerText = opzione.descrizione;
-                        button.onclick = () => faiScelta(opzione.id);
-                        opzioniDiv.appendChild(button);
-                    });
+                const opzioniDiv = document.getElementById('opzioni');
+                opzioniDiv.innerHTML = '';
+                data.scenarioCorrente.opzioni.forEach(opzione => {
+                    const button = document.createElement('button');
+                    button.innerText = opzione.descrizione;
+                    button.onclick = () => faiScelta(opzione.id);
+                    opzioniDiv.appendChild(button);
                 });
+
+                // Gestione dell'inventario
+                const inventarioDiv = document.getElementById('inventario');
+                inventarioDiv.innerHTML = '<h2>Inventario:</h2>';
+                data.inventario.forEach(oggetto => {
+                    const item = document.createElement('p');
+                    item.innerText = oggetto;
+                    inventarioDiv.appendChild(item);
+                });
+            });
         }
 
         function faiScelta(opzioneId) {
@@ -39,5 +62,10 @@
 
         caricaScenario();
     </script>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
 </body>
 </html>
