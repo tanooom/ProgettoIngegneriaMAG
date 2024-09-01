@@ -8,9 +8,10 @@ public class Opzione {
     private final int id;
     private final boolean richiedeIndovinello;
     private final String indovinello;
+    private final String rispostaCorrettaIndovinello;
 
     // Costruttore
-    public Opzione(String descrizione, Scenario scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, int id, boolean richiedeIndovinello, String indovinello) {
+    public Opzione(String descrizione, Scenario scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, int id, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
         this.descrizione = descrizione;
         this.scenarioSuccessivo = scenarioSuccessivo;
         this.richiedeOggetto = richiedeOggetto;
@@ -18,6 +19,7 @@ public class Opzione {
         this.id = id;
         this.indovinello = indovinello;
         this.richiedeIndovinello = richiedeIndovinello;
+        this.rispostaCorrettaIndovinello = rispostaCorrettaIndovinello; // Inizializzazione della risposta corretta
     }
 
     // Getter
@@ -47,5 +49,9 @@ public class Opzione {
 
     public String getIndovinello() {
         return indovinello;
+    }
+
+    public String getRispostaCorrettaIndovinello() {
+        return rispostaCorrettaIndovinello;
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gioco {
-    
+    private int id;
     private final Storia storia;
     private Scenario scenarioCorrente;
     private final List<String> inventario;
@@ -12,7 +12,8 @@ public class Gioco {
     private boolean inCorso; // Stato della partita (in corso o terminata)
 
     // Costruttore
-    public Gioco(Storia storia, String username) {
+    public Gioco(int id, Storia storia, String username) {
+        this.id = id;
         this.storia = storia;
         this.scenarioCorrente = storia.getScenarioIniziale();
         this.inventario = new ArrayList<>();
@@ -49,6 +50,10 @@ public class Gioco {
 
     public String getUsername() {
         return username; // Getter per ottenere l'username
+    }
+
+    public int getId() {
+        return id;
     }
 
     public boolean isInCorso() {

@@ -2,7 +2,6 @@ package com.example.myapp;
 
 import java.io.IOException;
 
-//import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,8 +66,9 @@ public class MapDBController {
                             @RequestParam boolean richiedeOggetto, 
                             @RequestParam String oggettoRichiesto, 
                             @RequestParam boolean richiedeIndovinello, 
-                            @RequestParam String indovinello) {
-        Opzione opzione = new Opzione(description, scenarioSuccessivo, richiedeOggetto, oggettoRichiesto, id, richiedeIndovinello, indovinello);
+                            @RequestParam String indovinello,
+                            @RequestParam String rispostaCorrettaIndovinello) {
+        Opzione opzione = new Opzione(description, scenarioSuccessivo, richiedeOggetto, oggettoRichiesto, id, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello);
         mapDBService.saveOption(opzione);
         return "Opzione aggiunta con successo!";
     }
@@ -79,17 +79,17 @@ public class MapDBController {
     }
 
     // Endpoint per gestire le partite
-    /*@PostMapping("/putMatch")
-    public String putMatch(@RequestParam int id, @RequestParam String matchData) {
-        Partita partita = new Partita(id, matchData);
-        mapDBService.saveMatch(partita);
-        return "Partita aggiunta con successo!";
+    @PostMapping("/putMatch")
+    public String putMatch(@RequestParam int id, @RequestParam Storia storia,  @RequestParam String username) {
+        Gioco gioco = new Gioco(id, storia, username);
+        mapDBService.saveMatch(gioco);
+        return "Gioco aggiunto con successo!";
     }
 
     @GetMapping("/getMatch")
-    public Partita getMatch(@RequestParam int id) {
+    public Gioco getMatch(@RequestParam int id) {
         return mapDBService.getMatchById(id);
-    }*/
+    }
 
     // Endpoint per gestire l'inventario
     @PostMapping("/putInventoryItem")
@@ -125,3 +125,4 @@ public class MapDBController {
         }
     }
 }
+

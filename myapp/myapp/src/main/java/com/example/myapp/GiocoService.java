@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class GiocoService {
 
     private final Map<Integer, Gioco> giochiAttivi = new HashMap<>();
-    private final StoriaController storiaController;
+    private final StoriaService storiaService;
 
     // Costruttore
-    public GiocoService(StoriaController storiaController) {
-        this.storiaController = storiaController;
+    public GiocoService(StoriaService storiaService) {
+        this.storiaService = storiaService;
     }
 
     public List<Storia> getStorieDisponibili() {
         // Recupera le storie disponibili tramite il controller
-        return storiaController.getStorieDisponibili(null, null, null, null);
+        return storiaService.getStorieDisponibili(null, null, null, null);
     }
 
     public Gioco caricaGioco(int storiaId, Utente user) {
@@ -27,9 +27,11 @@ public class GiocoService {
         Gioco gioco = giochiAttivi.get(storiaId);
         if (gioco == null) {
             // Recupera la storia dal controller
-            Storia storia = storiaController.getStoriaById(storiaId);
+            Storia storia = storiaService.getStoriaById(storiaId);
+            //TODO: fixare id
+            int id = 0;
             // Inizializza un nuovo gioco con la storia recuperata
-            gioco = new Gioco(storia, user.getUsername());
+            gioco = new Gioco(id, storia, user.getUsername());
             giochiAttivi.put(storiaId, gioco);
         }
         return gioco;

@@ -23,7 +23,7 @@ public class GiocoController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/storie")
+    @GetMapping("/storie-disponibili")
     public List<Storia> getStorieDisponibili() {
         return giocoService.getStorieDisponibili();
     }

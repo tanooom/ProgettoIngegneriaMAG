@@ -43,6 +43,7 @@
 
     <script>
         let storie = [];
+        let usernames = []; // Array per memorizzare gli username
 
         // Fetch delle storie
         fetch('/api/storie')
@@ -51,6 +52,25 @@
                 storie = data;
                 displayStorie(storie);
             });
+        
+        // Fetch degli username
+        fetch('/api/usernames')
+            .then(response => response.json())
+            .then(data => {
+                usernames = data;
+                populateUsernameFilter(usernames);
+            });
+
+        // Funzione per popolare il filtro degli username
+        function populateUsernameFilter(usernames) {
+            const filterUsername = document.getElementById('filterUsername');
+            usernames.forEach(username => {
+                const option = document.createElement('option');
+                option.value = username;
+                option.textContent = username;
+                filterUsername.appendChild(option);
+            });
+        }
 
         // Funzione per visualizzare le storie
         function displayStorie(storieDaVisualizzare) {
@@ -91,16 +111,16 @@
         }
 
         function giocaStoria(storiaId) {
-            window.location.href = `/gioca.html?storiaId=${storiaId}`;
+            window.location.href = '/gioca.html?storiaId=${storiaId}';
         }
 
         function riprendiStoria(storiaId) {
-            window.location.href = `/riprendi.html?storiaId=${storiaId}`;
+            window.location.href = '/riprendi.html?storiaId=${storiaId}';
         }
 
         function eliminaPartita(storiaId) {
             if (confirm("Sei sicuro di voler eliminare la partita?")) {
-                fetch(`/api/eliminaPartita/${storiaId}`, {
+                fetch('/api/eliminaPartita/${storiaId}', {
                     method: 'DELETE'
                 }).then(() => {
                     alert('Partita eliminata con successo');

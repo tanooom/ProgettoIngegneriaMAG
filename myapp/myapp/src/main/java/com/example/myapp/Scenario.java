@@ -40,4 +40,8 @@ public class Scenario {
     public List<Opzione> getOpzioni() {
         return opzioni;
     }
+    
+    public List<String> getOggettiRaccoglibili() {
+        return oggettiRaccoglibili;
+    }
 }

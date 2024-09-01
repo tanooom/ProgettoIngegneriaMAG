@@ -28,7 +28,7 @@ public class MapDBService {
     private HTreeMap<Integer, Scenario> scenarioMap;   // Mappa per gli scenari
     private HTreeMap<String, String> inventoryMap;     // Mappa per l'inventario
     private HTreeMap<Integer, Opzione> optionMap;      // Mappa per le opzioni
-    //private HTreeMap<Integer, Partita> matchMap;       // Mappa per le partite
+    private HTreeMap<Integer, Gioco> matchMap;       // Mappa per le partite
 
     @PostConstruct
     @SuppressWarnings("unchecked")
@@ -64,10 +64,10 @@ public class MapDBService {
                       .createOrOpen();
 
         // Inizializzazione della mappa delle partite
-        /*matchMap = db.hashMap("matchMap")
+        matchMap = db.hashMap("matchMap")
                      .keySerializer(org.mapdb.Serializer.INTEGER)
                      .valueSerializer(org.mapdb.Serializer.JAVA)
-                     .createOrOpen();*/
+                     .createOrOpen();
     }
 
     // Metodo per salvare una storia
@@ -113,18 +113,18 @@ public class MapDBService {
     }
 
     // Metodo per salvare una partita
-    /*public void saveMatch(Partita partita) {
-        if (partita.getId() == 0) {
-            throw new IllegalArgumentException("La partita deve avere un ID valido.");
+    public void saveMatch(Gioco gioco) {
+        if (gioco.getId() == 0) {
+            throw new IllegalArgumentException("Il gioco deve avere un ID valido.");
         }
-        matchMap.put(partita.getId(), partita);
+        matchMap.put(gioco.getId(), gioco);
         db.commit();
     }
 
     // Metodo per ottenere una partita per ID
-    public Partita getMatchById(int id) {
+    public Gioco getMatchById(int id) {
         return matchMap.get(id);
-    }*/
+    }
 
     // Metodo per gestire l'inventario
     public void putInventoryItem(String key, String value) {
