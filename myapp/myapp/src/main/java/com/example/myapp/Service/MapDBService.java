@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,10 @@ import org.mapdb.HTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Scenario;
+import com.example.myapp.Model.Storia;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

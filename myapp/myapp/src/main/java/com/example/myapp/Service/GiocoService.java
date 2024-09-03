@@ -1,10 +1,15 @@
-package com.example.myapp;
+package com.example.myapp.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Storia;
+import com.example.myapp.Model.Utente;
 
 @Service
 public class GiocoService {

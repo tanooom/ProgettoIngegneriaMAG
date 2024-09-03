@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Model;
 
 public class Main {
     public static void main(String[] args) {

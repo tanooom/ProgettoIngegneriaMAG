@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Controller;
 
 import java.util.List;
 
@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.example.myapp.Model.Storia;
+import com.example.myapp.Service.StoriaService;
 
 @Controller
 public class StoriaController {

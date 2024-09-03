@@ -1,10 +1,13 @@
-package com.example.myapp;
+package com.example.myapp.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+
+import com.example.myapp.Model.Main;
+import com.example.myapp.Model.Storia;
 
 @Service
 public class StoriaService {

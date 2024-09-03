@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Controller;
 
 import java.io.IOException;
 
@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Scenario;
+import com.example.myapp.Model.Storia;
+import com.example.myapp.Service.MapDBService;
 
 
 @RestController

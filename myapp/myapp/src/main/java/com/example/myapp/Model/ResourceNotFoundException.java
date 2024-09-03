@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Model;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

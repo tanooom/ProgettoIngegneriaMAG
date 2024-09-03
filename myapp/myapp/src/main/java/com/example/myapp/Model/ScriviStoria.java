@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Model;
 
 
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,8 @@ package com.example.myapp;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.myapp.Service.MapDBService;
 
 
 public class ScriviStoria {

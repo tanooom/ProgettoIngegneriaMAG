@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Model;
 
 import java.util.Collection;
 import java.util.Collections;

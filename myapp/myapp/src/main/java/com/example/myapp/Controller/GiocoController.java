@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.myapp.Controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Storia;
+import com.example.myapp.Model.Utente;
+import com.example.myapp.Service.GiocoService;
+import com.example.myapp.Service.UserService;
 
 @RestController
 @RequestMapping("/api")
