@@ -6,18 +6,102 @@
     <title>Scrivi Storia</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="scriviStoria">
     <header>
         <div class="header-content">
             <button class="back-button" onclick="history.back()">
-                <img src="/images/arrow.png" alt="Indietro">
+                <img src="/css/images/arrow.png" alt="Indietro">
+                <span class="back-text">Torna Indietro</span>
             </button>
             <h1>Scrivi la tua storia</h1>
         </div>
     </header>
+    
+
+    <main>
+        <div class="form-container">
+            <div>
+                <label for="titolo">Titolo:</label>
+                <input type="text" id="titolo" name="titolo">
+            </div>
+            <div>
+                <label for="descrizione">Descrizione:</label>
+                <textarea id="descrizione" name="descrizione"></textarea>
+            </div>
+            <div>
+                <label for="scenario-iniziale">Scenario Iniziale:</label>
+                <textarea id="scenario-iniziale" name="scenario-iniziale"></textarea>
+            </div>
+            <div>
+                <button id="add-scenario-button">Aggiungi Scenario</button>
+            </div>
+            <div id="scenario-container"></div>
+        </div>
+    </main>
+
+    <div class="bottom-buttons">
+        <button id="save-button">Salva</button>
+        <!--<button onclick="history.back()">Torna Indietro</button>-->
+    </div>
 
     <footer>
         <p>&copy; 2024 MyApp</p>
     </footer>
+
+    <script>
+        document.getElementById('add-scenario-button').addEventListener('click', function() {
+            const scenarioGroup = document.createElement('div');
+            scenarioGroup.classList.add('scenario-group');
+
+            const scenarioHTML = `
+                <div>
+                    <label for="nome-scenario">Nome Scenario:</label>
+                    <input type="text" name="nome-scenario">
+                </div>
+                <div>
+                    <label for="descrizione-scenario">Descrizione Scenario:</label>
+                    <textarea name="descrizione-scenario"></textarea>
+                </div>
+                <div>
+                    <label>È richiesta una scelta?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="richiede-scelta" value="si"> Sì</label>
+                        <label><input type="radio" name="richiede-scelta" value="no"> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label>È richiesto un indovinello?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="richiede-indovinello" value="si"> Sì</label>
+                        <label><input type="radio" name="richiede-indovinello" value="no"> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label>È richiesto un oggetto?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="richiede-oggetto" value="si"> Sì</label>
+                        <label><input type="radio" name="richiede-oggetto" value="no"> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label>Rilascia un oggetto?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="rilascia-oggetto" value="si"> Sì</label>
+                        <label><input type="radio" name="rilascia-oggetto" value="no"> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="scegli-scenario-successivo">Scegli Scenario Successivo:</label>
+                    <select name="scegli-scenario-successivo">
+                        <option value="">-- Seleziona --</option>
+                        <!-- Qui verranno aggiunti gli scenari disponibili -->
+                    </select>
+                </div>
+            `;
+
+            scenarioGroup.innerHTML = scenarioHTML;
+            document.getElementById('scenario-container').appendChild(scenarioGroup);
+        });
+    </script>
 </body>
 </html>

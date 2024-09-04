@@ -19,6 +19,7 @@ header {
 header h1 {
     margin: 0;
     font-size: 1.5em;
+    text-align: center;
 }
 
 /* Contenuto principale */
@@ -35,9 +36,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
+/*a:hover {
     text-decoration: underline;
-}
+}*/
 
 /* Moduli */
 form {
@@ -46,6 +47,7 @@ form {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     padding: 20px;
     margin-top: 20px;
+    box-sizing: border-box; /* Assicura che il padding e il bordo siano inclusi nelle dimensioni totali */
 }
 
 form input[type="text"],
@@ -56,11 +58,12 @@ form input[type="cognome"],
 form input[type="user"],
 form input[type="mail"],
 form input[type="submit"] {
-    width: 100%;
+    width: calc(100% - 10px); /* Calcola la larghezza del campo sottraendo il padding */
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; /* Assicura che il padding e il bordo siano inclusi nelle dimensioni totali */
 }
 
 form input[type="submit"] {
@@ -74,6 +77,7 @@ form input[type="submit"]:hover {
     background: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
 }
 
+
 /* Intestazione del modulo */
 h2 {
     color: #333; /* Colore del testo scuro */
@@ -82,6 +86,13 @@ h2 {
 }
 
 /* Pagine */
+
+.scenario-group { 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+
 .home, .login, .register {
     padding: 20px;
 }
@@ -139,25 +150,112 @@ footer {
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
     padding: 10px 0;
-    position: fixed;
+    position: relative; /* Cambia da fixed a relative */
     width: 100%;
-    bottom: 0;
+    margin-top: 20px; /* Margine superiore per evitare sovrapposizione */
 }
 
-/* visualizzaStoria */
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+/* Stile per i form nella pagina "Scrivi Storia" */
+body.scriviStoria main {
+    padding: 20px; /* Aggiungi spazio interno */
+}
+
+body.scriviStoria main div {
+    margin-bottom: 20px; /* Spazio tra i div all'interno del main */
+}
+
+body.scriviStoria label {
+    display: block; /* Rende le etichette di blocco */
+    margin-bottom: 5px; /* Spazio sotto l'etichetta */
+    font-weight: bold; /* Rende il testo dell'etichetta in grassetto */
+}
+
+body.scriviStoria input[type="text"],
+body.scriviStoria textarea {
+    width: 100%; /* Larghezza completa del contenitore */
+    padding: 10px; /* Spazio interno */
+    margin-top: 5px; /* Spazio sopra il campo di input/textarea */
+    border: 1px solid #ccc; /* Colore del bordo */
+    border-radius: 4px; /* Bordi arrotondati */
+    box-sizing: border-box; /* Include padding e bordo nelle dimensioni totali */
+}
+
+body.scriviStoria textarea {
+    height: 100px; /* Altezza fissa per le textarea */
+    resize: vertical; /* Permette solo la ridimensionabilità verticale */
+}
+
+body.scriviStoria button {
+    background-color: #007bff; /* Colore di sfondo blu per i pulsanti */
+    color: white; /* Colore del testo chiaro */
+    border: none; /* Nessun bordo */
+    padding: 10px 20px; /* Spazio interno */
+    border-radius: 4px; /* Bordo arrotondato */
+    cursor: pointer; /* Cambia il cursore quando si passa sopra */
+    font-size: 16px; /* Dimensione del testo */
+    margin-right: 10px; /* Spazio tra i pulsanti */
+}
+
+body.scriviStoria button:hover {
+    background-color: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
+}
+
+/* Stile per il contenitore del form all'interno di .scriviStoria */
+.scriviStoria .form-container {
+    background: #fff; /* Colore di sfondo bianco */
+    border-radius: 8px; /* Angoli curvi */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Ombreggiatura */
+    padding: 20px; /* Spazio interno */
+    margin: 20px auto; /* Margine superiore/inferiore e centramento orizzontale */
+    max-width: 80%; /* Larghezza massima del contenitore */
+}
+
+/* Migliora l'aspetto dei campi del form all'interno di .scriviStoria */
+.scriviStoria .form-container input[type="text"],
+.scriviStoria .form-container input[type="password"],
+.scriviStoria .form-container input[type="email"],
+.scriviStoria .form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Pulsante di aggiunta scenario all'interno di .scriviStoria */
+.scriviStoria #add-scenario-button {
+    background: grey; /* Colore di sfondo blu */
+    color: #fff; /* Colore del testo chiaro */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.scriviStoria #add-scenario-button:hover {
+    background: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
+}
+
+/* Stile per il contenitore degli scenari */
+#scenario-container {
+    margin-top: 20px;
+}
+
+.scenario-group {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
     padding: 15px;
-    margin: 20px auto;          /* Distanza dal margine superiore e inferiore, centra orizzontalmente */
-    width: 80%;                 /* Larghezza del box rispetto al contenitore principale */
-    max-width: 800px;           /* Larghezza massima del box */
-    border: 1px solid #333;     /* Bordo grigio attorno al box */
-    border-radius: 8px;         /* Bordi arrotondati */
-    background-color: #fff;     /* Colore di sfondo bianco */
-    box-shadow: 0 0 10px #333; /* Leggera ombreggiatura */
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.scenario-group div {
+    margin-bottom: 10px; /* Spazio tra i div all'interno del gruppo */
+}
+
+.bottom-buttons{
+    margin-left: 150px;
 }
 
 /* Adattamento per schermi piccoli */
@@ -273,3 +371,4 @@ header h1 {
     text-align: center; /* Centra il titolo */
     color: white;  /* Assicurati che il colore del titolo sia bianco */
 }
+
