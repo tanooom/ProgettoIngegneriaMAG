@@ -196,6 +196,17 @@ body.scriviStoria button {
     margin-right: 10px; /* Spazio tra i pulsanti */
 }
 
+body.visualizzaStoria button {
+    background-color: #007bff; /* Colore di sfondo blu per i pulsanti */
+    color: white; /* Colore del testo chiaro */
+    border: none; /* Nessun bordo */
+    padding: 10px 20px; /* Spazio interno */
+    border-radius: 4px; /* Bordo arrotondato */
+    cursor: pointer; /* Cambia il cursore quando si passa sopra */
+    font-size: 16px; /* Dimensione del testo */
+    margin-right: 10px; /* Spazio tra i pulsanti */
+}
+
 body.scriviStoria button:hover {
     background-color: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
 }
@@ -285,6 +296,12 @@ body.scriviStoria button:hover {
 
 .search-container select {
     width: auto;
+}
+
+.search-container{
+    display: flex;
+    padding: 10px;
+    gap: 10px;
 }
 
 .search-button {

@@ -6,11 +6,12 @@
     <title>Storie Disponibili</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="visualizzaStoria">
     <header>
         <div class="header-content">
-            <button class="back-button" onclick="history.back()">
-                <img src="/images/arrow.png" alt="Indietro">
+            <button class="back-button" onclick="window.location.href='home'">
+                <img src="/css/images/arrow.png" alt="Indietro">
+                <span class="back-text">Torna Indietro</span>
             </button>
             <h1>Storie Disponibili</h1>
         </div>
@@ -35,7 +36,7 @@
             <option value="concluso">Concluso</option>
         </select>
         <button class="search-button" onclick="filterStorie()">
-            <img src="/images/search-icon.png" alt="Cerca">
+            <img src="/css/images/search-icon.png" alt="Cerca">
         </button>
     </div>
 
