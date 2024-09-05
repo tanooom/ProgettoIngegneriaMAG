@@ -39,7 +39,7 @@
         </div>
     </main>
 
-    <div class="bottom-buttons">
+    <div>
         <button id="save-button">Salva</button>
         <!--<button onclick="history.back()">Torna Indietro</button>-->
     </div>
@@ -52,7 +52,7 @@
         document.getElementById('add-scenario-button').addEventListener('click', function() {
             const scenarioGroup = document.createElement('div');
             scenarioGroup.classList.add('scenario-group');
-
+    
             const scenarioHTML = `
                 <div>
                     <label for="nome-scenario">Nome Scenario:</label>
@@ -63,45 +63,75 @@
                     <textarea name="descrizione-scenario"></textarea>
                 </div>
                 <div>
-                    <label>È richiesta una scelta?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="richiede-scelta" value="si"> Sì</label>
-                        <label><input type="radio" name="richiede-scelta" value="no"> No</label>
-                    </div>
-                </div>
-                <div>
                     <label>È richiesto un indovinello?</label>
                     <div class="option-group">
-                        <label><input type="radio" name="richiede-indovinello" value="si"> Sì</label>
-                        <label><input type="radio" name="richiede-indovinello" value="no"> No</label>
+                        <label><input type="radio" name="richiede-indovinello" value="si" class="indovinello"> Sì</label>
+                        <label><input type="radio" name="richiede-indovinello" value="no" class="indovinello"> No</label>
+                    </div>
+                    <div class="indovinello-fields" style="display:none;">
+                        <label for="scrivi-indovinello">Scrivi indovinello:</label>
+                        <textarea name="scrivi-indovinello"></textarea>
+                        <label for="scrivi-risposta-indovinello">Scrivi la risposta all'indovinello:</label>
+                        <input type="text" name="scrivi-risposta-indovinello">
                     </div>
                 </div>
                 <div>
                     <label>È richiesto un oggetto?</label>
                     <div class="option-group">
-                        <label><input type="radio" name="richiede-oggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="richiede-oggetto" value="no"> No</label>
+                        <label><input type="radio" name="richiede-oggetto" value="si" class="oggetto"> Sì</label>
+                        <label><input type="radio" name="richiede-oggetto" value="no" class="oggetto"> No</label>
+                    </div>
+                    <div class="oggetto-fields" style="display:none;">
+                        <label for="scrivi-oggetto">Scrivi quale oggetto:</label>
+                        <input type="text" name="scrivi-oggetto">
                     </div>
                 </div>
                 <div>
                     <label>Rilascia un oggetto?</label>
                     <div class="option-group">
-                        <label><input type="radio" name="rilascia-oggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="rilascia-oggetto" value="no"> No</label>
+                        <label><input type="radio" name="rilascia-oggetto" value="si" class="rilascia"> Sì</label>
+                        <label><input type="radio" name="rilascia-oggetto" value="no" class="rilascia"> No</label>
+                    </div>
+                    <div class="rilascia-fields" style="display:none;">
+                        <label for="scrivi-rilascia-oggetto">Scrivi quale oggetto:</label>
+                        <input type="text" name="scrivi-rilascia-oggetto">
                     </div>
                 </div>
                 <div>
-                    <label for="scegli-scenario-successivo">Scegli Scenario Successivo:</label>
-                    <select name="scegli-scenario-successivo">
+                    <label for="scegli-scenario-precedente">Scegli Scenario Precedente:</label>
+                    <select name="scegli-scenario-precedente">
                         <option value="">-- Seleziona --</option>
                         <!-- Qui verranno aggiunti gli scenari disponibili -->
                     </select>
                 </div>
             `;
-
+    
             scenarioGroup.innerHTML = scenarioHTML;
             document.getElementById('scenario-container').appendChild(scenarioGroup);
+    
+            // Aggiungi listener per far apparire i campi aggiuntivi quando necessario
+            scenarioGroup.querySelectorAll('input[name="richiede-indovinello"]').forEach(function(el) {
+                el.addEventListener('change', function() {
+                    const indovinelloFields = scenarioGroup.querySelector('.indovinello-fields');
+                    indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
+                });
+            });
+    
+            scenarioGroup.querySelectorAll('input[name="richiede-oggetto"]').forEach(function(el) {
+                el.addEventListener('change', function() {
+                    const oggettoFields = scenarioGroup.querySelector('.oggetto-fields');
+                    oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
+                });
+            });
+    
+            scenarioGroup.querySelectorAll('input[name="rilascia-oggetto"]').forEach(function(el) {
+                el.addEventListener('change', function() {
+                    const rilasciaFields = scenarioGroup.querySelector('.rilascia-fields');
+                    rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
+                });
+            });
         });
     </script>
+    
 </body>
 </html>

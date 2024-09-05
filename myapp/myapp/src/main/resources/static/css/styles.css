@@ -236,6 +236,10 @@ body.scriviStoria button:hover {
     background: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
 }
 
+.option-group{
+    display: flex;
+}
+
 /* Stile per il contenitore degli scenari */
 #scenario-container {
     margin-top: 20px;
@@ -254,7 +258,7 @@ body.scriviStoria button:hover {
     margin-bottom: 10px; /* Spazio tra i div all'interno del gruppo */
 }
 
-.bottom-buttons{
+.scriviStoria #save-button{
     margin-left: 150px;
 }
 
@@ -371,4 +375,3 @@ header h1 {
     text-align: center; /* Centra il titolo */
     color: white;  /* Assicurati che il colore del titolo sia bianco */
 }
-
