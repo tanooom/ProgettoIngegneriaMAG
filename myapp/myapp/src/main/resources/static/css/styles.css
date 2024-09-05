@@ -236,8 +236,12 @@ body.scriviStoria button:hover {
     background: #025cbd; /* Colore di sfondo blu scuro al passaggio del mouse */
 }
 
-.option-group{
+.scriviStoria .option-group{
     display: flex;
+}
+
+.scriviStoria .option-group label{
+    font-weight: normal;
 }
 
 /* Stile per il contenitore degli scenari */
