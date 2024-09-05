@@ -12,14 +12,39 @@ body {
 header {
     background: #333; /* Colore di sfondo dell'intestazione scuro */
     color: #fff; /* Colore del testo chiaro */
-    padding: 10px 0;
+    padding: 10px 20px; /* Spazio interno */
     text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+}
+
+.home header {
+    background: #333; /* Colore di sfondo dell'intestazione scuro */
+    color: #fff; /* Colore del testo chiaro */
+    padding: 10px 20px; /* Spazio interno */
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.scriviStoria header h1, .visualizzaStoria header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
+    text-align: center; /* Centra il titolo */
+    color: white;  /* Assicurati che il colore del titolo sia bianco */
+    margin-right: 180px;
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5em;
-    text-align: center;
+    flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
+    text-align: center; /* Centra il titolo */
+    color: white;  /* Assicurati che il colore del titolo sia bianco */
 }
 
 /* Contenuto principale */
@@ -27,7 +52,12 @@ header h1 {
     width: 80%;
     max-width: 1200px;
     margin: auto;
-    padding: 20px;
+    display: flex;              /* Abilita Flexbox */
+    justify-content: center;    /* Centra orizzontalmente gli elementi */
+    align-items: center;        /* Centra verticalmente gli elementi */
+    flex-direction: row;        /* Dispone gli elementi in colonna */
+    gap: 10px;                  /* Spazio tra i pulsanti */
+    padding: 20px; 
 }
 
 /* Link */
@@ -116,15 +146,6 @@ h2 {
     margin-top: 20px;
 }
 
-.container {
-    display: flex;              /* Abilita Flexbox */
-    justify-content: center;    /* Centra orizzontalmente gli elementi */
-    align-items: center;        /* Centra verticalmente gli elementi */
-    flex-direction: row;        /* Dispone gli elementi in colonna */
-    gap: 10px;                  /* Spazio tra i pulsanti */
-    padding: 20px;              /* Spazio interno per il contenitore */
-}
-
 /* Pulsanti */
 .button {
     display: inline-block;
@@ -145,15 +166,37 @@ h2 {
 }
 
 /* Footer */
-footer {
+.home footer {
     background: #333; /* Colore di sfondo del footer scuro */
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
-    padding: 10px 0;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-left: -20px;
+}
+
+.visualizzaStoria footer {
+    background: #333; /* Colore di sfondo del footer scuro */
+    color: #fff; /* Colore del testo chiaro */
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.scriviStoria footer {
+    background: #333; /* Colore di sfondo del footer scuro */
+    color: #fff; /* Colore del testo chiaro */
+    text-align: center;
+    padding: 5px 0;
     position: relative; /* Cambia da fixed a relative */
     width: 100%;
     margin-top: 20px; /* Margine superiore per evitare sovrapposizione */
 }
+
 
 /* Stile per i form nella pagina "Scrivi Storia" */
 body.scriviStoria main {
@@ -185,18 +228,7 @@ body.scriviStoria textarea {
     resize: vertical; /* Permette solo la ridimensionabilità verticale */
 }
 
-body.scriviStoria button {
-    background-color: #007bff; /* Colore di sfondo blu per i pulsanti */
-    color: white; /* Colore del testo chiaro */
-    border: none; /* Nessun bordo */
-    padding: 10px 20px; /* Spazio interno */
-    border-radius: 4px; /* Bordo arrotondato */
-    cursor: pointer; /* Cambia il cursore quando si passa sopra */
-    font-size: 16px; /* Dimensione del testo */
-    margin-right: 10px; /* Spazio tra i pulsanti */
-}
-
-body.visualizzaStoria button {
+body.scriviStoria button, body.visualizzaStoria button {
     background-color: #007bff; /* Colore di sfondo blu per i pulsanti */
     color: white; /* Colore del testo chiaro */
     border: none; /* Nessun bordo */
@@ -378,21 +410,4 @@ body.scriviStoria button:hover {
 
 .back-button:hover {
     background-color: #025cbd; /* Scurisci il blu al passaggio del mouse */
-}
-
-/* Header */
-header {
-    background: #333; /* Colore di sfondo dell'intestazione scuro */
-    color: #fff; /* Colore del testo chiaro */
-    padding: 10px 20px; /* Spazio interno */
-    text-align: center;
-    position: relative;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 1.5em;
-    flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
-    text-align: center; /* Centra il titolo */
-    color: white;  /* Assicurati che il colore del titolo sia bianco */
 }
