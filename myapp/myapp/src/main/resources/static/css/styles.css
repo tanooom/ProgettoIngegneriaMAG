@@ -252,6 +252,7 @@ body.scriviStoria button:hover {
     padding: 20px; /* Spazio interno */
     margin: 20px auto; /* Margine superiore/inferiore e centramento orizzontale */
     max-width: 80%; /* Larghezza massima del contenitore */
+    margin-bottom: 5px;
 }
 
 /* Migliora l'aspetto dei campi del form all'interno di .scriviStoria */
