@@ -6,6 +6,7 @@ body {
     color: #333; /* Colore del testo scuro */
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 /* Intestazione */
@@ -30,7 +31,7 @@ header {
     margin-top: -20px;
 }
 
-.scriviStoria header h1, .visualizzaStoria header h1 {
+.scriviStoria header h1, .visualizzaStoria header h1, .profilo header h1, .giocaStoria header h1 {
     margin: 0;
     font-size: 1.5em;
     flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
@@ -177,7 +178,7 @@ h2 {
     margin-left: -20px;
 }
 
-.visualizzaStoria footer {
+.visualizzaStoria footer, .profilo footer, .giocaStoria footer  {
     background: #333; /* Colore di sfondo del footer scuro */
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
@@ -187,7 +188,7 @@ h2 {
     bottom: 0;
 }
 
-.scriviStoria footer {
+.scriviStoria footer{
     background: #333; /* Colore di sfondo del footer scuro */
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
@@ -228,7 +229,7 @@ body.scriviStoria textarea {
     resize: vertical; /* Permette solo la ridimensionabilità verticale */
 }
 
-body.scriviStoria button, body.visualizzaStoria button {
+body.scriviStoria button, body.visualizzaStoria button, body.profilo button, body.giocaStoria button {
     background-color: #007bff; /* Colore di sfondo blu per i pulsanti */
     color: white; /* Colore del testo chiaro */
     border: none; /* Nessun bordo */
@@ -307,6 +308,22 @@ body.scriviStoria button:hover {
 
 .scriviStoria #save-button{
     margin-left: 150px;
+    margin-top: -10px;
+}
+
+#delete-account-button {
+    background: none; /* Rimuovi il colore di sfondo */
+    color: #f44336; /* Colore rosso per indicare attenzione */
+    border: none; /* Rimuovi i bordi */
+    padding: 0; /* Rimuovi padding */
+    font-size: 16px; /* Dimensione del testo */
+    text-decoration: underline; /* Sottolinea il testo */
+    cursor: pointer; /* Cambia il puntatore a "mano" */
+}
+
+/* Aggiungi un effetto hover */
+#delete-account-button:hover {
+    color: #d32f2f; /* Colore più scuro al passaggio del mouse */
 }
 
 /* Adattamento per schermi piccoli */
@@ -401,6 +418,7 @@ body.scriviStoria button:hover {
     cursor: pointer;           /* Cambia il cursore quando si passa sopra */
     padding: 10px;             /* Spazio interno per il pulsante */
     border-radius: 4px;        /* Bordo arrotondato */
+    gap: 5px;
 }
 
 .back-button img {

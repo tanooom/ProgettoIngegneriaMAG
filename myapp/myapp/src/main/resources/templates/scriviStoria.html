@@ -9,7 +9,7 @@
 <body class="scriviStoria">
     <header>
         <div class="header-content">
-            <button class="back-button" onclick="window.location.href='home'">
+            <button class="back-button" onclick="confermaTornaIndietro()">
                 <img src="/css/images/arrow.png" alt="Indietro">
                 <span class="back-text">Torna Indietro</span>
             </button>
@@ -40,7 +40,6 @@
 
     <div>
         <button id="save-button">Salva</button>
-        <!--<button onclick="history.back()">Torna Indietro</button>-->
     </div>
 
     <footer>
@@ -130,6 +129,13 @@
                 });
             });
         });
+
+        function confermaTornaIndietro() {
+            if (confirm("Assicurati di aver salvato la storia prima di tornare indietro, altrimenti tutti i dati andranno persi!")) {
+                window.location.href = '/home';
+            }
+        }
+
     </script>
     
 </body>

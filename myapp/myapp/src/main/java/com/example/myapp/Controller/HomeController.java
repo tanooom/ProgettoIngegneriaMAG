@@ -45,4 +45,14 @@ public class HomeController {
     public String scriviStoria() {
         return "scriviStoria";
     }
+
+    @GetMapping("/profilo")
+    public String profilo() {
+        return "profilo";
+    }
+
+    @GetMapping("/giocaStoria")
+    public String giocaStoria() {
+        return "giocaStoria";
+    }
 }

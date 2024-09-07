@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il mio profilo</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="profilo">
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="window.location.href='home'">
+                <img src="/css/images/arrow.png" alt="Indietro">
+                <span class="back-text">Torna Indietro</span>
+            </button>
+            <h1>Il mio profilo</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <form>
+            <div class="profile-field">
+                <label>Nome: </label>
+                <input type="text" name="nome" value="${user.nome}" readonly>
+            </div>
+            <div class="profile-field">
+                <label>Cognome: </label>
+                <input type="text" name="cognome" value="${user.cognome}" readonly>
+            </div>
+            <div class="profile-field">
+                <label>Email: </label>
+                <input type="email" name="mail" value="${user.mail}" readonly>
+            </div>
+            <div class="profile-field">
+                <label>Username: </label>
+                <input type="text" name="username" value="${user.username}" readonly>
+            </div>
+            <div class="profile-field">
+                <label>Password: </label>
+                <input type="password" name="password" value="********" readonly>
+            </div>
+            <div>
+                <button type="button" id="delete-account-button" onclick="confermaEliminaAccount()">Elimina Account</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
+    <!-- Script per conferma eliminazione account -->
+    <script>
+        function confermaEliminaAccount() {
+            if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
+                window.location.href = '/deleteAccount';
+            }
+        }
+    </script>
+
+</body>
+</html>
