@@ -149,13 +149,21 @@ public class MapDBService {
     }
 
     // Metodo per esportare i dati in un file JSON
-    public void exportToJson(String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+public void exportToJson(String filePath) throws IOException {
+    ObjectMapper objectMapper = new ObjectMapper();
 
-        // Esporta la mappa delle storie
-        Map<Integer, Storia> storieData = new HashMap<>(storyMap);
-        objectMapper.writeValue(new File(filePath), storieData);
-    }
+    // Crea una mappa per tutti i dati
+    Map<String, Object> allData = new HashMap<>();
+    allData.put("storyMap", new HashMap<>(storyMap));
+    allData.put("userMap", new HashMap<>(userMap));
+    allData.put("scenarioMap", new HashMap<>(scenarioMap));
+    allData.put("inventoryMap", new HashMap<>(inventoryMap));
+    allData.put("optionMap", new HashMap<>(optionMap));
+    allData.put("matchMap", new HashMap<>(matchMap));
+
+    // Scrivi i dati nel file JSON
+    objectMapper.writeValue(new File(filePath), allData);
+}
 
     // Metodo per importare i dati da un file JSON
     public void importFromJson(String filePath) throws IOException {
@@ -171,4 +179,5 @@ public class MapDBService {
     public void cleanup() {
         db.close();
     }
+    
 }

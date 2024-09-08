@@ -24,9 +24,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
                 // TODO: da togliere i commenti e da eliminare quello temporaneo dopo aver sistemato login e registrazione
-                //.requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**", "/registrationSuccess").permitAll()
+                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**", "/registrationSuccess").permitAll()
                 //.anyRequest().authenticated()
                 .anyRequest().permitAll() // TEMPORANEO -> Permette l'accesso a tutte le richieste senza autenticazione
 
@@ -53,4 +54,5 @@ public class SecurityConfig {
         
         return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
     }
+    
 }

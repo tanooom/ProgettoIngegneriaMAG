@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.myapp.Model.Gioco;
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Service.MapDBService;
-
 
 @RestController
 @RequestMapping("/mapdb")
@@ -25,10 +25,10 @@ public class MapDBController {
 
     // Endpoint per gestire gli utenti
     @PostMapping("/putUser")
-    public String putUser(@RequestParam String key, @RequestParam String value) {
-        mapDBService.putUser(key, value);
-        return "Utente aggiunto con successo!";
-    }
+public RedirectView putUser(@RequestParam String key, @RequestParam String value) {
+    mapDBService.putUser(key, value);
+    return new RedirectView("/registrationSuccess");
+}
 
     @GetMapping("/getUser")
     public String getUser(@RequestParam String key) {
@@ -129,6 +129,11 @@ public class MapDBController {
         } catch (IOException e) {
             return "Errore durante l'importazione dei dati: " + e.getMessage();
         }
+    }
+
+    @GetMapping("/registrationSuccess")
+    public String registrationSuccess() {
+        return "registrationSuccess";
     }
 }
 

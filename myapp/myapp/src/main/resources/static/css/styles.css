@@ -167,7 +167,7 @@ h2 {
 }
 
 /* Footer */
-.home footer {
+.home footer, .register footer, .login footer {
     background: #333; /* Colore di sfondo del footer scuro */
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
@@ -178,7 +178,7 @@ h2 {
     margin-left: -20px;
 }
 
-.visualizzaStoria footer, .profilo footer, .giocaStoria footer  {
+.visualizzaStoria footer, .profilo footer, .giocaStoria footer, .registrationSuccess footer{
     background: #333; /* Colore di sfondo del footer scuro */
     color: #fff; /* Colore del testo chiaro */
     text-align: center;
