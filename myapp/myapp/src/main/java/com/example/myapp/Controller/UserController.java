@@ -26,6 +26,11 @@ public class UserController {
         model.addAttribute("user", new Utente());
         return "register";
     }
+    
+    @GetMapping("/registrationSuccess")
+    public String registrationSuccess() {
+        return "registrationSuccess"; // Nome del file registrationSuccess.html
+    }
 
     // Gestisce la registrazione dell'utente
     @PostMapping("/user/register")
@@ -53,18 +58,13 @@ public class UserController {
             model.addAttribute("username", username);
 
             // Reindirizza a registrationSuccess.html
-            return "registrationSuccess";
+            return "redirect:/registrationSuccess";  // Usa redirect per reindirizzare
 
         } catch (Exception e) {
             // Gestisce eventuali eccezioni durante la registrazione
             model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
             return "register"; // Torna al modulo di registrazione con un messaggio di errore
         }
-    }
-
-    @GetMapping("/registrationSuccess")
-    public String registrationSuccess() {
-        return "registrationSuccess"; // Nome del file registrationSuccess.html
     }
 
     // Classe di eccezione personalizzata per la gestione delle risorse non trovate

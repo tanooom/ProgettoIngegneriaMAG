@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
+//import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.myapp.Model.Gioco;
 import com.example.myapp.Model.Opzione;
@@ -24,11 +24,11 @@ public class MapDBController {
     private MapDBService mapDBService;
 
     // Endpoint per gestire gli utenti
-    @PostMapping("/putUser")
-public RedirectView putUser(@RequestParam String key, @RequestParam String value) {
-    mapDBService.putUser(key, value);
-    return new RedirectView("/registrationSuccess");
-}
+    /*@PostMapping("/putUser")
+        public RedirectView putUser(@RequestParam String key, @RequestParam String value) {
+        mapDBService.putUser(key, value);
+        return new RedirectView("/registrationSuccess");
+    }*/
 
     @GetMapping("/getUser")
     public String getUser(@RequestParam String key) {

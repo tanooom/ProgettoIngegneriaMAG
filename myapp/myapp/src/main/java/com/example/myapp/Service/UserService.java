@@ -40,20 +40,33 @@ public class UserService implements UserDetailsService {
 
     // Metodo per registrare un utente in MapDB
     public Utente register(Utente user) {
-        // Codifica della password
+        // Controlla se l'utente esiste in MapDB
+        if (userMap.containsKey(user.getUsername())) {
+            throw new IllegalArgumentException("L'utente con questo username esiste già in MapDB.");
+        }
+    
+        // Controlla se l'utente esiste nel database relazionale
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            throw new IllegalArgumentException("L'utente con questo username esiste già nel database.");
+        }
+    
+        // Codifica la password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+    
         try {
-            // Salva utente in MapDB
+            // Salva l'utente in MapDB
             userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
                     user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
-            // Salva utente in JPA [opzionale, se vuoi persistenza nel database relazionale]
+    
+            // Salva l'utente nel database relazionale
             return userRepository.save(user);
         } catch (Exception e) {
-            // Gestisci l'eccezione (puoi anche loggare qui)
+            // Gestisci eventuali eccezioni
             throw new RuntimeException("Errore durante la registrazione dell'utente", e);
         }
     }
+    
+    
 
     public String getEncodedPassword(String username) {
         Utente user = getUser(username);
