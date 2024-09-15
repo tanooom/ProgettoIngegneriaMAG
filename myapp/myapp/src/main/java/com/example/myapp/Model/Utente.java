@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +19,6 @@ import jakarta.persistence.Id;
 public class Utente implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Aggiunta della chiave primaria
 
     @Column(name = "username", nullable = false, unique = true)
