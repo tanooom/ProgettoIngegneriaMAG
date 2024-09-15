@@ -1,0 +1,109 @@
+/* Stili generali */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Intestazione */
+header {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    color: white;
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+/* Container per il modulo */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;              
+    justify-content: center;   
+    align-items: center;        
+    flex-direction: row; 
+    gap: 10px;
+    padding: 20px; 
+}
+
+/* Moduli */
+form {
+    background: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box; 
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="submit"] {
+    width: calc(100% - 10px); 
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+form input[type="submit"] {
+    background: #007bff; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: #025cbd; 
+}
+
+/* Registrazione */
+.registration-info {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.registration-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive per schermi piccoli */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+}

@@ -1,0 +1,192 @@
+/* Generale */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Intestazione */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    margin-right: 180px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+/* Contenuto principale */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px;
+}
+
+/* Pulsanti */
+body button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+body button:hover {
+    background-color: #025cbd;
+}
+
+/* Search container */
+.search-container {
+    display: flex;
+    padding: 20px;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.search-container input[type="text"],
+.search-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    flex-grow: 1;
+    width: auto;
+}
+
+.search-button {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.search-button:hover {
+    background-color: #025cbd;
+}
+
+/* Stile per le storie */
+.storia-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.storia-box h2 {
+    margin: 0 0 10px 0;
+}
+
+.storia-box p {
+    margin: 0 0 10px 0;
+}
+
+.storia-box button {
+    align-self: flex-start;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Pulsante di ritorno */
+.back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    gap: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.back-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.back-button:hover {
+    background-color: #025cbd;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 600px) {
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container input[type="text"],
+    .search-container select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+}

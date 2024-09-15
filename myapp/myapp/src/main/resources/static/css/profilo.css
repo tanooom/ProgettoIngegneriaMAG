@@ -1,0 +1,161 @@
+/* Generale */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Intestazione */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+
+.header-content {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    margin-right: 180px;
+}
+
+/* Contenuto principale */
+.container {
+    width: 60%;
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;             
+    justify-content: center;    
+    align-items: center;       
+    flex-direction: column;    
+    padding: 20px;
+    background-color: #fff;    
+    border-radius: 8px;     
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+form {
+    width: 90%;
+    box-sizing: border-box;
+}
+
+/* Campi profilo */
+.profile-field {
+    margin-bottom: 10px;
+    width: 100%;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.profile-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile-field input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Contenitore per i pulsanti */
+.button-container {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 20px;
+    width: 100%; 
+}
+
+/* Stile pulsanti */
+#logout-button,
+#delete-account-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 48%; 
+    text-align: center;
+}
+
+#logout-button:hover,
+#delete-account-button:hover {
+    background-color: #025cbd; 
+}
+
+#delete-account-button {
+    background-color: #f44336; 
+}
+
+#delete-account-button:hover {
+    background-color: #d32f2f; 
+}
+
+/* Pulsante di ritorno */
+.back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; 
+    border: none;    
+    cursor: pointer;     
+    padding: 10px;   
+    border-radius: 4px; 
+    gap: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.back-button img {
+    width: 24px;  
+    height: 24px; 
+}
+
+.back-button:hover {
+    background-color: #025cbd; 
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff; 
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;           
+        padding: 15px;
+    }
+
+    form {
+        max-width: 100%;  
+    }
+}
