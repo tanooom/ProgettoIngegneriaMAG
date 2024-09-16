@@ -37,8 +37,6 @@
             <div id="scenario-container"></div>
         </div>
     </main>
-
-    <!-- TODO: Mettere pulsante per salvare lo scenario aggiunto o eliminare lo scenario aggiunto -->
     <div>
         <button id="save-button">Salva</button>
     </div>
@@ -51,7 +49,7 @@
         document.getElementById('add-scenario-button').addEventListener('click', function() {
             const scenarioGroup = document.createElement('div');
             scenarioGroup.classList.add('scenario-group');
-    
+
             const scenarioHTML = `
                 <div>
                     <label for="nome-scenario">Nome Scenario:</label>
@@ -103,11 +101,13 @@
                         <!-- Qui verranno aggiunti gli scenari disponibili -->
                     </select>
                 </div>
+                <button type="button" class="save-button">Salva Scenario</button>
+                <button type="button" class="delete-button">Elimina Scenario</button>
             `;
-    
+
             scenarioGroup.innerHTML = scenarioHTML;
             document.getElementById('scenario-container').appendChild(scenarioGroup);
-    
+
             // Aggiungi listener per far apparire i campi aggiuntivi quando necessario
             scenarioGroup.querySelectorAll('input[name="richiede-indovinello"]').forEach(function(el) {
                 el.addEventListener('change', function() {
@@ -115,19 +115,122 @@
                     indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
                 });
             });
-    
+
             scenarioGroup.querySelectorAll('input[name="richiede-oggetto"]').forEach(function(el) {
                 el.addEventListener('change', function() {
                     const oggettoFields = scenarioGroup.querySelector('.oggetto-fields');
                     oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
                 });
             });
-    
+
             scenarioGroup.querySelectorAll('input[name="rilascia-oggetto"]').forEach(function(el) {
                 el.addEventListener('change', function() {
                     const rilasciaFields = scenarioGroup.querySelector('.rilascia-fields');
                     rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
                 });
+            });
+
+            // Listener per salvare lo scenario e passare alla visualizzazione ridotta
+            scenarioGroup.querySelector('.save-button').addEventListener('click', function() {
+                const nomeScenario = scenarioGroup.querySelector('input[name="nome-scenario"]').value;
+                const descrizioneScenario = scenarioGroup.querySelector('textarea[name="descrizione-scenario"]').value;
+                const richiedeIndovinello = scenarioGroup.querySelector('input[name="richiede-indovinello"]:checked') ? scenarioGroup.querySelector('input[name="richiede-indovinello"]:checked').value : 'no';
+                const indovinello = richiedeIndovinello === 'si' ? scenarioGroup.querySelector('textarea[name="scrivi-indovinello"]').value : 'Nessun indovinello';
+                const rispostaIndovinello = richiedeIndovinello === 'si' ? scenarioGroup.querySelector('input[name="scrivi-risposta-indovinello"]').value : '';
+                const richiedeOggetto = scenarioGroup.querySelector('input[name="richiede-oggetto"]:checked') ? scenarioGroup.querySelector('input[name="richiede-oggetto"]:checked').value : 'no';
+                const oggettoRichiesto = richiedeOggetto === 'si' ? scenarioGroup.querySelector('input[name="scrivi-oggetto"]').value : 'Nessun oggetto richiesto';
+                const rilasciaOggetto = scenarioGroup.querySelector('input[name="rilascia-oggetto"]:checked') ? scenarioGroup.querySelector('input[name="rilascia-oggetto"]:checked').value : 'no';
+                const oggettoRilasciato = rilasciaOggetto === 'si' ? scenarioGroup.querySelector('input[name="scrivi-rilascia-oggetto"]').value : 'Nessun oggetto rilasciato';
+                const scenarioPrecedente = scenarioGroup.querySelector('select[name="scegli-scenario-precedente"]').value || 'Nessuno';
+
+                // Crea il contenitore ridotto
+                const recapHTML = `
+                    <div class="small-container">
+                        <p><strong>Nome Scenario:</strong> ${nomeScenario}</p>
+                        <p><strong>Descrizione Scenario:</strong> ${descrizioneScenario}</p>
+                        <p><strong>Richiede Indovinello:</strong> ${richiedeIndovinello === 'si' ? 'Sì' : 'No'}</p>
+                        ${richiedeIndovinello === 'si' ? `<p><strong>Indovinello:</strong> ${indovinello}</p><p><strong>Risposta Indovinello:</strong> ${rispostaIndovinello}</p>` : ''}
+                        <p><strong>Richiede Oggetto:</strong> ${richiedeOggetto === 'si' ? 'Sì' : 'No'}</p>
+                        ${richiedeOggetto === 'si' ? `<p><strong>Oggetto Richiesto:</strong> ${oggettoRichiesto}</p>` : ''}
+                        <p><strong>Rilascia Oggetto:</strong> ${rilasciaOggetto === 'si' ? 'Sì' : 'No'}</p>
+                        ${rilasciaOggetto === 'si' ? `<p><strong>Oggetto Rilasciato:</strong> ${oggettoRilasciato}</p>` : ''}
+                        <p><strong>Scenario Precedente:</strong> ${scenarioPrecedente}</p>
+                        <div class="button-container">
+                            <button class="edit-button">Modifica</button>
+                            <button class="delete-button">Elimina Scenario</button>
+                        </div>
+                    </div>
+                `;
+
+                scenarioGroup.innerHTML = recapHTML;
+
+                // Listener per la modifica
+                scenarioGroup.querySelector('.edit-button').addEventListener('click', function() {
+                    scenarioGroup.innerHTML = scenarioHTML;
+
+                    // Riporta i dati nei campi del form
+                    scenarioGroup.querySelector('input[name="nome-scenario"]').value = nomeScenario;
+                    scenarioGroup.querySelector('textarea[name="descrizione-scenario"]').value = descrizioneScenario;
+                    scenarioGroup.querySelector(`input[name="richiede-indovinello"][value="${richiedeIndovinello}"]`).checked = true;
+                    if (richiedeIndovinello === 'si') {
+                        scenarioGroup.querySelector('textarea[name="scrivi-indovinello"]').value = indovinello;
+                        scenarioGroup.querySelector('input[name="scrivi-risposta-indovinello"]').value = rispostaIndovinello;
+                        scenarioGroup.querySelector('.indovinello-fields').style.display = 'block';
+                    }
+                    scenarioGroup.querySelector(`input[name="richiede-oggetto"][value="${richiedeOggetto}"]`).checked = true;
+                    if (richiedeOggetto === 'si') {
+                        scenarioGroup.querySelector('input[name="scrivi-oggetto"]').value = oggettoRichiesto;
+                        scenarioGroup.querySelector('.oggetto-fields').style.display = 'block';
+                    }
+                    scenarioGroup.querySelector(`input[name="rilascia-oggetto"][value="${rilasciaOggetto}"]`).checked = true;
+                    if (rilasciaOggetto === 'si') {
+                        scenarioGroup.querySelector('input[name="scrivi-rilascia-oggetto"]').value = oggettoRilasciato;
+                        scenarioGroup.querySelector('.rilascia-fields').style.display = 'block';
+                    }
+                    scenarioGroup.querySelector('select[name="scegli-scenario-precedente"]').value = scenarioPrecedente;
+                    
+                    // Riaggiungi i listener per i campi
+                    scenarioGroup.querySelectorAll('input[name="richiede-indovinello"]').forEach(function(el) {
+                        el.addEventListener('change', function() {
+                            const indovinelloFields = scenarioGroup.querySelector('.indovinello-fields');
+                            indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
+                        });
+                    });
+
+                    scenarioGroup.querySelectorAll('input[name="richiede-oggetto"]').forEach(function(el) {
+                        el.addEventListener('change', function() {
+                            const oggettoFields = scenarioGroup.querySelector('.oggetto-fields');
+                            oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
+                        });
+                    });
+
+                    scenarioGroup.querySelectorAll('input[name="rilascia-oggetto"]').forEach(function(el) {
+                        el.addEventListener('change', function() {
+                            const rilasciaFields = scenarioGroup.querySelector('.rilascia-fields');
+                            rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
+                        });
+                    });
+
+                    // Listener per salvare di nuovo
+                    scenarioGroup.querySelector('.save-button').addEventListener('click', function() {
+                        // Ripeti la logica del salvataggio
+                    });
+
+                    // Listener per eliminare lo scenario salvato
+                    scenarioGroup.querySelector('.delete-button').addEventListener('click', function() {
+                        scenarioGroup.remove();
+                    });
+                });
+
+                // Listener per eliminare lo scenario salvato
+                scenarioGroup.querySelector('.delete-button').addEventListener('click', function() {
+                    scenarioGroup.remove();
+                });
+            });
+
+            // Listener per eliminare lo scenario
+            scenarioGroup.querySelector('.delete-button').addEventListener('click', function() {
+                scenarioGroup.remove(); // Rimuove lo scenario
             });
         });
 
@@ -138,6 +241,5 @@
         }
 
     </script>
-    
 </body>
 </html>

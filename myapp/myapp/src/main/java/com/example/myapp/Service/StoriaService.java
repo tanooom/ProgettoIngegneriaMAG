@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.example.myapp.Model.Main;
 import com.example.myapp.Model.Storia;
 
 @Service
@@ -36,14 +35,11 @@ public class StoriaService {
 
     // Aggiungi questo metodo per recuperare storie dal database
     public Storia getStoriaById(int storiaId) {
-        /* TODO: Logica per recuperare una storia dal database o da una lista
+        // TODO: Logica per recuperare una storia dal database o da una lista
         return tutteLeStorie.stream()
             .filter(storia -> storia.getId() == storiaId) // Assicurati di avere un metodo getId()
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Storia non trovata per l'ID: " + storiaId));
-        */
-        // TEMPORANEO: Creazione MANUALE di una storia di esempio
-        return Main.creaStoria();
     }
 
     public List<Storia> getAllStorie() {
@@ -52,8 +48,7 @@ public class StoriaService {
 
         // Esempio di storie create manualmente
         List<Storia> storie = new ArrayList<>();
-        storie.add(Main.creaStoria());
-        // Aggiungi altre storie se necessario
+        //storie.add(Main.creaStoria());
 
         return storie;
     }

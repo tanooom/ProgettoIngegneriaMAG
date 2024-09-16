@@ -67,5 +67,4 @@ public class Storia{
     public String getTitolo(){
         return titolo;
     }
-
 }
