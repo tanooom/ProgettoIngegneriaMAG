@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.persistence.Column;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;

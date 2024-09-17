@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.myapp.Model.UserRepository;
+//import com.example.myapp.Model.UserRepository;
 import com.example.myapp.Model.Utente;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -17,15 +17,15 @@ public class UserService implements UserDetailsService {
 
     private final HTreeMap<String, String> userMap;
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    //private final UserRepository userRepository;
 
     // Aggiungi un contatore per gestire manualmente l'incremento degli ID
     private final AtomicLong userIdCounter = new AtomicLong(1); // Partenza da 1
 
-    public UserService(HTreeMap<String, String> userMap, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserService(HTreeMap<String, String> userMap, PasswordEncoder passwordEncoder /* , UserRepository userRepository*/) {
         this.userMap = userMap;
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+        //this.userRepository = userRepository;
     }
 
     // Metodo per ottenere tutte le informazioni dell'utente da MapDB
@@ -50,10 +50,10 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("L'utente con questo username esiste già in MapDB.");
         }
     
-        // Controlla se l'utente esiste nel database relazionale
+        /*// Controlla se l'utente esiste nel database relazionale
         if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new IllegalArgumentException("L'utente con questo username esiste già nel database.");
-        }
+        }*/
     
         // Imposta manualmente l'ID incrementale
         Long newId = userIdCounter.getAndIncrement();
@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
                     user.getId(), user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
     
              // Salva l'utente nel database relazionale
-            return userRepository.save(user);
+            return /*userRepository.save(*/user/* )*/;
         } catch (Exception e) {
             // Gestisci eventuali eccezioni
             throw new RuntimeException("Errore durante la registrazione dell'utente", e);
@@ -106,7 +106,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public void save(Utente user) {
+    /*public void save(Utente user) {
         userRepository.save(user); // Salva l'utente nel database
-    }
+    }*/
 }
