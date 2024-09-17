@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Success</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/registrationSuccess.css">
 </head>
 <body class="registrationSuccess">
     <header>
         <h1>Registrazione avvenuta con successo!</h1>
     </header>
     <div class="container">
-        <p>Grazie per esserti registrato, ${nome} ${cognome}! Ora puoi <a href="/login">accedere</a> al tuo account.</p>
+        <p class="access-info">Grazie per esserti registrato, ${nome} ${cognome}!<br>Ora puoi accedere al tuo account.</p>
+        <button type="button" class="button" onclick="window.location.href='/login'">Accedi</button>
     </div>
     <footer>
         <p>&copy; 2024 MyApp</p>

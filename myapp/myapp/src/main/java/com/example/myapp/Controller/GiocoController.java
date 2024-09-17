@@ -39,14 +39,11 @@ public class GiocoController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-
         Gioco gioco = giocoService.caricaGioco(storiaId, user);
-
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", gioco.getStoria().getTitolo());
         response.put("scenarioCorrente", gioco.getScenarioCorrente());
         response.put("inventario", gioco.getInventario());
-
         return response;
     }
 
@@ -55,7 +52,6 @@ public class GiocoController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        
         // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
         giocoService.faiScelta(storiaId, opzioneId, user);
     }

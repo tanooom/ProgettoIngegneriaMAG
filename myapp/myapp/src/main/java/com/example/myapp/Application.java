@@ -11,4 +11,5 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+	// COMANDO: curl "http://localhost:8080/mapdb/export?filePath=backup.json"
 }

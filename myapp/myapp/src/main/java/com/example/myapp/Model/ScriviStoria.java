@@ -7,11 +7,14 @@ package com.example.myapp.Model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.myapp.Service.MapDBService;
 
 
 public class ScriviStoria {
     
+    @Autowired
     private MapDBService mapDBService;
 
     private final Map<Integer, Storia> storie = new HashMap<>();
@@ -88,7 +91,4 @@ public class ScriviStoria {
     public void eliminaStoria(int storiaId) {
         storie.remove(storiaId);
     }
-
-
-
 }

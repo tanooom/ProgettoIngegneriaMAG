@@ -1,5 +1,7 @@
 package com.example.myapp.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -9,23 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myapp.Model.Utente;
-//import com.example.myapp.Service.AuthService;
 import com.example.myapp.Service.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserService userService;
-
     //@Autowired
     //private AuthService authService;
-
     @Autowired
     private PasswordEncoder passwordEncoder; // Aggiungi questa linea
 
@@ -52,7 +47,6 @@ public class UserController {
 
         // Codifica la password
         String encodedPassword = passwordEncoder.encode(password);
-
         // Crea un nuovo oggetto Utente con la password codificata
         Utente user = new Utente(username, encodedPassword, nome, cognome, mail);
 

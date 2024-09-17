@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il mio profilo</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/profilo.css">
 </head>
 
 <body class="profilo">
@@ -40,7 +40,8 @@
                 <label>Password: </label>
                 <input type="password" name="password" value="********" readonly>
             </div>
-            <div>
+            <div class="button-container"></div>
+                <button type="button" id="logout-button" onclick="window.location.href='/logout'">Logout</button>
                 <button type="button" id="delete-account-button" onclick="confermaEliminaAccount()">Elimina Account</button>
             </div>
         </form>
@@ -52,6 +53,7 @@
 
     <!-- Script per conferma eliminazione account -->
     <script>
+        //TODO: non funziona l'eliminazione
         function confermaEliminaAccount() {
             if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
                 window.location.href = '/deleteAccount';

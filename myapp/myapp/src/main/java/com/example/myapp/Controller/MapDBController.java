@@ -5,10 +5,10 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.myapp.Model.Gioco;
 import com.example.myapp.Model.Opzione;
@@ -33,6 +33,12 @@ public class MapDBController {
     @GetMapping("/getUser")
     public String getUser(@RequestParam String key) {
         return mapDBService.getUser(key);
+    }
+
+    @PostMapping("/saveStoria")
+    public String saveStoria(@RequestBody Storia storia) {
+        mapDBService.saveStory(storia);
+        return "Storia salvata con successo!";
     }
 
     public String putStory(@RequestParam int id, 
@@ -136,4 +142,3 @@ public class MapDBController {
         return "registrationSuccess";
     }
 }
-
