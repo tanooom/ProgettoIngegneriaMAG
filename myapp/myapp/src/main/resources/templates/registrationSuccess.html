@@ -11,7 +11,8 @@
         <h1>Registrazione avvenuta con successo!</h1>
     </header>
     <div class="container">
-        <p class="access-info">Grazie per esserti registrato, ${nome} ${cognome}!<br>Ora puoi accedere al tuo account.</p>
+        <p class="access-info">Grazie per esserti registrato/a, <span th:text="${nome} + ' ' + ${cognome}"></span>!
+            <br>Clicca qui per accedere al tuo account.</p>
         <button type="button" class="button" onclick="window.location.href='/login'">Accedi</button>
     </div>
     <footer>

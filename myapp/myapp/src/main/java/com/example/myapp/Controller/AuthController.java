@@ -1,4 +1,4 @@
-package com.example.myapp.Controller;
+/*package com.example.myapp.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,4 +46,4 @@ public class AuthController {
         System.out.println("Login failed for user: " + username);
         return "redirect:/login?error";
     }
-}
+}*/

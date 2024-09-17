@@ -45,31 +45,37 @@ public class UserController {
             @RequestParam String mail,
             Model model) {
 
-        // Codifica la password
-        String encodedPassword = passwordEncoder.encode(password);
-        // Crea un nuovo oggetto Utente con la password codificata
-        Utente user = new Utente(username, encodedPassword, nome, cognome, mail);
+            // Controlla se l'username esiste già nel database
+            if (userService.findByUsername(username) != null) {
+                model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");
+                    return "register"; // Torna alla pagina di registrazione con l'errore
+            }
 
-        try {
-            // Registra l'utente usando il metodo register
-            userService.register(user);
+            // Codifica la password
+            String encodedPassword = passwordEncoder.encode(password);
+            // Crea un nuovo oggetto Utente con la password codificata
+            Utente user = new Utente(username, encodedPassword, nome, cognome, mail);
 
-            // Autentica automaticamente l'utente dopo la registrazione
-            //authService.autoLogin(username, password);
+            try {
+                // Registra l'utente usando il metodo register
+                userService.register(user);
 
-            // Passa i dati per la visualizzazione nella pagina di successo
-            model.addAttribute("nome", nome);
-            model.addAttribute("cognome", cognome);
-            model.addAttribute("username", username);
+                // Autentica automaticamente l'utente dopo la registrazione
+                //authService.autoLogin(username, password);
 
-            // Reindirizza a registrationSuccess.html
-            return "redirect:/registrationSuccess";  // Usa redirect per reindirizzare
+                // Passa i dati per la visualizzazione nella pagina di successo
+                model.addAttribute("nome", nome);
+                model.addAttribute("cognome", cognome);
+                model.addAttribute("username", username);
 
-        } catch (Exception e) {
-            logger.error("Si è verificato un errore durante la registrazione", e);
-            model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
-            return "redirect:/login";
-        }
+                // Reindirizza a registrationSuccess.html
+                return "registrationSuccess";  // Usa redirect per reindirizzare
+
+            } catch (Exception e) {
+                logger.error("Si è verificato un errore durante la registrazione", e);
+                model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
+                return "login";
+            }
     }
 
     // Classe di eccezione personalizzata per la gestione delle risorse non trovate

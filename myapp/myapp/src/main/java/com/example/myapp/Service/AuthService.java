@@ -1,4 +1,4 @@
-package com.example.myapp.Service;
+/*package com.example.myapp.Service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,4 +20,4 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-}
+}*/
