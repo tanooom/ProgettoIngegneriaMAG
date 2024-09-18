@@ -169,9 +169,25 @@ public void exportToJson(String filePath) throws IOException {
     public void importFromJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Specifica il tipo con TypeReference
-        Map<Integer, Storia> importedData = objectMapper.readValue(new File(filePath), new TypeReference<Map<Integer, Storia>>() {});
-        storyMap.putAll(importedData); // Importiamo i dati nella mappa
+        // Leggi i dati dal file JSON come una mappa generale
+        Map<String, Object> allData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {});
+
+        // Usa TypeReference per deserializzare ogni singola mappa con il tipo corretto
+        Map<Integer, Storia> importedStories = objectMapper.convertValue(allData.get("storyMap"), new TypeReference<Map<Integer, Storia>>() {});
+        Map<String, String> importedUsers = objectMapper.convertValue(allData.get("userMap"), new TypeReference<Map<String, String>>() {});
+        Map<Integer, Scenario> importedScenarios = objectMapper.convertValue(allData.get("scenarioMap"), new TypeReference<Map<Integer, Scenario>>() {});
+        Map<String, String> importedInventory = objectMapper.convertValue(allData.get("inventoryMap"), new TypeReference<Map<String, String>>() {});
+        Map<Integer, Opzione> importedOptions = objectMapper.convertValue(allData.get("optionMap"), new TypeReference<Map<Integer, Opzione>>() {});
+        Map<Integer, Gioco> importedMatches = objectMapper.convertValue(allData.get("matchMap"), new TypeReference<Map<Integer, Gioco>>() {});
+
+        // Ripopola le mappe con i dati importati
+        storyMap.putAll(importedStories);
+        userMap.putAll(importedUsers);
+        scenarioMap.putAll(importedScenarios);
+        inventoryMap.putAll(importedInventory);
+        optionMap.putAll(importedOptions);
+        matchMap.putAll(importedMatches);
+        
         db.commit(); // Committiamo i dati al database
     }
 

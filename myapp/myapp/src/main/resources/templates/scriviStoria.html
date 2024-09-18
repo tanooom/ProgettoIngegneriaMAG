@@ -240,8 +240,29 @@
                 })
             };
 
-            console.log('Salvataggio della storia:', storie);
-            alert('Storia salvata nel console log!');
+            // Invia i dati al server tramite fetch POST
+            fetch('/api/storie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(storie)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Errore nel salvataggio della storia');
+                }
+            })
+            .then(data => {
+                console.log('Storia salvata con successo:', data);
+                alert('Storia salvata con successo!');
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore durante il salvataggio della storia.');
+            });
         });
     </script>
 </body>
