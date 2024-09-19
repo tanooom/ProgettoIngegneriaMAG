@@ -8,8 +8,7 @@
 </head>
 <body class="home">
     <header>
-        <h1>Benvenuto, ${user.nome} ${user.cognome}!</h1>
-    </header>
+        <h1 th:text="'Benvenuta/o, ' + ${nome} + ' ' + ${cognome} + '!'"></h1>    </header>
     <div class="container">
         <a href="/scriviStoria" class="button">Scrivi Storia</a>
         <a href="/visualizzaStoria" class="button">Gioca Storia</a>

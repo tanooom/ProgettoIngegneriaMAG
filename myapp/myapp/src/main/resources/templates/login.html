@@ -11,7 +11,12 @@
         <h1>Accedi!</h1>
     </header>
     <div class="container">
+
         <form action="/login" method="post">
+            <!-- Mostra il messaggio di errore se presente -->
+        <div th:if="${param.error}" class="error-message">
+            <p>Username o password non corretti</p>
+        </div>
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Accedi">

@@ -2,15 +2,17 @@ package com.example.myapp.Model;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-import com.example.myapp.Service.UserService;
+//import com.example.myapp.Service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +37,7 @@ public class SecurityConfig {
             .formLogin(login -> login
                 .loginPage("/login")
                 .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error")
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
@@ -45,6 +48,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new SimpleUrlAuthenticationFailureHandler("/login?error=true");
+    }
+
+    /*@Bean
     public AuthenticationManager authManager(HttpSecurity http, UserService userService) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 
             http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -53,6 +61,6 @@ public class SecurityConfig {
             .passwordEncoder(passwordEncoder());
         
         return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
-    }
+    }*/
     
 }

@@ -3,6 +3,9 @@ package com.example.myapp.Controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -126,7 +129,7 @@ public class MapDBController {
         }
     }
 
-    // Endpoint per importare i dati da JSON
+    /*// Endpoint per importare i dati da JSON
     @PostMapping("/import")
     public String importFromJson(@RequestParam String filePath) {
         try {
@@ -135,8 +138,30 @@ public class MapDBController {
         } catch (IOException e) {
             return "Errore durante l'importazione dei dati: " + e.getMessage();
         }
-    }
+    }*/
 
+    // Endpoint per eliminare un utente
+@DeleteMapping("/deleteUser")
+public ResponseEntity<String> deleteUser(@RequestParam String username) {
+    try {
+        mapDBService.deleteUser(username);
+        return ResponseEntity.ok("Utente eliminato con successo!");
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: " + e.getMessage());
+    }
+}
+
+    // Endpoint per eliminare tutti gli utenti
+    @DeleteMapping("/deleteAllUsers")
+    public String deleteAllUsers() {
+        try {
+            mapDBService.deleteAllUsers();
+            return "Tutti gli utenti sono stati rimossi con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione degli utenti: " + e.getMessage();
+        }
+    }
+    
     @GetMapping("/registrationSuccess")
     public String registrationSuccess() {
         return "registrationSuccess";

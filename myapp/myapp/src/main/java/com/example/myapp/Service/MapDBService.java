@@ -175,6 +175,27 @@ public void exportToJson(String filePath) throws IOException {
         db.commit(); // Committiamo i dati al database
     }
 
+    // Metodo per eliminare un utente per username
+    public void deleteUser(String username) {
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("L'username non può essere nullo o vuoto.");
+        }
+
+        // Rimuove l'utente dalla mappa
+        if (userMap.containsKey(username)) {
+            userMap.remove(username);
+            db.commit(); // Commit dei cambiamenti al database
+        } else {
+            throw new IllegalArgumentException("L'utente con username " + username + " non esiste.");
+        }
+    }
+
+    // Metodo per eliminare tutti gli utenti
+    public void deleteAllUsers() {
+        userMap.clear();  // Rimuove tutte le voci dalla mappa degli utenti
+        db.commit();      // Commit delle modifiche per renderle persistenti
+    }
+
     @PreDestroy
     public void cleanup() {
         db.close();

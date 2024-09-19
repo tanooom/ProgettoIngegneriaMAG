@@ -3,7 +3,6 @@ package com.example.myapp.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +18,6 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
-    //@Autowired
-    //private AuthService authService;
-    @Autowired
-    private PasswordEncoder passwordEncoder; // Aggiungi questa linea
 
     // Mostra il modulo di registrazione
     @GetMapping("/register")
@@ -45,37 +40,31 @@ public class UserController {
             @RequestParam String mail,
             Model model) {
 
-            // Controlla se l'username esiste già nel database
-            if (userService.findByUsername(username) != null) {
-                model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");
-                    return "register"; // Torna alla pagina di registrazione con l'errore
-            }
+        // Controlla se l'username esiste già nel database
+        if (userService.findByUsername(username) != null) {
+            model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");
+            return "register"; // Torna alla pagina di registrazione con l'errore
+        }
 
-            // Codifica la password
-            String encodedPassword = passwordEncoder.encode(password);
-            // Crea un nuovo oggetto Utente con la password codificata
-            Utente user = new Utente(username, encodedPassword, nome, cognome, mail);
+        try {
+            // Crea un nuovo oggetto Utente con la password in chiaro
+            Utente user = new Utente(username, password, nome, cognome, mail);
 
-            try {
-                // Registra l'utente usando il metodo register
-                userService.register(user);
+            // Registra l'utente usando il metodo register nel servizio
+            userService.register(user);
 
-                // Autentica automaticamente l'utente dopo la registrazione
-                //authService.autoLogin(username, password);
+            // Passa i dati per la visualizzazione nella pagina di successo
+            model.addAttribute("nome", nome);
+            model.addAttribute("cognome", cognome);
+            model.addAttribute("username", username);
 
-                // Passa i dati per la visualizzazione nella pagina di successo
-                model.addAttribute("nome", nome);
-                model.addAttribute("cognome", cognome);
-                model.addAttribute("username", username);
+            return "registrationSuccess";  // Usa redirect per reindirizzare
 
-                // Reindirizza a registrationSuccess.html
-                return "registrationSuccess";  // Usa redirect per reindirizzare
-
-            } catch (Exception e) {
-                logger.error("Si è verificato un errore durante la registrazione", e);
-                model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
-                return "login";
-            }
+        } catch (Exception e) {
+            logger.error("Si è verificato un errore durante la registrazione", e);
+            model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
+            return "register"; // Torna alla pagina di registrazione con l'errore
+        }
     }
 
     // Classe di eccezione personalizzata per la gestione delle risorse non trovate

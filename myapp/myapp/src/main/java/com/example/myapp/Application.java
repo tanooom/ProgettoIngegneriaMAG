@@ -12,4 +12,11 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 	// COMANDO: curl "http://localhost:8080/mapdb/export?filePath=backup.json"
+
+	// PER RIMUOVERE UN UTENTE: 
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/mapdb/deleteUser?username=andre2"
+
+	// PER RIMUOVERE TUTTI GLI UTENTI:
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/mapdb/deleteAllUsers"
+
 }

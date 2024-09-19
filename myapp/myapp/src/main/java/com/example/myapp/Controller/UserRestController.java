@@ -1,4 +1,4 @@
-package com.example.myapp.Controller;
+/*package com.example.myapp.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,4 +23,4 @@ public class UserRestController {
         }
         return user;
     }
-}
+}*/

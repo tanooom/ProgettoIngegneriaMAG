@@ -56,7 +56,7 @@ form {
     box-sizing: border-box;
 }
 
-/* Campi profilo */
+/* Campi del profilo */
 .profile-field {
     margin-bottom: 10px;
     width: 100%;
@@ -70,8 +70,9 @@ form {
     margin-bottom: 5px;
 }
 
-.profile-field input {
-    width: calc(100% - 20px);
+.profile-field input,
+.profile-field button {
+    width: 100%; /* Imposta la larghezza al 100% del contenitore */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -81,36 +82,39 @@ form {
 /* Contenitore per i pulsanti */
 .button-container {
     display: flex;
-    justify-content: space-between; 
+    flex-direction: column; /* Cambia la direzione dei pulsanti per adattarsi */
+    gap: 10px; /* Spazio tra i pulsanti */
     margin-top: 20px;
     width: 100%; 
 }
 
-/* Stile pulsanti */
-#logout-button,
-#delete-account-button {
+/* Stile pulsante Logout */
+#logout-button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
     font-size: 16px;
-    border-radius: 4px;
     cursor: pointer;
-    width: 48%; 
     text-align: center;
+    width: 100%; /* Imposta la larghezza al 100% del contenitore */
 }
 
-#logout-button:hover,
-#delete-account-button:hover {
-    background-color: #025cbd; 
+#logout-button:hover {
+    background-color: #025cbd;
 }
 
-#delete-account-button {
-    background-color: #f44336; 
+/* Link per eliminazione account */
+#delete-account-link {
+    display: inline-block; /* Mostra il link come un blocco inline per applicare padding */
+    color: red;
+    padding: 10px; /* Aggiungi padding per allineare il testo come i pulsanti */
+    text-align: left;
+    text-decoration: underline; /* Rimuove la sottolineatura */
+    width: 100%; /* Imposta la larghezza al 100% del contenitore */
 }
 
-#delete-account-button:hover {
-    background-color: #d32f2f; 
+#delete-account-link:hover {
+    color: rgb(225, 0, 0);
 }
 
 /* Pulsante di ritorno */

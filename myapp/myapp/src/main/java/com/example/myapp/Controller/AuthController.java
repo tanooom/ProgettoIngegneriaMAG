@@ -1,49 +1,28 @@
 /*package com.example.myapp.Controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.example.myapp.Model.Utente;
-import com.example.myapp.Service.AuthService;
-import com.example.myapp.Service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
 
-    private final UserService userService;
-    private final AuthService authService;
-
-    public AuthController(UserService userService, AuthService authService) {
-        this.userService = userService;
-        this.authService = authService;
+    /*@GetMapping("/login")
+    public String loginPage() {
+        // Mostra la pagina di login
+        return "login";
     }
 
-    @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password, 
-                           @RequestParam String nome, @RequestParam String cognome, 
-                           @RequestParam String mail) {
-        
-        // Crea un nuovo oggetto User
-        Utente user = new Utente(username, password, nome, cognome, mail);
-        
-        // Registra l'utente usando il metodo register
-        userService.register(user);
-
-        // Autentica automaticamente l'utente dopo la registrazione
-        authService.autoLogin(username, password);
-
-        return "redirect:/registrationSuccess";
-    }
-
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
-        String encodedPassword = userService.getEncodedPassword(username);
-        if (encodedPassword != null && userService.checkPassword(password, encodedPassword)) {
-            authService.autoLogin(username, password);
-            return "redirect:/home";
-        }
-        System.out.println("Login failed for user: " + username);
-        return "redirect:/login?error";
+        // Con Spring Security, non è necessario gestire l'autenticazione manualmente.
+        // Spring Security gestirà il processo di autenticazione e reindirizzamento
+        // quindi possiamo rimuovere la logica qui e lasciare che Spring Security faccia il suo lavoro.
+
+        // Se non si utilizza il login automatico o ulteriori logiche personalizzate,
+        // si può rimuovere completamente il metodo `login` dal controller.
+        
+        return "redirect:/login?error"; // Redirect per indicare che il login è fallito
     }
 }*/

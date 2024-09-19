@@ -19,30 +19,32 @@
     </header>
 
     <div class="container">
-        <form>
+        <form id="profile-form">
             <div class="profile-field">
                 <label>Nome: </label>
-                <input type="text" name="nome" value="${user.nome}" readonly>
+                <input type="text" name="nome" th:value="${user.nome}" readonly>
             </div>
             <div class="profile-field">
                 <label>Cognome: </label>
-                <input type="text" name="cognome" value="${user.cognome}" readonly>
+                <input type="text" name="cognome" th:value="${user.cognome}" readonly>
             </div>
             <div class="profile-field">
                 <label>Email: </label>
-                <input type="email" name="mail" value="${user.mail}" readonly>
+                <input type="email" name="mail" th:value="${user.mail}" readonly>
             </div>
             <div class="profile-field">
                 <label>Username: </label>
-                <input type="text" name="username" value="${user.username}" readonly>
+                <input type="text" name="username" th:value="${user.username}" readonly>
             </div>
             <div class="profile-field">
                 <label>Password: </label>
-                <input type="password" name="password" value="********" readonly>
+                <input type="password" name="password" th:value="'********'" readonly>
             </div>
-            <div class="button-container"></div>
+            <div class="profile-field">
+                <a href="#" id="delete-account-link" onclick="confermaEliminaAccount(); return false;">Elimina Account</a>
+            </div>
+            <div class="profile-field">
                 <button type="button" id="logout-button" onclick="window.location.href='/logout'">Logout</button>
-                <button type="button" id="delete-account-button" onclick="confermaEliminaAccount()">Elimina Account</button>
             </div>
         </form>
     </div>
@@ -53,13 +55,30 @@
 
     <!-- Script per conferma eliminazione account -->
     <script>
-        //TODO: non funziona l'eliminazione
         function confermaEliminaAccount() {
-            if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
-                window.location.href = '/deleteAccount';
+    if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
+        const username = document.querySelector('input[name="username"]').value; // Assicurati che l'elemento esista
+        fetch('/mapdb/deleteUser?username=' + encodeURIComponent(username), { // Usa il percorso corretto
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Errore durante l\'eliminazione dell\'account');
             }
-        }
-    </script>
+        })
+        .then(message => {
+            alert(message); // Mostra il messaggio di successo
+            window.location.href = '/login'; // Reindirizza alla pagina di login
+        })
+        .catch(error => {
+            console.error("Errore durante l'eliminazione dell'account:", error);
+            alert("Errore durante l'eliminazione dell'account.");
+        });
+    }
+}
 
+    </script>
 </body>
 </html>

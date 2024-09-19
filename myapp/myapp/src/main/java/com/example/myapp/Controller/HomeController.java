@@ -21,8 +21,24 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        model.addAttribute("user", user);  // Passa l'utente alla vista
+
+        if (user != null) {
+            model.addAttribute("user", user);  // Passa l'utente alla vista
+            model.addAttribute("nome", user.getNome());
+            model.addAttribute("cognome", user.getCognome());
+        }
         return "home"; // Restituisce home.html
+    }
+
+    @GetMapping("/profilo")
+    public String profilo(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+        if (user != null) {
+            model.addAttribute("user", user);  // Passa l'utente alla vista
+        }
+        return "profilo"; // Restituisce profilo.html
     }
 
     @GetMapping("/login")
@@ -46,10 +62,10 @@ public class HomeController {
         return "scriviStoria";
     }
 
-    @GetMapping("/profilo")
+    /*@GetMapping("/profilo")
     public String profilo() {
         return "profilo";
-    }
+    }*/
 
     @GetMapping("/giocaStoria")
     public String giocaStoria() {

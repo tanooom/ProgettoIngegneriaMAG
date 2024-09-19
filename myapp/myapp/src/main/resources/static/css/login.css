@@ -96,6 +96,10 @@ footer {
     bottom: 0;
 }
 
+.error-message{
+    color:red;
+}
+
 /* Responsive per schermi piccoli */
 @media (max-width: 600px) {
     .container {
