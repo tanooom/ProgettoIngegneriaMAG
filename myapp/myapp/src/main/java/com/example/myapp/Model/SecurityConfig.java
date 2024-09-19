@@ -28,10 +28,10 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                // TODO: da togliere i commenti e da eliminare quello temporaneo dopo aver sistemato login e registrazione
-                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**", "/registrationSuccess").permitAll()
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll() // TEMPORANEO -> Permette l'accesso a tutte le richieste senza autenticazione
+                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/mapdb/export", "/mapdb/deleteUser", "/mapdb/deleteAllUsers").permitAll()
+                .anyRequest().authenticated()
+                //.anyRequest().permitAll() // TEMPORANEO -> Permette l'accesso a tutte le richieste senza autenticazione
 
             )
             .formLogin(login -> login
