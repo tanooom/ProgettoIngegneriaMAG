@@ -243,6 +243,14 @@
             console.log('Salvataggio della storia:', storie);
             alert('Storia salvata nel console log!');
         });
+
+        function confermaTornaIndietro() {
+            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato la storia!");
+
+            if (conferma) {
+                window.location.href = 'home';
+            }
+        }
     </script>
 </body>
 </html>
