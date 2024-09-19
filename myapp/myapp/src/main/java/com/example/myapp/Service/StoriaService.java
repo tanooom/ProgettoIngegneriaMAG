@@ -14,6 +14,17 @@ public class StoriaService {
     // TODO: da popolare con le storie dal database
     private final List<Storia> tutteLeStorie = new ArrayList<>();
     
+    public Storia creaStoria(Storia storia) {
+        // Logica per assegnare un ID unico alla storia e salvarla nel database (es. MapDB)
+        storia.setId(tutteLeStorie.size() + 1);
+        tutteLeStorie.add(storia);
+        
+        // Eventuale logica per salvare su MapDB usando MapDBService
+        // mapDBService.saveStory(storia); 
+
+        return storia;
+    }
+    
     public List<Storia> getStorieDisponibili(String searchTerm, String username, String lunghezza, String stato) {
         return tutteLeStorie.stream()
             .filter(storia -> (searchTerm == null || storia.getTitolo().toLowerCase().contains(searchTerm.toLowerCase())))
