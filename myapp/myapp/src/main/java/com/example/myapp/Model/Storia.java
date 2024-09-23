@@ -18,7 +18,6 @@ public class Storia{
         this.scenarioIniziale = scenarioIniziale;
         this.finali = new ArrayList<>();
         this.scenari = new ArrayList<>();
-        this.scenari.add(scenarioIniziale); // Aggiungi direttamente lo scenario iniziale alla lista
         this.username = username;
         this.lunghezza = lunghezza;
         this.stato = stato;
@@ -67,4 +66,19 @@ public class Storia{
     public String getTitolo(){
         return titolo;
     }
+
+    @Override
+    public String toString() {
+        return "Storia{" +
+                "id=" + id +
+                ", titolo='" + titolo + '\'' +
+                ", scenarioIniziale=" + scenarioIniziale.toString() +
+                ", finali=" + finali.toString() +
+                ", scenari=" + scenari.toString() +
+                ", username='" + username + '\'' +
+                ", lunghezza=" + lunghezza +
+                ", stato='" + stato + '\'' +
+                '}';
+    }
+
 }

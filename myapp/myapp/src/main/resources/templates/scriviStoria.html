@@ -224,20 +224,40 @@
         document.getElementById('save-button').addEventListener('click', function() {
             const titolo = document.getElementById('titolo').value;
             const descrizione = document.getElementById('descrizione').value;
-            const scenarioIniziale = document.getElementById('scenario-iniziale').value;
+            const scenarioInizialeDescrizione = document.getElementById('scenario-iniziale').value;
+            const scenarioInizialeTitolo = "Scenario Iniziale";
+            const scenarioIniziale = {
+                nome: scenarioInizialeTitolo,
+                descrizione: scenarioInizialeDescrizione
+            }
+
+        // Raccogli gli scenari dinamici
+        const scenari = [];
+            document.querySelectorAll('.scenario-group').forEach(scenario => {
+            const scenarioId = 0;
+            const scenarioNome = scenario.querySelector('input[name="nome-scenario"]').value;
+            const scenarioDescrizione = scenario.querySelector('textarea[name="descrizione-scenario"]').value;
+            console.log(scenarioNome);
+            console.log(scenarioDescrizione);
+            
+            scenari.push({
+                id: scenarioId,
+                nome: scenarioNome,
+                descrizione: scenarioDescrizione,
+                opzioni: [],
+                oggettiRaccoglibili: [],
+                EntryScenari: [],
+                ExitScenari: []
+            });
+            });
+
+            console.log(scenari);
 
             const storie = {
                 titolo,
                 descrizione,
                 scenarioIniziale,
-                scenari: Array.from(document.querySelectorAll('.scenario-group')).map(group => {
-                    const summary = group.querySelector('.summary-scenario');
-                    return {
-                        nome: summary.querySelector('strong:contains("Nome Scenario") + p').textContent,
-                        descrizione: summary.querySelector('strong:contains("Descrizione Scenario") + p').textContent,
-                        // Aggiungi altre proprietà come richiesto
-                    };
-                })
+                scenari: scenari
             };
 
             // Invia i dati al server tramite fetch POST

@@ -27,7 +27,9 @@ public class StoriaController {
     public ResponseEntity<Storia> salvaStoria(@RequestBody Storia storia) {
         try {
             // Salva la storia utilizzando il servizio
+            System.out.println("questa è la storia:   " + storia.toString());
             Storia nuovaStoria = storiaService.creaStoria(storia);
+            System.out.println("questa è la NUOVA storia:   " +  nuovaStoria.toString());
             return ResponseEntity.ok(nuovaStoria);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null); // Errore generico
