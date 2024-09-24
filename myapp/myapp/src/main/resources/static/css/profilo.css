@@ -49,6 +49,8 @@ header h1 {
     border-radius: 8px;     
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    flex-grow: 1;
+    margin-bottom: 80px;
 }
 
 form {
@@ -73,7 +75,7 @@ form {
 .profile-field input,
 .profile-field button {
     width: 100%; /* Imposta la larghezza al 100% del contenitore */
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;

@@ -10,13 +10,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
-//import jakarta.persistence.Id;
+import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "utenti")
 public class Utente implements UserDetails {
 
-    //private Long id; // Aggiunta della chiave primaria - SERVE?
+    @Id
+    private Long id; // Aggiunta della chiave primaria
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -37,6 +38,10 @@ public class Utente implements UserDetails {
         this.nome = nome;
         this.cognome = cognome;
         this.mail = mail;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
