@@ -297,6 +297,11 @@ footer{
     margin-top: 20px; 
 }
 
+input[type="text"],
+textarea {
+    font-family: Arial, sans-serif;
+}
+
 /* Adattamento per schermi piccoli */
 @media (max-width: 600px) {
     .search-box {
