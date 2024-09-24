@@ -1,29 +1,26 @@
 package com.example.myapp.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Gioco {
+public class Partita {
     private final int id;
     private final Storia storia;
     private Scenario scenarioCorrente;
-    private final List<String> inventario;
+    private final Inventario inventario;
     private final String username; // Aggiunta per tenere traccia dell'utente
     private boolean inCorso; // Stato della partita (in corso o terminata)
 
     // Costruttore
-    public Gioco(int id, Storia storia, String username) {
+    public Partita(int id, Storia storia, String username) {
         this.id = id;
         this.storia = storia;
         this.scenarioCorrente = storia.getScenarioIniziale();
-        this.inventario = new ArrayList<>();
+        this.inventario = new Inventario(); // Inizializza un inventario vuoto
         this.username = username;
         this.inCorso = true; // La partita inizia in corso
     }
 
     // Metodo per fare una scelta
     public boolean faiScelta(Opzione opzione) {
-        if (opzione.isRichiedeOggetto() && !inventario.contains(opzione.getOggettoRichiesto())) {
+        if (opzione.isRichiedeOggetto() && !inventario.contieneOggetto(opzione.getOggettoRichiesto())) {
             return false; // L'utente non ha l'oggetto richiesto
         }
         this.scenarioCorrente = opzione.getScenarioSuccessivo();
@@ -32,7 +29,7 @@ public class Gioco {
 
     // Metodo per raccogliere un oggetto
     public void raccogliOggetto(String oggetto) {
-        this.inventario.add(oggetto);
+        this.inventario.aggiungiOggetto(oggetto);
     }
 
     // Getter
@@ -40,7 +37,7 @@ public class Gioco {
         return scenarioCorrente;
     }
 
-    public List<String> getInventario() {
+    public Inventario getInventario() {
         return inventario;
     }
 

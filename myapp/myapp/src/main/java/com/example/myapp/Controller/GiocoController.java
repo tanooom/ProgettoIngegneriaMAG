@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
 import com.example.myapp.Service.GiocoService;
@@ -39,7 +39,7 @@ public class GiocoController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        Gioco gioco = giocoService.caricaGioco(storiaId, user);
+        Partita gioco = giocoService.caricaGioco(storiaId, user);
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", gioco.getStoria().getTitolo());
         response.put("scenarioCorrente", gioco.getScenarioCorrente());

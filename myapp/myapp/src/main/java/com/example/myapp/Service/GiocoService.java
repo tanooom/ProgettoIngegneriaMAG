@@ -6,15 +6,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.example.myapp.Model.Gioco;
 import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
 
 @Service
 public class GiocoService {
 
-    private final Map<Integer, Gioco> giochiAttivi = new HashMap<>();
+    private final Map<Integer, Partita> giochiAttivi = new HashMap<>();
     private final StoriaService storiaService;
 
     // Costruttore
@@ -27,23 +27,23 @@ public class GiocoService {
         return storiaService.getStorieDisponibili(null, null, null, null);
     }
 
-    public Gioco caricaGioco(int storiaId, Utente user) {
-        // Controlla se esiste già un gioco attivo per questa storia
-        Gioco gioco = giochiAttivi.get(storiaId);
+    public Partita caricaGioco(int storiaId, Utente user) {
+        // Controlla se esiste già una partita attiva per questa storia
+        Partita gioco = giochiAttivi.get(storiaId);
         if (gioco == null) {
             // Recupera la storia dal controller
             Storia storia = storiaService.getStoriaById(storiaId);
             //TODO: fixare id
             int id = 0;
-            // Inizializza un nuovo gioco con la storia recuperata
-            gioco = new Gioco(id, storia, user.getUsername());
+            // Inizializza un nuovo partita con la storia recuperata
+            gioco = new Partita(id, storia, user.getUsername());
             giochiAttivi.put(storiaId, gioco);
         }
         return gioco;
     }
 
     public void terminaGioco(int storiaId) {
-        Gioco gioco = giochiAttivi.get(storiaId);
+        Partita gioco = giochiAttivi.get(storiaId);
         if (gioco != null) {
             gioco.terminaGioco();
             // Rimuovi la partita dalle partite attive
@@ -51,12 +51,12 @@ public class GiocoService {
         }
     }
 
-    public Gioco getGioco(int storiaId) {
+    public Partita getGioco(int storiaId) {
         return giochiAttivi.get(storiaId);
     }
 
     public void faiScelta(int storiaId, int opzioneId, Utente user) {
-        Gioco gioco = giochiAttivi.get(storiaId);
+        Partita gioco = giochiAttivi.get(storiaId);
         if (gioco != null) {
             Opzione opzione = gioco.getScenarioCorrente().getOpzioni().stream()
                 .filter(o -> o.getId() == opzioneId)

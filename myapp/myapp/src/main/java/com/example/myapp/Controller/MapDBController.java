@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.myapp.Model.Gioco;
+import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
@@ -96,13 +96,13 @@ public class MapDBController {
     // Endpoint per gestire le partite
     @PostMapping("/putMatch")
     public String putMatch(@RequestParam int id, @RequestParam Storia storia,  @RequestParam String username) {
-        Gioco gioco = new Gioco(id, storia, username);
+        Partita gioco = new Partita(id, storia, username);
         mapDBService.saveMatch(gioco);
         return "Gioco aggiunto con successo!";
     }
 
     @GetMapping("/getMatch")
-    public Gioco getMatch(@RequestParam int id) {
+    public Partita getMatch(@RequestParam int id) {
         return mapDBService.getMatchById(id);
     }
 

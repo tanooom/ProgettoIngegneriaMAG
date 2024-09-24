@@ -13,8 +13,8 @@ import org.mapdb.HTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.myapp.Model.Gioco;
 import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -32,7 +32,7 @@ public class MapDBService {
     private HTreeMap<Integer, Scenario> scenarioMap;   // Mappa per gli scenari
     private HTreeMap<String, String> inventoryMap;     // Mappa per l'inventario
     private HTreeMap<Integer, Opzione> optionMap;      // Mappa per le opzioni
-    private HTreeMap<Integer, Gioco> matchMap;       // Mappa per le partite
+    private HTreeMap<Integer, Partita> matchMap;       // Mappa per le partite
 
     @PostConstruct
     @SuppressWarnings("unchecked")
@@ -117,7 +117,7 @@ public class MapDBService {
     }
 
     // Metodo per salvare una partita
-    public void saveMatch(Gioco gioco) {
+    public void saveMatch(Partita gioco) {
         if (gioco.getId() == 0) {
             throw new IllegalArgumentException("Il gioco deve avere un ID valido.");
         }
@@ -126,7 +126,7 @@ public class MapDBService {
     }
 
     // Metodo per ottenere una partita per ID
-    public Gioco getMatchById(int id) {
+    public Partita getMatchById(int id) {
         return matchMap.get(id);
     }
 
@@ -178,7 +178,7 @@ public void exportToJson(String filePath) throws IOException {
         Map<Integer, Scenario> importedScenarios = objectMapper.convertValue(allData.get("scenarioMap"), new TypeReference<Map<Integer, Scenario>>() {});
         Map<String, String> importedInventory = objectMapper.convertValue(allData.get("inventoryMap"), new TypeReference<Map<String, String>>() {});
         Map<Integer, Opzione> importedOptions = objectMapper.convertValue(allData.get("optionMap"), new TypeReference<Map<Integer, Opzione>>() {});
-        Map<Integer, Gioco> importedMatches = objectMapper.convertValue(allData.get("matchMap"), new TypeReference<Map<Integer, Gioco>>() {});
+        Map<Integer, Partita> importedMatches = objectMapper.convertValue(allData.get("matchMap"), new TypeReference<Map<Integer, Partita>>() {});
 
         // Ripopola le mappe con i dati importati
         storyMap.putAll(importedStories);

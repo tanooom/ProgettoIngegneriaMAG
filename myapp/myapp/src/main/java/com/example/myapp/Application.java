@@ -18,5 +18,4 @@ public class Application {
 
 	// PER RIMUOVERE TUTTI GLI UTENTI:
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/mapdb/deleteAllUsers"
-
 }

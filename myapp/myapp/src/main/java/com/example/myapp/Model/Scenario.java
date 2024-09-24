@@ -9,8 +9,9 @@ public class Scenario {
     private final String descrizione;
     private final List<Opzione> opzioni;
     private final List<String> oggettiRaccoglibili;
-    private final List<Scenario> EntryScenari;
-    private final List<Scenario> ExitScenari;
+    private final List<Scenario> entryScenari;
+    private final List<Scenario> exitScenari;
+    private Storia storia; // Storia a cui appartiene lo scenario
 
     // Costruttore
     public Scenario(int id, String nome, String descrizione) {
@@ -19,11 +20,9 @@ public class Scenario {
         this.descrizione = descrizione;
         this.opzioni = new ArrayList<>();
         this.oggettiRaccoglibili = new ArrayList<>();
-        this.EntryScenari = new ArrayList<>();
-        this.ExitScenari = new ArrayList<>();
+        this.entryScenari = new ArrayList<>();
+        this.exitScenari = new ArrayList<>();
     }
-
-    // TODO: da aggiungere scenari precedenti e scenari successivi e la storia a cui appartiene
 
     // Metodi per aggiungere opzioni
     public void aggiungiOpzione(Opzione opzione) {
@@ -32,6 +31,20 @@ public class Scenario {
 
     public void aggiungiOggettoRaccoglibile(String oggetto) {
         this.oggettiRaccoglibili.add(oggetto);
+    }
+
+    // Aggiungi scenario precedente (EntryScenario)
+    public void aggiungiEntryScenario(Scenario scenarioPrecedente) {
+        if (!this.entryScenari.contains(scenarioPrecedente)) {
+            this.entryScenari.add(scenarioPrecedente);
+        }
+    }
+
+    // Aggiungi scenario successivo (ExitScenario)
+    public void aggiungiExitScenario(Scenario scenarioSuccessivo) {
+        if (!this.exitScenari.contains(scenarioSuccessivo)) {
+            this.exitScenari.add(scenarioSuccessivo);
+        }
     }
 
     // Getter
@@ -55,6 +68,22 @@ public class Scenario {
         return oggettiRaccoglibili;
     }
 
+    public Storia getStoria() {
+        return storia;
+    }
+
+    public List<Scenario> getEntryScenari() {
+        return entryScenari;
+    }
+
+    public List<Scenario> getExitScenari() {
+        return exitScenari;
+    }
+
+    public void setStoria(Storia storia) {
+        this.storia = storia;
+    }
+
     @Override
     public String toString() {
         return "Scenario{" +
@@ -63,8 +92,8 @@ public class Scenario {
                 ", descrizione='" + descrizione + '\'' +
                 ", opzioni=" + opzioni +
                 ", oggettiRaccoglibili=" + oggettiRaccoglibili +
-                ", EntryScenari=" + EntryScenari +
-                ", ExitScenari=" + ExitScenari +
+                ", EntryScenari=" + entryScenari +
+                ", ExitScenari=" + exitScenari +
                 '}';
     }
 }
