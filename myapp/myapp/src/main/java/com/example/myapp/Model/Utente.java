@@ -86,11 +86,9 @@ public class Utente implements UserDetails {
         this.mail = mail;
     }
 
-    // TODO: togliere se non servono i metodi qui sotto
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Restituisce un'autorità predefinita; puoi modificarlo in base alle tue esigenze
+        // Restituisce un'autorità predefinita
         return Collections.emptyList(); // Modifica qui se hai ruoli specifici
     }
 

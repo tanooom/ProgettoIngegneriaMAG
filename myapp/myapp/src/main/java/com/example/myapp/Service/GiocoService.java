@@ -67,9 +67,8 @@ public class GiocoService {
             throw new RuntimeException("Gioco non trovato per l'ID: " + storiaId);
         }
     }
-
-    /* TODO: serve questo metodo?
-    private Gioco inizializzaNuovoGioco(int storiaId, String username, int lunghezza, String stato) {
+    
+    /*private Gioco inizializzaNuovoGioco(int storiaId, String username, int lunghezza, String stato) {
         // TODO: modificare il caricamento della storia
         String titoloStoria = "Nome della Storia";
         int scenarioId = 1;

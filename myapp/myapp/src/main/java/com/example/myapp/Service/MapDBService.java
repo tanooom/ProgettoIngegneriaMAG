@@ -188,7 +188,7 @@ public void exportToJson(String filePath) throws IOException {
         optionMap.putAll(importedOptions);
         matchMap.putAll(importedMatches);
         
-        db.commit(); // Committiamo i dati al database
+        db.commit(); // Committa i dati al database
     }
 
     // Metodo per eliminare un utente per username

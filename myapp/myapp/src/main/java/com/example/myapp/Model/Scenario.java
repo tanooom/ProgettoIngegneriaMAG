@@ -80,10 +80,6 @@ public class Scenario {
         return exitScenari;
     }
 
-    public void setStoria(Storia storia) {
-        this.storia = storia;
-    }
-
     @Override
     public String toString() {
         return "Scenario{" +

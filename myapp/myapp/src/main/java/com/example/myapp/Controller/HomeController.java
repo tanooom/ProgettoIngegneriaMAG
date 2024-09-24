@@ -16,7 +16,7 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/home") // TODO: Qui potrebbe volerci solo "/"
+    @GetMapping("/home")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();

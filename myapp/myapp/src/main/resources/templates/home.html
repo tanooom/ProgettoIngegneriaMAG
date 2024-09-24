@@ -8,12 +8,24 @@
 </head>
 <body class="home">
     <header>
-        <h1 th:text="'Benvenuta/o, ' + ${nome} + ' ' + ${cognome} + '!'"></h1>    </header>
+        <h1 th:text="'Benvenuta/o, ' + ${nome} + ' ' + ${cognome} + '!'"></h1>    
+    </header>
+    
     <div class="container">
-        <a href="/scriviStoria" class="button">Scrivi Storia</a>
-        <a href="/visualizzaStoria" class="button">Gioca Storia</a>
-        <a href="/profilo" class="button">Profilo</a>
+        <a href="/scriviStoria" class="box">
+            <img src="/css/images/scrivi.png" alt="Scrivi Storia">
+            <span>SCRIVI UNA STORIA</span>
+        </a>
+        <a href="/visualizzaStoria" class="box">
+            <img src="/css/images/gioca.png" alt="Gioca Storia">
+            <span>GIOCA UNA STORIA</span>
+        </a>
+        <a href="/profilo" class="box">
+            <img src="/css/images/profilo.png" alt="Profilo">
+            <span>PROFILO</span>
+        </a>
     </div>
+
     <footer>
         <p>&copy; 2024 MyApp</p>
     </footer>
