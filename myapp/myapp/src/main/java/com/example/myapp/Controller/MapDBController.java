@@ -62,8 +62,8 @@ public class MapDBController {
 
     // Endpoint per gestire gli scenari
     @PostMapping("/putScenario")
-    public String putScenario(@RequestParam int id, @RequestParam String description) {
-        Scenario scenario = new Scenario(id, description);
+    public String putScenario(@RequestParam int id, @RequestParam String nome, @RequestParam String description) {
+        Scenario scenario = new Scenario(id, nome, description);
         mapDBService.saveScenario(scenario);
         return "Scenario aggiunto con successo!";
     }

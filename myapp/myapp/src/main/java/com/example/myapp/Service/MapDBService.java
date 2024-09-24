@@ -216,5 +216,4 @@ public void exportToJson(String filePath) throws IOException {
     public void cleanup() {
         db.close();
     }
-    
 }

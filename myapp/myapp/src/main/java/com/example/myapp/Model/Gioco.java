@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gioco {
-    private int id;
+    private final int id;
     private final Storia storia;
     private Scenario scenarioCorrente;
     private final List<String> inventario;

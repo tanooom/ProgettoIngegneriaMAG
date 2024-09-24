@@ -10,14 +10,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+//import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "utenti")
 public class Utente implements UserDetails {
 
-    @Id
-    private Long id; // Aggiunta della chiave primaria
+    //private Long id; // Aggiunta della chiave primaria - SERVE?
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;

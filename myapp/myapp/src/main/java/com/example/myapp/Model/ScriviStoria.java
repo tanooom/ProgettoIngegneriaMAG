@@ -1,16 +1,13 @@
 package com.example.myapp.Model;
 
-
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.myapp.Service.MapDBService;
-
 
 public class ScriviStoria {
     
@@ -52,7 +49,6 @@ public class ScriviStoria {
             throw new RuntimeException("Storia non trovata con ID: " + storiaId);
         }
     }
-
 
     public void aggiungiFinale(int storiaId, Scenario finale) {
         Storia storia = storie.get(storiaId);
