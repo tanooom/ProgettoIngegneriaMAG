@@ -3,7 +3,7 @@ package com.example.myapp.Model;
 public class Opzione {
     private final int id;
     private final String descrizione;
-    private final Scenario scenarioSuccessivo; //TODO: cambia con id
+    private final int scenarioSuccessivo;
     private final boolean richiedeOggetto;
     private final String oggettoRichiesto;
     private final boolean richiedeIndovinello;
@@ -11,12 +11,12 @@ public class Opzione {
     private final String rispostaCorrettaIndovinello;
 
     // Costruttore
-    public Opzione(String descrizione, Scenario scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, int id, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
+    public Opzione(String descrizione, int scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, int id, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
+        this.id = id;
         this.descrizione = descrizione;
         this.scenarioSuccessivo = scenarioSuccessivo;
         this.richiedeOggetto = richiedeOggetto;
         this.oggettoRichiesto = oggettoRichiesto;
-        this.id = id;
         this.indovinello = indovinello;
         this.richiedeIndovinello = richiedeIndovinello;
         this.rispostaCorrettaIndovinello = rispostaCorrettaIndovinello; // Inizializzazione della risposta corretta
@@ -27,7 +27,7 @@ public class Opzione {
         return descrizione;
     }
 
-    public Scenario getScenarioSuccessivo() {
+    public int getScenarioSuccessivo() {
         return scenarioSuccessivo;
     }
 
