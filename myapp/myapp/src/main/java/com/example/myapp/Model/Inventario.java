@@ -6,6 +6,8 @@ import java.util.List;
 public class Inventario {
 
     private final List<String> oggetti;
+    //TODO: aggiungi riferimento partita
+    //TODO: aggiungi id
 
     // Costruttore: inizializza un inventario vuoto
     public Inventario() {

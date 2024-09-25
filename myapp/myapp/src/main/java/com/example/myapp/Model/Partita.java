@@ -3,8 +3,8 @@ package com.example.myapp.Model;
 public class Partita {
     private final int id;
     private final Storia storia;
-    private Scenario scenarioCorrente;
-    private final Inventario inventario;
+    private Scenario scenarioCorrente; //TODO: cambia con id
+    private final Inventario inventario; //TODO: metere id inventario
     private final String username; // Aggiunta per tenere traccia dell'utente
     private boolean inCorso; // Stato della partita (in corso o terminata)
 

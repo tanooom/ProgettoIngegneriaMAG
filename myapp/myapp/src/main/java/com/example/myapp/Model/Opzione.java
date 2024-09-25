@@ -1,11 +1,11 @@
 package com.example.myapp.Model;
 
 public class Opzione {
+    private final int id;
     private final String descrizione;
-    private final Scenario scenarioSuccessivo;
+    private final Scenario scenarioSuccessivo; //TODO: cambia con id
     private final boolean richiedeOggetto;
     private final String oggettoRichiesto;
-    private final int id;
     private final boolean richiedeIndovinello;
     private final String indovinello;
     private final String rispostaCorrettaIndovinello;

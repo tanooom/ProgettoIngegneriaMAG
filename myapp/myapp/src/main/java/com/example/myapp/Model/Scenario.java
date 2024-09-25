@@ -7,11 +7,14 @@ public class Scenario {
     private final int id;
     private final String nome;
     private final String descrizione;
-    private final List<Opzione> opzioni;
+    private final List<Opzione> opzioni; //TODO: cambia con id
     private final List<String> oggettiRaccoglibili;
-    private final List<Scenario> entryScenari;
-    private final List<Scenario> exitScenari;
-    private Storia storia; // Storia a cui appartiene lo scenario
+    private final List<Scenario> entryScenari; //TODO: Scenario precedente DA FARE CON ID
+    private final List<Scenario> exitScenari; //TODO: Scenario successivo DA FARE CON ID
+    private Storia storia; //TODO: Storia a cui appartiene lo scenario DA FARE CON ID
+    //private final boolean scenarioIniziale=false;
+    //stessa cosa sopra per finali
+    //TODO: valore boolean true o false per scenario iniziale o finale
 
     // Costruttore
     public Scenario(int id, String nome, String descrizione) {
@@ -78,6 +81,10 @@ public class Scenario {
 
     public List<Scenario> getExitScenari() {
         return exitScenari;
+    }
+
+    public Boolean setScenarioIniziale(){
+        return true;
     }
 
     @Override

@@ -7,6 +7,8 @@ public class Storia{
     private int id;
     private final String titolo;
     private final Scenario scenarioIniziale;
+    //TODO: cambiare con un array di Id la lista di scenari
+    //TODO:togliere scenario inziale e finali
     private final List<Scenario> finali;
     private final List<Scenario> scenari;
     private final String username; // Username dello scrittore
