@@ -117,11 +117,11 @@ public class MapDBService {
     }
 
     // Metodo per salvare una partita
-    public void saveMatch(Partita gioco) {
-        if (gioco.getId() == 0) {
-            throw new IllegalArgumentException("Il gioco deve avere un ID valido.");
+    public void saveMatch(Partita partita) {
+        if (partita.getId() == 0) {
+            throw new IllegalArgumentException("La partita deve avere un ID valido.");
         }
-        matchMap.put(gioco.getId(), gioco);
+        matchMap.put(partita.getId(), partita);
         db.commit();
     }
 

@@ -70,7 +70,7 @@ public class GiocaStoria {
                 // Passa allo scenario successivo
                 scenarioCorrente = mapDBController.getScenarioById(opzioneScelta.getScenarioSuccessivo());
 
-                // Verifica se lo scenario corrente è un finale e termina il gioco
+                // Verifica se lo scenario corrente è un finale e termina la partita
                 if (scenarioCorrente != null && scenarioCorrente.isScenarioFinale()) {
                     System.out.println("Fine della storia! Hai raggiunto un finale.");
                     break;

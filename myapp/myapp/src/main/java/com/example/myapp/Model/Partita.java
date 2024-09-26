@@ -63,7 +63,7 @@ public class Partita {
         return inCorso; // Getter per ottenere lo stato della partita
     }
 
-    public void terminaGioco() {
+    public void terminaPartita() {
         this.inCorso = false; // Metodo per terminare la partita
     }
 }

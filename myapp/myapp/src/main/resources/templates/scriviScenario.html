@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrivi Storia</title>
+    <title>Aggiungi Scenario</title>
     <link rel="stylesheet" href="/css/scriviStoria.css">
 </head>
 <body class="scriviStoria">
@@ -13,284 +13,92 @@
                 <img src="/css/images/arrow.png" alt="Indietro">
                 <span class="back-text">Torna Indietro</span>
             </button>
-            <h1>Scrivi la tua storia</h1>
+            <h1>Aggiungi Scenario</h1>
         </div>
     </header>
 
     <main>
         <div class="form-container">
-            <div>
-                <label for="titolo">Titolo:</label>
-                <input type="text" id="titolo" name="titolo">
-            </div>
-            <div>
-                <label for="descrizione">Descrizione:</label>
-                <textarea id="descrizione" name="descrizione"></textarea>
-            </div>
-            <div>
-                <label for="scenario-iniziale">Scenario Iniziale:</label>
-                <textarea id="scenario-iniziale" name="scenario-iniziale"></textarea>
-            </div>
-            <div>
-                <button id="add-scenario-button">Aggiungi Scenario</button>
-            </div>
-            <div id="scenario-container"></div>
+            <!-- Form per l'invio dei dati -->
+            <form id="scenario-form" method="POST" action="/aggiungiOpzione">
+                <div>
+                    <label for="nome-scenario">Nome Scenario:</label>
+                    <input type="text" id="nome-scenario" name="nomeScenario" required>
+                </div>
+                <div>
+                    <label for="descrizione-scenario">Descrizione Scenario:</label>
+                    <textarea id="descrizione-scenario" name="descrizioneScenario" required></textarea>
+                </div>
+                <div>
+                    <label>Richiede Indovinello?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="richiedeIndovinello" value="si"> Sì</label>
+                        <label><input type="radio" name="richiedeIndovinello" value="no" checked> No</label>
+                    </div>
+                    <div class="indovinello-fields" style="display:none;">
+                        <label for="scrivi-indovinello">Scrivi indovinello:</label>
+                        <textarea id="scrivi-indovinello" name="indovinello"></textarea>
+                        <label for="scrivi-risposta-indovinello">Scrivi la risposta:</label>
+                        <input type="text" id="scrivi-risposta-indovinello" name="rispostaIndovinello">
+                    </div>
+                </div>
+                <div>
+                    <label>Richiede Oggetto?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="richiedeOggetto" value="si"> Sì</label>
+                        <label><input type="radio" name="richiedeOggetto" value="no" checked> No</label>
+                    </div>
+                    <div class="oggetto-fields" style="display:none;">
+                        <label for="scrivi-oggetto">Scrivi oggetto richiesto:</label>
+                        <input type="text" id="scrivi-oggetto" name="oggettoRichiesto">
+                    </div>
+                </div>
+                <div>
+                    <label>Rilascia Oggetto?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="rilasciaOggetto" value="si"> Sì</label>
+                        <label><input type="radio" name="rilasciaOggetto" value="no" checked> No</label>
+                    </div>
+                    <div class="rilascia-fields" style="display:none;">
+                        <label for="scrivi-rilascia-oggetto">Scrivi oggetto rilasciato:</label>
+                        <input type="text" id="scrivi-rilascia-oggetto" name="oggettoRilasciato">
+                    </div>
+                </div>
+                <button type="submit" id="save-scenario-button">Salva Scenario</button>
+            </form>
         </div>
     </main>
-    <div>
-        <button id="save-button">Salva</button>
-    </div>
 
     <footer>
         <p>&copy; 2024 MyApp</p>
     </footer>
 
     <script>
-        const scenarioNames = []; // Array to hold the names of added scenarios
-
-        document.getElementById('add-scenario-button').addEventListener('click', function() {
-            addScenario();
+        document.querySelectorAll('input[name="richiedeIndovinello"]').forEach(function(el) {
+            el.addEventListener('change', function() {
+                const indovinelloFields = document.querySelector('.indovinello-fields');
+                indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
+            });
         });
 
-        function addScenario() {
-            const scenarioGroup = document.createElement('div');
-            scenarioGroup.classList.add('scenario-group');
-            const previousScenariosOptions = scenarioNames.map(name => `<option value="${name}">${name}</option>`).join('');
-            
-            scenarioGroup.innerHTML = `
-                <div class="editable-scenario">
-                    <div>
-                        <label for="nome-scenario">Nome Scenario:</label>
-                        <input type="text" name="nome-scenario" required>
-                    </div>
-                    <div>
-                        <label for="descrizione-scenario">Descrizione Scenario:</label>
-                        <textarea name="descrizione-scenario" required></textarea>
-                    </div>
-                    <div>
-                        <label>Richiede Indovinello?</label>
-                        <div class="option-group">
-                            <label><input type="radio" name="richiede-indovinello" value="si"> Sì</label>
-                            <label><input type="radio" name="richiede-indovinello" value="no" checked> No</label>
-                        </div>
-                        <div class="indovinello-fields" style="display:none;">
-                            <label for="scrivi-indovinello">Scrivi indovinello:</label>
-                            <textarea name="scrivi-indovinello"></textarea>
-                            <label for="scrivi-risposta-indovinello">Scrivi la risposta:</label>
-                            <input type="text" name="scrivi-risposta-indovinello">
-                        </div>
-                    </div>
-                    <div>
-                        <label>Richiede Oggetto?</label>
-                        <div class="option-group">
-                            <label><input type="radio" name="richiede-oggetto" value="si"> Sì</label>
-                            <label><input type="radio" name="richiede-oggetto" value="no" checked> No</label>
-                        </div>
-                        <div class="oggetto-fields" style="display:none;">
-                            <label for="scrivi-oggetto">Scrivi oggetto richiesto:</label>
-                            <input type="text" name="scrivi-oggetto">
-                        </div>
-                    </div>
-                    <div>
-                        <label>Rilascia Oggetto?</label>
-                        <div class="option-group">
-                            <label><input type="radio" name="rilascia-oggetto" value="si"> Sì</label>
-                            <label><input type="radio" name="rilascia-oggetto" value="no" checked> No</label>
-                        </div>
-                        <div class="rilascia-fields" style="display:none;">
-                            <label for="scrivi-rilascia-oggetto">Scrivi oggetto rilasciato:</label>
-                            <input type="text" name="scrivi-rilascia-oggetto">
-                        </div>
-                        <div>
-                            <label for="scenario-precedente">Scenario Precedente:</label>
-                            <select name="scenario-precedente">
-                                <option value="">Nessuno</option>
-                                ${previousScenariosOptions}
-                            </select>
-                        </div>
-                    </div>
-                    <button type="button" class="save-button">Salva</button>
-                    <button type="button" class="delete-button">Elimina</button>
-                </div>
-                <div class="summary-scenario" style="display:none;"></div>
-            `;
-
-            document.getElementById('scenario-container').appendChild(scenarioGroup);
-
-            //TODO: cambiare scrivi scenario e scrivi storia
-            // Gestione della visibilità dei campi aggiuntivi
-            addRadioChangeListeners(scenarioGroup);
-
-            // Listener per salvare lo scenario
-            scenarioGroup.querySelector('.save-button').addEventListener('click', function() {
-                saveScenario(scenarioGroup);
+        document.querySelectorAll('input[name="richiedeOggetto"]').forEach(function(el) {
+            el.addEventListener('change', function() {
+                const oggettoFields = document.querySelector('.oggetto-fields');
+                oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
             });
+        });
 
-            // Listener per eliminare lo scenario
-            scenarioGroup.querySelector('.delete-button').addEventListener('click', function() {
-                scenarioGroup.remove();
-                updateScenarioNames();
-            });
-
-            // Update scenario names quando viene aggiunto un nuovo scenario
-            updateScenarioNames();
-        }
-
-        function addRadioChangeListeners(scenarioGroup) {
-            scenarioGroup.querySelectorAll('input[name="richiede-indovinello"]').forEach(function(el) {
-                el.addEventListener('change', function() {
-                    const indovinelloFields = scenarioGroup.querySelector('.indovinello-fields');
-                    indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
-                });
-            });
-
-            scenarioGroup.querySelectorAll('input[name="richiede-oggetto"]').forEach(function(el) {
-                el.addEventListener('change', function() {
-                    const oggettoFields = scenarioGroup.querySelector('.oggetto-fields');
-                    oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
-                });
-            });
-
-            scenarioGroup.querySelectorAll('input[name="rilascia-oggetto"]').forEach(function(el) {
-                el.addEventListener('change', function() {
-                    const rilasciaFields = scenarioGroup.querySelector('.rilascia-fields');
-                    rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
-                });
-            });
-        }
-
-        function saveScenario(scenarioGroup) {
-            const nomeScenario = scenarioGroup.querySelector('input[name="nome-scenario"]').value;
-            const descrizioneScenario = scenarioGroup.querySelector('textarea[name="descrizione-scenario"]').value;
-            const richiedeIndovinello = scenarioGroup.querySelector('input[name="richiede-indovinello"]:checked').value;
-            const indovinello = richiedeIndovinello === 'si' ? scenarioGroup.querySelector('textarea[name="scrivi-indovinello"]').value : 'Nessun indovinello';
-            const rispostaIndovinello = richiedeIndovinello === 'si' ? scenarioGroup.querySelector('input[name="scrivi-risposta-indovinello"]').value : '';
-            const richiedeOggetto = scenarioGroup.querySelector('input[name="richiede-oggetto"]:checked').value;
-            const oggettoRichiesto = richiedeOggetto === 'si' ? scenarioGroup.querySelector('input[name="scrivi-oggetto"]').value : 'Nessun oggetto richiesto';
-            const rilasciaOggetto = scenarioGroup.querySelector('input[name="rilascia-oggetto"]:checked').value;
-            const oggettoRilasciato = rilasciaOggetto === 'si' ? scenarioGroup.querySelector('input[name="scrivi-rilascia-oggetto"]').value : 'Nessun oggetto rilasciato';
-
-            const summaryHTML = `
-                <div class="small-container">
-                    <p><strong>Nome Scenario:</strong> ${nomeScenario}</p>
-                    <p><strong>Descrizione Scenario:</strong> ${descrizioneScenario}</p>
-                    <p><strong>Richiede Indovinello:</strong> ${richiedeIndovinello}</p>
-                    <p><strong>Indovinello:</strong> ${indovinello}</p>
-                    <p><strong>Risposta Indovinello:</strong> ${rispostaIndovinello}</p>
-                    <p><strong>Richiede Oggetto:</strong> ${richiedeOggetto}</p>
-                    <p><strong>Oggetto Richiesto:</strong> ${oggettoRichiesto}</p>
-                    <p><strong>Rilascia Oggetto:</strong> ${rilasciaOggetto}</p>
-                    <p><strong>Oggetto Rilasciato:</strong> ${oggettoRilasciato}</p>
-                </div>
-            `;
-
-            const summaryContainer = scenarioGroup.querySelector('.summary-scenario');
-            summaryContainer.innerHTML = summaryHTML;
-            summaryContainer.style.display = 'block';
-            scenarioGroup.querySelector('.editable-scenario').style.display = 'none';
-            
-            // Aggiungi i pulsanti di modifica ed eliminazione al riepilogo
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Modifica';
-            editButton.classList.add('edit-button');
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Elimina';
-            deleteButton.classList.add('delete-button');
-
-            summaryContainer.appendChild(editButton);
-            summaryContainer.appendChild(deleteButton);
-
-            // Listener per modificare lo scenario
-            editButton.addEventListener('click', function() {
-                summaryContainer.style.display = 'none';
-                scenarioGroup.querySelector('.editable-scenario').style.display = 'block';
-            });
-
-            // Listener per eliminare lo scenario
-            deleteButton.addEventListener('click', function() {
-                scenarioGroup.remove();
-            });
-
-            // Update scenario names for dropdowns
-            updateScenarioNames();
-        }
-
-        function updateScenarioNames() {
-            const addedScenarioNames = Array.from(document.querySelectorAll('.scenario-group .summary-scenario strong')).map(el => el.textContent);
-            scenarioNames.length = 0; // Clear the array
-            scenarioNames.push(...addedScenarioNames); // Update with new names
-        }
-
-        document.getElementById('save-button').addEventListener('click', function() {
-            const titolo = document.getElementById('titolo').value;
-            const descrizione = document.getElementById('descrizione').value;
-            const scenarioInizialeDescrizione = document.getElementById('scenario-iniziale').value;
-            const scenarioInizialeTitolo = "Scenario Iniziale";
-            const scenarioIniziale = {
-                nome: scenarioInizialeTitolo,
-                descrizione: scenarioInizialeDescrizione
-                //scenarioInziale: true;
-            }
-
-        // Raccogli gli scenari dinamici
-        const scenari = [];
-            document.querySelectorAll('.scenario-group').forEach(scenario => {
-            const scenarioId = 0;
-            const scenarioNome = scenario.querySelector('input[name="nome-scenario"]').value;
-            const scenarioDescrizione = scenario.querySelector('textarea[name="descrizione-scenario"]').value;
-            console.log(scenarioNome);
-            console.log(scenarioDescrizione);
-            
-            scenari.push({
-                id: scenarioId,
-                nome: scenarioNome,
-                descrizione: scenarioDescrizione,
-                opzioni: [],
-                oggettiRaccoglibili: [],
-                EntryScenari: [],
-                ExitScenari: []
-            });
-            });
-
-            console.log(scenari);
-
-            const storie = {
-                titolo,
-                descrizione,
-                scenarioIniziale,
-                scenari: scenari
-            };
-
-            // Invia i dati al server tramite fetch POST
-            fetch('/api/storie', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(storie)
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Errore nel salvataggio della storia');
-                }
-            })
-            .then(data => {
-                console.log('Storia salvata con successo:', data);
-                alert('Storia salvata con successo!');
-            })
-            .catch(error => {
-                console.error('Errore:', error);
-                alert('Si è verificato un errore durante il salvataggio della storia.');
+        document.querySelectorAll('input[name="rilasciaOggetto"]').forEach(function(el) {
+            el.addEventListener('change', function() {
+                const rilasciaFields = document.querySelector('.rilascia-fields');
+                rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
             });
         });
 
         function confermaTornaIndietro() {
-            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato la storia!");
+            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato lo scenario!");
             if (conferma) {
-                window.location.href = 'home';
+                window.location.href = 'scriviStoria'; // Reindirizza alla pagina di scriviStoria
             }
         }
     </script>

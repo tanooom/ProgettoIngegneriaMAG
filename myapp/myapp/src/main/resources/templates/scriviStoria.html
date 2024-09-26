@@ -32,7 +32,7 @@
                 <textarea id="scenario-iniziale" name="scenario-iniziale"></textarea>
             </div>
             <div>
-                <button id="add-scenario-button">Aggiungi Scenario</button>
+                <button id="add-scenario-button" onclick="window.location.href='scriviScenario'">Aggiungi Scenario</button>
             </div>
             <div id="scenario-container"></div>
         </div>
@@ -55,7 +55,7 @@
         function addScenario() {
             const scenarioGroup = document.createElement('div');
             scenarioGroup.classList.add('scenario-group');
-            const previousScenariosOptions = scenarioNames.map(name => `<option value="${name}">${name}</option>`).join('');
+            const previousScenariosOptions = scenarioNames.map(name => <option value="${name}">${name}</option>).join('');
             
             scenarioGroup.innerHTML = `
                 <div class="editable-scenario">

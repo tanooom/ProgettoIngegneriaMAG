@@ -27,8 +27,6 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/mapdb/export", "/mapdb/deleteUser", "/mapdb/deleteAllUsers").permitAll()
                 .anyRequest().authenticated()
-                //.anyRequest().permitAll() // TEMPORANEO -> Permette l'accesso a tutte le richieste senza autenticazione
-
             )
             .formLogin(login -> login
                 .loginPage("/login")
