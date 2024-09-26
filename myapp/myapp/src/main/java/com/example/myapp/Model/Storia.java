@@ -33,14 +33,6 @@ public class Storia{
         this.id = id;
     }
 
-    // Metodo per ottenere uno scenario specifico per indice
-    public int getScenario(int scenarioId) {
-        if (scenarioId < 0 || scenarioId >= scenari.size()) {
-            throw new IndexOutOfBoundsException("Scenario ID non valido.");
-        }
-        return scenari.get(scenarioId); // Ritorna l'ID dello scenario
-    }
-
     public List<Integer> getScenari() {
         return scenari;
     }
@@ -73,19 +65,20 @@ public class Storia{
     // Restituisce l'ID dello scenario iniziale
     public int getScenarioIniziale() {
         return this.scenarioIniziale;
-    }    
+    }
 
-    /**public List<Scenario> getFinali() {
-        List<Scenario> finali = new ArrayList<>();
-        for (int scenarioId : scenari) {
-            Scenario scenario = getScenarioById(scenarioId); // usa il metodo sopra
-            if (scenario.isScenarioFinale()) {
-                finali.add(scenario);
-            }
+    public int getScenarioId(int scenarioId) {
+        if (scenari.contains(scenarioId)) {
+            return scenarioId; // Restituisce semplicemente l'ID
+        } else {
+            throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioId);
         }
-        return finali;
-    }**/
-    
+    }
+
+    public int getOpzioneId(int opzioneId) {
+        // TODO: controllare se l'opzione è valida
+        return opzioneId;
+    }    
 
     @Override
     public String toString() {

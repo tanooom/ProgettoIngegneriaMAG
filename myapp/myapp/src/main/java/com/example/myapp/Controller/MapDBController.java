@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Opzione;
+import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Service.MapDBService;
@@ -70,7 +70,7 @@ public class MapDBController {
     }
 
     @GetMapping("/getScenario")
-    public Scenario getScenario(@RequestParam int id) {
+    public Scenario getScenarioById(@RequestParam int id) {
         return mapDBService.getScenarioById(id);
     }
 

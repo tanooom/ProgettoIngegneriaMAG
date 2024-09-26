@@ -2,7 +2,9 @@ package com.example.myapp.Model;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.myapp.Service.MapDBService;
 
 public class ScriviStoria {
@@ -34,7 +36,7 @@ public class ScriviStoria {
     public void aggiungiOpzione(int storiaId, int scenarioId, int opzioneId) {
         Storia storia = storie.get(storiaId);
         if (storia != null) {
-            int scenarioIdRecuperato = storia.getScenario(scenarioId);
+            int scenarioIdRecuperato = storia.getScenarioId(scenarioId);
             Scenario scenario = mapDBService.getScenarioById(scenarioIdRecuperato);
             if (scenario != null) {
                 scenario.aggiungiOpzione(opzioneId);
@@ -51,8 +53,8 @@ public class ScriviStoria {
     public void aggiungiOggettoRaccoglibile(int storiaId, int scenarioId, String oggetto) {
         Storia storia = storie.get(storiaId);
         if (storia != null) {
-            int scenarioIdRecuperato = storia.getScenario(scenarioId);
-            Scenario scenario = mapDBService.getScenarioById(scenarioIdRecuperato);
+            int scenarioRecuperatoId = storia.getScenarioId(scenarioId);
+            Scenario scenario = mapDBService.getScenarioById(scenarioRecuperatoId);
             if (scenario != null) {
                 scenario.aggiungiOggettoRaccoglibile(oggetto);
                 salvaStoria(storia);
