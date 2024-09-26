@@ -6,34 +6,20 @@ import java.util.List;
 public class Storia{
     private int id;
     private final String titolo;
-    private final Scenario scenarioIniziale;
-    //TODO: cambiare con un array di Id la lista di scenari
-    //TODO:togliere scenario inziale e finali
-    private final List<Scenario> finali;
-    private final List<Scenario> scenari;
     private final String username; // Username dello scrittore
     private final int lunghezza; // Numero di scenari
     private final String stato; // Stato della storia
+    private final List<Integer> scenari; // Lista ID scenari
 
-    public Storia(int id, String titolo, Scenario scenarioIniziale, String username, int lunghezza, String stato) {
+    public Storia(int id, String titolo, String username, int lunghezza, String stato) {
         this.titolo = titolo;
-        this.scenarioIniziale = scenarioIniziale;
-        this.finali = new ArrayList<>();
-        this.scenari = new ArrayList<>();
         this.username = username;
         this.lunghezza = lunghezza;
         this.stato = stato;
+        this.scenari = new ArrayList<>();
     }
 
-    public Scenario getScenarioIniziale(){
-        return scenarioIniziale;
-    }
-
-    public List<Scenario> getFinali(){
-        return finali;
-    }
-
-    public void aggiungiScenario(Scenario scenario) {
+    public void aggiungiScenario(int scenario) {
         this.scenari.add(scenario);
     }
 
@@ -45,12 +31,13 @@ public class Storia{
         this.id = id;
     }
 
-    public Scenario getScenario(int scenarioId) {
+    // Metodo per ottenere uno scenario specifico per indice
+    public int getScenario(int scenarioId) {
         return scenari.get(scenarioId);
     }
 
-    public void aggiungiFinale(Scenario finale) {
-        this.finali.add(finale);
+    public List<Integer> getScenari() {
+        return scenari;
     }
 
     public String getUsername() {
@@ -74,12 +61,10 @@ public class Storia{
         return "Storia{" +
                 "id=" + id +
                 ", titolo='" + titolo + '\'' +
-                ", scenarioIniziale=" + scenarioIniziale.toString() +
-                ", finali=" + finali.toString() +
-                ", scenari=" + scenari.toString() +
                 ", username='" + username + '\'' +
                 ", lunghezza=" + lunghezza +
                 ", stato='" + stato + '\'' +
+                ", scenari=" + scenari.toString() +
                 '}';
     }
 }

@@ -11,7 +11,7 @@ public class Opzione {
     private final String rispostaCorrettaIndovinello;
 
     // Costruttore
-    public Opzione(String descrizione, int scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, int id, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
+    public Opzione(int id, String descrizione, int scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
         this.id = id;
         this.descrizione = descrizione;
         this.scenarioSuccessivo = scenarioSuccessivo;

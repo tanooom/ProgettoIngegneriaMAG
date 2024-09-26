@@ -58,10 +58,10 @@ public class GiocoService {
     public void faiScelta(int storiaId, int opzioneId, Utente user) {
         Partita gioco = giochiAttivi.get(storiaId);
         if (gioco != null) {
-            Opzione opzione = gioco.getScenarioCorrente().getOpzioni().stream()
-                .filter(o -> o.getId() == opzioneId)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Opzione non trovata"));
+            Opzione opzione = storiaService.getOpzioneById(opzioneId);
+            if (opzione == null) {
+                throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
+            }            
             gioco.faiScelta(opzione);
         } else {
             throw new RuntimeException("Gioco non trovato per l'ID: " + storiaId);

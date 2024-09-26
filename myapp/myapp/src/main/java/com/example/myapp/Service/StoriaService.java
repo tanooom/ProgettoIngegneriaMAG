@@ -44,7 +44,7 @@ public class StoriaService {
         };
     }
 
-    // Aggiungi questo metodo per recuperare storie dal database
+    // Recupera storie dal database
     public Storia getStoriaById(int storiaId) {
         // TODO: Logica per recuperare una storia dal database o da una lista
         return tutteLeStorie.stream()
@@ -53,14 +53,17 @@ public class StoriaService {
             .orElseThrow(() -> new RuntimeException("Storia non trovata per l'ID: " + storiaId));
     }
 
+    // Aggiungi il metodo per ottenere uno scenario per ID da una storia
+    public Integer getScenarioById(int storiaId, int scenarioId) {
+        Storia storia = getStoriaById(storiaId);
+        return storia.getScenari().stream()
+            .filter(id -> id == scenarioId)
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Scenario non trovato per l'ID: " + scenarioId));
+    }
+
+    // Ottiene una lista di tutte le storie
     public List<Storia> getAllStorie() {
-        // Recupera tutte le storie dal database o da un'altra fonte di dati
-        // Qui puoi usare un repository JPA o simulare storie per ora
-
-        // Esempio di storie create manualmente
-        List<Storia> storie = new ArrayList<>();
-        //storie.add(Main.creaStoria());
-
-        return storie;
+        return new ArrayList<>(tutteLeStorie); // Ritorna la lista completa di storie
     }
 }

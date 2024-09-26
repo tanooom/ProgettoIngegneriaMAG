@@ -44,13 +44,14 @@ public class MapDBController {
         return "Storia salvata con successo!";
     }
 
-    public String putStory(@RequestParam int id, 
-                        @RequestParam String title, 
-                        @RequestParam Scenario scenarioIniziale, 
-                        @RequestParam String username, 
-                        @RequestParam int lunghezza, 
-                        @RequestParam String stato) {
-        Storia storia = new Storia(id, title, scenarioIniziale, username, lunghezza, stato);
+    public String putStory( @RequestParam int id, 
+                            @RequestParam String title, 
+                            @RequestParam String username, 
+                            @RequestParam int lunghezza, 
+                            @RequestParam String stato, 
+                            @RequestParam int scenarioId) {
+        Storia storia = new Storia(id, title, username, lunghezza, stato);
+        storia.aggiungiScenario(scenarioId);
         mapDBService.saveStory(storia);
         return "Storia aggiunta con successo!";
     }
@@ -77,13 +78,13 @@ public class MapDBController {
     @PostMapping("/putOption")
     public String putOption(@RequestParam int id, 
                             @RequestParam String description, 
-                            @RequestParam Scenario scenarioSuccessivo,
+                            @RequestParam int scenarioSuccessivo,
                             @RequestParam boolean richiedeOggetto, 
                             @RequestParam String oggettoRichiesto, 
                             @RequestParam boolean richiedeIndovinello, 
                             @RequestParam String indovinello,
                             @RequestParam String rispostaCorrettaIndovinello) {
-        Opzione opzione = new Opzione(description, scenarioSuccessivo, richiedeOggetto, oggettoRichiesto, id, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello);
+        Opzione opzione = new Opzione(id, description, scenarioSuccessivo, richiedeOggetto, oggettoRichiesto, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello);
         mapDBService.saveOption(opzione);
         return "Opzione aggiunta con successo!";
     }

@@ -27,7 +27,8 @@ public class GiocaStoria {
                 
                 // Mostra le opzioni disponibili
                 int i = 1;
-                for (Opzione opzione : scenarioCorrente.getOpzioni()) {
+                for (Integer opzioneId : scenarioCorrente.getOpzioni()) {
+                    Opzione opzione = storia.getOpzioneById(opzioneId);
                     System.out.println(i + ". " + opzione.getDescrizione());
                     i++;
                 }
@@ -37,7 +38,7 @@ public class GiocaStoria {
                 int scelta = scanner.nextInt();
                 
                 // Ottieni l'opzione scelta
-                Opzione opzioneScelta = scenarioCorrente.getOpzioni().get(scelta - 1);
+                Opzione opzioneScelta = storia.getOpzioneById(scenarioCorrente.getOpzioni().get(scelta - 1));
                 
                 // Verifica se l'opzione richiede un oggetto
                 if (opzioneScelta.isRichiedeOggetto()) {
@@ -62,7 +63,8 @@ public class GiocaStoria {
                 }
                 
                 // Passa allo scenario successivo
-                scenarioCorrente = opzioneScelta.getScenarioSuccessivo();
+                scenarioCorrente = storia.getScenarioById(opzioneScelta.getScenarioSuccessivo());
+
                 
                 // Se lo scenario corrente è un finale, termina il gioco
                 if (storia.getFinali().contains(scenarioCorrente)) {
