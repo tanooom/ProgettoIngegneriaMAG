@@ -96,10 +96,13 @@ public class MapDBController {
 
     // Endpoint per gestire le partite
     @PostMapping("/putMatch")
-    public String putMatch(@RequestParam int id, @RequestParam Storia storia,  @RequestParam String username) {
-        Partita gioco = new Partita(id, storia, username);
-        mapDBService.saveMatch(gioco);
-        return "Gioco aggiunto con successo!";
+    public String putMatch( @RequestParam int id, 
+                            @RequestParam Storia storia,  
+                            @RequestParam String username, 
+                            @RequestParam int inventarioId) {
+        Partita partita = new Partita(id, storia, username, inventarioId);
+        mapDBService.saveMatch(partita);
+        return "Partita aggiunta con successo!";
     }
 
     @GetMapping("/getMatch")

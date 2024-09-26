@@ -6,14 +6,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Storia;
+import com.example.myapp.Model.Scenario;
 
 @Service
 public class StoriaService {
 
     // TODO: da popolare con le storie dal database
     private final List<Storia> tutteLeStorie = new ArrayList<>();
-    
+
     public Storia creaStoria(Storia storia) {
         // Logica per assegnare un ID unico alla storia e salvarla nel database (es. MapDB)
         storia.setId(tutteLeStorie.size() + 1);
@@ -53,13 +55,26 @@ public class StoriaService {
             .orElseThrow(() -> new RuntimeException("Storia non trovata per l'ID: " + storiaId));
     }
 
-    // Aggiungi il metodo per ottenere uno scenario per ID da una storia
-    public Integer getScenarioById(int storiaId, int scenarioId) {
+    public Scenario getScenarioById(int storiaId, int scenarioId) {
         Storia storia = getStoriaById(storiaId);
         return storia.getScenari().stream()
-            .filter(id -> id == scenarioId)
+            .filter(scenarioIdFromList -> scenarioIdFromList == scenarioId) // Cambiato per confrontare con Integer
+            .map(scenarioIdFromList -> {
+                return new Scenario(scenarioIdFromList, "NomeScenario", "DescrizioneScenario"); // Sostituisci con il tuo metodo di recupero
+            })
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Scenario non trovato per l'ID: " + scenarioId));
+    }
+    
+    public Opzione getOpzioneById(int storiaId, int scenarioId, int opzioneId) {
+        Scenario scenario = getScenarioById(storiaId, scenarioId);
+        return scenario.getOpzioni().stream()
+            .filter(opzioneIdFromList -> opzioneIdFromList == opzioneId) // Cambiato per confrontare con Integer
+            .map(opzioneIdFromList -> {
+                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", 0, false, null, false, null, null); // Sostituisci con il tuo metodo di recupero
+            })
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Opzione non trovata per l'ID: " + opzioneId));
     }
 
     // Ottiene una lista di tutte le storie

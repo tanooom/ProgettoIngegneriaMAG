@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
-import com.example.myapp.Service.GiocoService;
+import com.example.myapp.Service.PartitaService;
 import com.example.myapp.Service.UserService;
 
 @RestController
 @RequestMapping("/api")
-public class GiocoController {
+public class PartitaController {
 
     @Autowired
-    private GiocoService giocoService;
+    private PartitaService partitaService;
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/storie-disponibili")
     public List<Storia> getStorieDisponibili() {
-        return giocoService.getStorieDisponibili();
+        return partitaService.getStorieDisponibili();
     }
 
     @GetMapping("/gioca/{storiaId}")
@@ -39,20 +39,20 @@ public class GiocoController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        Partita gioco = giocoService.caricaGioco(storiaId, user);
+        Partita partita = partitaService.caricaPartita(storiaId, user);
         Map<String, Object> response = new HashMap<>();
-        response.put("titolo", gioco.getStoria().getTitolo());
-        response.put("scenarioCorrente", gioco.getScenarioCorrente());
-        response.put("inventario", gioco.getInventario());
+        response.put("titolo", partita.getStoria().getTitolo());
+        response.put("scenarioCorrente", partita.getScenarioCorrente());
+        response.put("inventario", partita.getInventarioId());
         return response;
     }
 
     @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")
-    public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId) {
+    public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId, InventarioController inventarioController) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
-        giocoService.faiScelta(storiaId, opzioneId, user);
+        partitaService.faiScelta(storiaId, opzioneId, user, inventarioController);
     }
 }

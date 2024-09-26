@@ -10,7 +10,7 @@ public class GiocaStoria {
     }
 
     public void inizia() {
-        Scenario scenarioCorrente = storia.getScenarioIniziale();
+        Scenario scenarioCorrente = storia.getScenarioById(storia.getScenarioIniziale());
         
         try (Scanner scanner = new Scanner(System.in)) {
             while (scenarioCorrente != null) {
@@ -65,12 +65,12 @@ public class GiocaStoria {
                 // Passa allo scenario successivo
                 scenarioCorrente = storia.getScenarioById(opzioneScelta.getScenarioSuccessivo());
 
-                
+                /**
                 // Se lo scenario corrente è un finale, termina il gioco
                 if (storia.getFinali().contains(scenarioCorrente)) {
                     System.out.println("Fine della storia.");
                     break;
-                }
+                }**/
             }
         }
     }

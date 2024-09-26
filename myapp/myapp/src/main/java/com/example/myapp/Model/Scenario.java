@@ -27,8 +27,8 @@ public class Scenario {
     }
 
     // Metodi per aggiungere opzioni
-    public void aggiungiOpzione(int opzione) {
-        this.opzioni.add(opzione);
+    public void aggiungiOpzione(int opzioneId) {
+        this.opzioni.add(opzioneId);
     }
 
     public void aggiungiOggettoRaccoglibile(String oggetto) {

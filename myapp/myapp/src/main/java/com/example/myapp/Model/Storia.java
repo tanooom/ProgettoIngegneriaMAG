@@ -9,9 +9,11 @@ public class Storia{
     private final String username; // Username dello scrittore
     private final int lunghezza; // Numero di scenari
     private final String stato; // Stato della storia
+    private int scenarioIniziale;
     private final List<Integer> scenari; // Lista ID scenari
 
     public Storia(int id, String titolo, String username, int lunghezza, String stato) {
+        this.id = id;
         this.titolo = titolo;
         this.username = username;
         this.lunghezza = lunghezza;
@@ -19,8 +21,8 @@ public class Storia{
         this.scenari = new ArrayList<>();
     }
 
-    public void aggiungiScenario(int scenario) {
-        this.scenari.add(scenario);
+    public void aggiungiScenario(int scenarioId) {
+        this.scenari.add(scenarioId);
     }
 
     public int getId() {
@@ -33,7 +35,10 @@ public class Storia{
 
     // Metodo per ottenere uno scenario specifico per indice
     public int getScenario(int scenarioId) {
-        return scenari.get(scenarioId);
+        if (scenarioId < 0 || scenarioId >= scenari.size()) {
+            throw new IndexOutOfBoundsException("Scenario ID non valido.");
+        }
+        return scenari.get(scenarioId); // Ritorna l'ID dello scenario
     }
 
     public List<Integer> getScenari() {
@@ -55,6 +60,32 @@ public class Storia{
     public String getTitolo(){
         return titolo;
     }
+
+     // Imposta l'ID dello scenario iniziale
+     public void setScenarioIniziale(int scenario) {
+        if (scenari.contains(scenario)) {
+            this.scenarioIniziale = scenario;
+        } else {
+            throw new RuntimeException("Scenario non trovato nella lista.");
+        }
+    }
+
+    // Restituisce l'ID dello scenario iniziale
+    public int getScenarioIniziale() {
+        return this.scenarioIniziale;
+    }    
+
+    /**public List<Scenario> getFinali() {
+        List<Scenario> finali = new ArrayList<>();
+        for (int scenarioId : scenari) {
+            Scenario scenario = getScenarioById(scenarioId); // usa il metodo sopra
+            if (scenario.isScenarioFinale()) {
+                finali.add(scenario);
+            }
+        }
+        return finali;
+    }**/
+    
 
     @Override
     public String toString() {

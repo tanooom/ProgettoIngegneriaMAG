@@ -5,13 +5,18 @@ import java.util.List;
 
 public class Inventario {
 
+    private final int id;
     private final List<String> oggetti;
     //TODO: aggiungi riferimento partita
-    //TODO: aggiungi id
 
     // Costruttore: inizializza un inventario vuoto
-    public Inventario() {
+    public Inventario(int id) {
+        this.id = id;
         this.oggetti = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
     }
 
     // Aggiunge un oggetto all'inventario
