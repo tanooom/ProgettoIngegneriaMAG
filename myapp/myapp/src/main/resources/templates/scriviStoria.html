@@ -55,7 +55,7 @@
         function addScenario() {
             const scenarioGroup = document.createElement('div');
             scenarioGroup.classList.add('scenario-group');
-            const previousScenariosOptions = scenarioNames.map(name => <option value="${name}">${name}</option>).join('');
+            const previousScenariosOptions = scenarioNames.map(name => '<option value="${name}">${name}</option>').join('');
             
             scenarioGroup.innerHTML = `
                 <div class="editable-scenario">

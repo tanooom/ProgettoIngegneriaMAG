@@ -38,7 +38,7 @@
             </div>
             <!--<div class="profile-field">
                 <label>Password: </label>
-                <input type="password" name="password" th:value="'********'" readonly>
+                <input type="password" name="password" th:value="''" readonly>
             </div>-->
             <div class="profile-field">
                 <a href="#" id="delete-account-link" onclick="confermaEliminaAccount(); return false;">Elimina Account</a>
@@ -56,7 +56,7 @@
         function confermaEliminaAccount() {
             if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
                 const username = document.querySelector('input[name="username"]').value; // Assicurati che l'elemento esista
-                fetch('/mapdb/deleteUser?username=' + encodeURIComponent(username), { // Usa il percorso corretto
+                fetch('/deleteUser?username=' + encodeURIComponent(username), { // Usa il percorso corretto
                     method: 'DELETE'
                 })
                 .then(response => {
