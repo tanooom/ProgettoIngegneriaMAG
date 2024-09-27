@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.myapp.Model.Storia;
+import com.example.myapp.Service.MapDBService;
 import com.example.myapp.Service.StoriaService;
 
 @Controller
@@ -22,14 +23,32 @@ public class StoriaController {
     @Autowired
     private StoriaService storiaService;
 
+    @Autowired
+    private MapDBService mapDBService;
+
     // Aggiungiamo un metodo POST per salvare la storia
     @PostMapping("/api/storie")
     public ResponseEntity<Storia> salvaStoria(@RequestBody Storia storia) {
         try {
-            // Salva la storia utilizzando il servizio
-            System.out.println("questa è la storia:   " + storia.toString());
-            Storia nuovaStoria = storiaService.creaStoria(storia);
-            System.out.println("questa è la NUOVA storia:   " +  nuovaStoria.toString());
+            // Creazione di una nuova storia fittizia TEMPORANEA
+            Storia nuovaStoria = new Storia(
+                1, // ID della storia
+                "La grande avventura", // Titolo
+                "Tizio Caio", // Nome dell'autore
+                3, // Lunghezza (numero di scenari)
+                "In corso" // Stato della storia
+            );
+
+            // Aggiunta di scenari fittizi
+            nuovaStoria.aggiungiScenario(101); // ID di un scenario fittizio
+            nuovaStoria.aggiungiScenario(102);
+            nuovaStoria.aggiungiScenario(103);
+            nuovaStoria.setIdScenarioIniziale(101); // Impostazione dello scenario iniziale
+
+            // Salva la storia nel database
+            mapDBService.saveStory(nuovaStoria);
+            //Storia nuovaStoria = storiaService.creaStoria(storia);
+            System.out.println("QUESTA E' LA NUOVA STORIA:   " +  nuovaStoria.toString());
             return ResponseEntity.ok(nuovaStoria);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null); // Errore generico

@@ -288,12 +288,11 @@
         });
 
         function confermaTornaIndietro() {
-    console.log("Funzione confermaTornaIndietro chiamata"); // Aggiungi questa riga
-    const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato la storia!");
-    if (conferma) {
-        window.location.href = 'http://localhost:8080/home';
-    }
-}
+            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato la storia!");
+            if (conferma) {
+                window.location.href = 'home'; // Reindirizza alla pagina home
+            }
+        }
     </script>
 </body>
 </html>
