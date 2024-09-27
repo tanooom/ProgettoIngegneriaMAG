@@ -17,11 +17,10 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final DB db;  
 
-    // Modifica il costruttore per accettare il DB
     public UserService(HTreeMap<String, String> userMap, PasswordEncoder passwordEncoder, DB db) {
         this.userMap = userMap;
         this.passwordEncoder = passwordEncoder;
-        this.db = db;  // Inizializza la variabile db
+        this.db = db; 
     }
 
     // Metodo per ottenere tutte le informazioni dell'utente da MapDB
@@ -36,21 +35,13 @@ public class UserService implements UserDetailsService {
 
     // Metodo per registrare un utente in MapDB
     public Utente register(Utente user) {
-
-        // Codifica la password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         try {
-            // Salva l'utente in MapDB
             userMap.put(user.getUsername(), String.format("%s;%s;%s;%s",
                      user.getPassword(), user.getNome(), user.getCognome(), user.getMail()));
-
-            // Commit delle modifiche per renderle persistenti
             db.commit();
-
-            return user; // Ritorna l'utente registrato con successo
+            return user; 
         } catch (Exception e) {
-            // Gestisci eventuali eccezioni e fai logging
             throw new RuntimeException("Errore durante la registrazione dell'utente", e);
         }
     }
@@ -62,10 +53,6 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-
-    /*public boolean checkPassword(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
-    }*/
 
     public Utente findByUsername(String username) {
         return getUser(username);
@@ -82,5 +69,20 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles("USER")
                 .build();
+    }
+
+    // Metodo per eliminare un utente per username
+    public void deleteUser(String username) {
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("L'username non può essere nullo o vuoto.");
+        }
+
+        // Rimuove l'utente dalla mappa
+        if (userMap.containsKey(username)) {
+            userMap.remove(username);
+            db.commit(); // Commit dei cambiamenti al database
+        } else {
+            throw new IllegalArgumentException("L'utente con username " + username + " non esiste.");
+        }
     }
 }

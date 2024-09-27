@@ -149,21 +149,21 @@ public class MapDBService {
     }
 
     // Metodo per esportare i dati in un file JSON
-public void exportToJson(String filePath) throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
+    public void exportToJson(String filePath) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
 
-    // Crea una mappa per tutti i dati
-    Map<String, Object> allData = new HashMap<>();
-    allData.put("storyMap", new HashMap<>(storyMap));
-    allData.put("userMap", new HashMap<>(userMap));
-    allData.put("scenarioMap", new HashMap<>(scenarioMap));
-    allData.put("inventoryMap", new HashMap<>(inventoryMap));
-    allData.put("optionMap", new HashMap<>(optionMap));
-    allData.put("matchMap", new HashMap<>(matchMap));
+        // Crea una mappa per tutti i dati
+        Map<String, Object> allData = new HashMap<>();
+        allData.put("storyMap", new HashMap<>(storyMap));
+        allData.put("userMap", new HashMap<>(userMap));
+        allData.put("scenarioMap", new HashMap<>(scenarioMap));
+        allData.put("inventoryMap", new HashMap<>(inventoryMap));
+        allData.put("optionMap", new HashMap<>(optionMap));
+        allData.put("matchMap", new HashMap<>(matchMap));
 
-    // Scrivi i dati nel file JSON
-    objectMapper.writeValue(new File(filePath), allData);
-}
+        // Scrivi i dati nel file JSON
+        objectMapper.writeValue(new File(filePath), allData);
+    }
 
     // Metodo per importare i dati da un file JSON
     public void importFromJson(String filePath) throws IOException {
@@ -191,7 +191,7 @@ public void exportToJson(String filePath) throws IOException {
         db.commit(); // Committa i dati al database
     }
 
-    // Metodo per eliminare un utente per username
+    /*// Metodo per eliminare un utente per username
     public void deleteUser(String username) {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("L'username non può essere nullo o vuoto.");
@@ -204,12 +204,22 @@ public void exportToJson(String filePath) throws IOException {
         } else {
             throw new IllegalArgumentException("L'utente con username " + username + " non esiste.");
         }
-    }
+    }*/
 
     // Metodo per eliminare tutti gli utenti
     public void deleteAllUsers() {
         userMap.clear();  // Rimuove tutte le voci dalla mappa degli utenti
         db.commit();      // Commit delle modifiche per renderle persistenti
+    }
+
+    // Metodo per rimuovere un'opzione
+    public void removeOption(int id) {
+        if (optionMap.containsKey(id)) {
+            optionMap.remove(id);
+            db.commit(); // Salva le modifiche nel database
+        } else {
+            throw new IllegalArgumentException("Opzione con ID " + id + " non trovata.");
+        }
     }
 
     @PreDestroy

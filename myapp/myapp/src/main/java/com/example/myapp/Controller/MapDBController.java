@@ -3,40 +3,24 @@ package com.example.myapp.Controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Service.MapDBService;
 
 @RestController
-@RequestMapping("/mapdb")
+//@RequestMapping("/mapdb")
 public class MapDBController {
 
     @Autowired
     private MapDBService mapDBService;
-
-    // Endpoint per gestire gli utenti
-    /*@PostMapping("/putUser")
-        public RedirectView putUser(@RequestParam String key, @RequestParam String value) {
-        mapDBService.putUser(key, value);
-        return new RedirectView("/registrationSuccess");
-    }*/
-
-    @GetMapping("/getUser")
-    public String getUser(@RequestParam String key) {
-        return mapDBService.getUser(key);
-    }
 
     @PostMapping("/saveStoria")
     public String saveStoria(@RequestBody Storia storia) {
@@ -74,7 +58,7 @@ public class MapDBController {
         return mapDBService.getScenarioById(id);
     }
 
-    // Endpoint per gestire le opzioni
+    /*// Endpoint per gestire le opzioni
     @PostMapping("/putOption")
     public String putOption(@RequestParam int id, 
                             @RequestParam String description, 
@@ -92,7 +76,7 @@ public class MapDBController {
     @GetMapping("/getOption")
     public Opzione getOption(@RequestParam int id) {
         return mapDBService.getOptionById(id);
-    }
+    }*/
 
     // Endpoint per gestire le partite
     @PostMapping("/putMatch")
@@ -144,17 +128,6 @@ public class MapDBController {
         }
     }*/
 
-    // Endpoint per eliminare un utente
-@DeleteMapping("/deleteUser")
-public ResponseEntity<String> deleteUser(@RequestParam String username) {
-    try {
-        mapDBService.deleteUser(username);
-        return ResponseEntity.ok("Utente eliminato con successo!");
-    } catch (IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: " + e.getMessage());
-    }
-}
-
     // Endpoint per eliminare tutti gli utenti
     @DeleteMapping("/deleteAllUsers")
     public String deleteAllUsers() {
@@ -164,10 +137,5 @@ public ResponseEntity<String> deleteUser(@RequestParam String username) {
         } catch (Exception e) {
             return "Errore durante la rimozione degli utenti: " + e.getMessage();
         }
-    }
-    
-    @GetMapping("/registrationSuccess")
-    public String registrationSuccess() {
-        return "registrationSuccess";
     }
 }

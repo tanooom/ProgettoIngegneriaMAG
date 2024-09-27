@@ -42,7 +42,7 @@ public class PartitaController {
         Partita partita = partitaService.caricaPartita(storiaId, user);
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
-        response.put("scenarioCorrente", partita.getScenarioCorrente());
+        response.put("scenarioCorrente", partita.getIdScenarioCorrente());
         response.put("inventario", partita.getInventarioId());
         return response;
     }

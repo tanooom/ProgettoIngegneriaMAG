@@ -9,9 +9,9 @@ public class Scenario {
     private final String descrizione;
     private final List<Integer> opzioni;
     private final List<String> oggettiRaccoglibili;
-    private final List<Integer> entryScenari; // Scenario precedente
-    private final List<Integer> exitScenari; // Scenario successivo
-    private int storia; // Storia a cui appartiene lo scenario
+    private final List<Integer> idEntryScenari; // Scenario precedente
+    private final List<Integer> idExitScenari; // Scenario successivo
+    private int idStoria; // Storia a cui appartiene lo scenario
     private final boolean scenarioIniziale = false; // Se true è lo scenario iniziale
     private final boolean scenarioFinale = false; // Se true è uno scenario finale
 
@@ -22,8 +22,8 @@ public class Scenario {
         this.descrizione = descrizione;
         this.opzioni = new ArrayList<>();
         this.oggettiRaccoglibili = new ArrayList<>();
-        this.entryScenari = new ArrayList<>();
-        this.exitScenari = new ArrayList<>();
+        this.idEntryScenari = new ArrayList<>();
+        this.idExitScenari = new ArrayList<>();
     }
 
     // Metodi per aggiungere opzioni
@@ -36,16 +36,16 @@ public class Scenario {
     }
 
     // Aggiungi scenario precedente (EntryScenario)
-    public void aggiungiEntryScenario(int scenarioPrecedente) {
-        if (!this.entryScenari.contains(scenarioPrecedente)) {
-            this.entryScenari.add(scenarioPrecedente);
+    public void aggiungiIdEntryScenario(int idScenarioPrecedente) {
+        if (!this.idEntryScenari.contains(idScenarioPrecedente)) {
+            this.idEntryScenari.add(idScenarioPrecedente);
         }
     }
 
     // Aggiungi scenario successivo (ExitScenario)
-    public void aggiungiExitScenario(int scenarioSuccessivo) {
-        if (!this.exitScenari.contains(scenarioSuccessivo)) {
-            this.exitScenari.add(scenarioSuccessivo);
+    public void aggiungiIdExitScenario(int idScenarioSuccessivo) {
+        if (!this.idExitScenari.contains(idScenarioSuccessivo)) {
+            this.idExitScenari.add(idScenarioSuccessivo);
         }
     }
 
@@ -70,32 +70,32 @@ public class Scenario {
         return oggettiRaccoglibili;
     }
 
-    public int getStoria() {
-        return storia;
+    public int getIdStoria() {
+        return idStoria;
     }
 
-    public List<Integer> getEntryScenari() {
-        return entryScenari;
+    public List<Integer> getIdEntryScenari() {
+        return idEntryScenari;
     }
 
-    public List<Integer> getExitScenari() {
-        return exitScenari;
+    public List<Integer> getIdExitScenari() {
+        return idExitScenari;
     }
 
-    public void setStoria(int storia) {
-        this.storia = storia;
+    public void setIdStoria(int storia) {
+        this.idStoria = storia;
     }
 
     // Metodo per controllare se lo scenario è iniziale
     public boolean isScenarioIniziale() {
         // Uno scenario è considerato iniziale se non ha scenari precedenti
-        return this.entryScenari.isEmpty();
+        return this.idEntryScenari.isEmpty();
     }
 
     // Metodo per controllare se lo scenario è finale
     public boolean isScenarioFinale() {
         // Uno scenario è considerato finale se non ha scenari successivi
-        return this.exitScenari.isEmpty();
+        return this.idExitScenari.isEmpty();
     }
 
     @Override
@@ -106,9 +106,9 @@ public class Scenario {
                 ", descrizione='" + descrizione + '\'' +
                 ", opzioni=" + opzioni +
                 ", oggettiRaccoglibili=" + oggettiRaccoglibili +
-                ", EntryScenari=" + entryScenari +
-                ", ExitScenari=" + exitScenari +
-                ", storiaId=" + storia +
+                ", EntryScenari=" + idEntryScenari +
+                ", ExitScenari=" + idExitScenari +
+                ", storiaId=" + idStoria +
                 ", scenarioIniziale=" + scenarioIniziale +
                 ", scenarioFinale=" + scenarioFinale +
                 '}';

@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.example.myapp.Model.Opzione;
-import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Scenario;
+import com.example.myapp.Model.Storia;
 
 @Service
 public class StoriaService {
@@ -57,7 +57,7 @@ public class StoriaService {
 
     public Scenario getScenarioById(int storiaId, int scenarioId) {
         Storia storia = getStoriaById(storiaId);
-        return storia.getScenari().stream()
+        return storia.getIdScenari().stream()
             .filter(scenarioIdFromList -> scenarioIdFromList == scenarioId) // Cambiato per confrontare con Integer
             .map(scenarioIdFromList -> {
                 return new Scenario(scenarioIdFromList, "NomeScenario", "DescrizioneScenario"); // Sostituisci con il tuo metodo di recupero
@@ -71,7 +71,7 @@ public class StoriaService {
         return scenario.getOpzioni().stream()
             .filter(opzioneIdFromList -> opzioneIdFromList == opzioneId) // Cambiato per confrontare con Integer
             .map(opzioneIdFromList -> {
-                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", 0, false, null, false, null, null); // Sostituisci con il tuo metodo di recupero
+                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", false, null, false, null, null, false, null); // Sostituisci con il tuo metodo di recupero
             })
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Opzione non trovata per l'ID: " + opzioneId));
@@ -79,6 +79,6 @@ public class StoriaService {
 
     // Ottiene una lista di tutte le storie
     public List<Storia> getAllStorie() {
-        return new ArrayList<>(tutteLeStorie); // Ritorna la lista completa di storie
+        return new ArrayList<>(tutteLeStorie); // Ritorna la lista completa di storie
     }
 }

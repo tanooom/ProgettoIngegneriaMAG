@@ -57,15 +57,6 @@ public class HomeController {
         return "visualizzaStoria";
     }
 
-    @GetMapping("/scriviStoria")
-    public String scriviStoria() {
-        return "scriviStoria";
-    }
-
-    /*@GetMapping("/profilo")
-    public String profilo() {
-        return "profilo";
-    }*/
 
     @GetMapping("/giocaStoria")
     public String giocaStoria() {

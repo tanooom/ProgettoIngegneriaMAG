@@ -60,7 +60,7 @@ public class PartitaService {
     public void faiScelta(int storiaId, int opzioneId, Utente user, InventarioController inventarioController) {
         Partita partita = partiteAttive.get(storiaId);
         if (partita != null) {
-            Opzione opzione = storiaService.getOpzioneById(storiaId, partita.getScenarioCorrente(), opzioneId);
+            Opzione opzione = storiaService.getOpzioneById(storiaId, partita.getIdScenarioCorrente(), opzioneId);
             if (opzione == null) {
                 throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
             }            
@@ -82,5 +82,5 @@ public class PartitaService {
         Partita nuovaPartita = new Partita(storia, username); // Passa anche username
         partiteAttivi.put(storiaId, nuovaPartita);
         return nuovaPartita;
-    }*/
+    }*/
 }

@@ -3,18 +3,21 @@ package com.example.myapp.Model;
 import java.util.Scanner;
 
 import com.example.myapp.Controller.MapDBController;
+import com.example.myapp.Controller.OpzioneController;
 
 public class GiocaStoria {
     private final Storia storia;
     private final MapDBController mapDBController;
+    private final OpzioneController opzioneController;
 
-    public GiocaStoria(Storia storia, MapDBController mapDBController) {
+    public GiocaStoria(Storia storia, MapDBController mapDBController, OpzioneController opzioneController) {
         this.storia = storia;
         this.mapDBController = mapDBController;
+        this.opzioneController = opzioneController;
     }
 
     public void inizia() {
-        int scenarioInizialeId = storia.getScenarioIniziale();
+        int scenarioInizialeId = storia.getIdScenarioIniziale();
         Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioInizialeId);
         
         try (Scanner scanner = new Scanner(System.in)) {
@@ -33,7 +36,7 @@ public class GiocaStoria {
                 // Mostra le opzioni disponibili
                 int i = 1;
                 for (Integer opzioneId : scenarioCorrente.getOpzioni()) {
-                    Opzione opzione = mapDBController.getOption(opzioneId);
+                    Opzione opzione = opzioneController.getOption(opzioneId); // Usa OpzioneController
                     System.out.println(i + ". " + opzione.getDescrizione());
                     i++;
                 }
@@ -43,7 +46,7 @@ public class GiocaStoria {
                 int scelta = scanner.nextInt();
                 
                 // Ottieni l'opzione scelta
-                Opzione opzioneScelta = mapDBController.getOption(scenarioCorrente.getOpzioni().get(scelta - 1));
+                Opzione opzioneScelta = opzioneController.getOption(scenarioCorrente.getOpzioni().get(scelta - 1)); // Usa OpzioneController
 
                 // Verifica se l'opzione richiede un oggetto
                 if (opzioneScelta.isRichiedeOggetto()) {
@@ -68,7 +71,8 @@ public class GiocaStoria {
                 }
                 
                 // Passa allo scenario successivo
-                scenarioCorrente = mapDBController.getScenarioById(opzioneScelta.getScenarioSuccessivo());
+                //scenarioCorrente = mapDBController.getScenarioById(opzioneScelta.getIdScenarioSuccessivo());
+                //Opzione non ha piu idScenarioSuccessivo
 
                 // Verifica se lo scenario corrente è un finale e termina la partita
                 if (scenarioCorrente != null && scenarioCorrente.isScenarioFinale()) {

@@ -24,8 +24,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/mapdb/export", "/mapdb/deleteUser", "/mapdb/deleteAllUsers").permitAll()
+                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/", "/js/", "/images/").permitAll()
+                .requestMatchers("/export", "/deleteUser", "/deleteAllUsers", "/deleteOption").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
@@ -55,5 +55,5 @@ public class SecurityConfig {
             .passwordEncoder(passwordEncoder());
         
         return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
-    }*/
+    }*/
 }

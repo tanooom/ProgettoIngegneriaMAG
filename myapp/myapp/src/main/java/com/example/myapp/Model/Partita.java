@@ -5,7 +5,7 @@ import com.example.myapp.Controller.InventarioController;
 public class Partita {
     private final int id;
     private final Storia storia;
-    private int scenarioCorrente;
+    private final int idScenarioCorrente;
     private final int inventarioId;
     private final String username; // Aggiunta per tenere traccia dell'utente
     private boolean inCorso; // Stato della partita (in corso o terminata)
@@ -14,7 +14,7 @@ public class Partita {
     public Partita(int id, Storia storia, String username, int inventarioId) {
         this.id = id;
         this.storia = storia;
-        this.scenarioCorrente = storia.getScenarioIniziale();
+        this.idScenarioCorrente = storia.getIdScenarioIniziale();
         this.inventarioId = inventarioId; // Inizializza un inventario vuoto
         this.username = username;
         this.inCorso = true; // La partita inizia in corso
@@ -28,7 +28,8 @@ public class Partita {
         if (opzione.isRichiedeOggetto() && !inventario.contieneOggetto(opzione.getOggettoRichiesto())) {
             return false; // L'utente non ha l'oggetto richiesto
         }
-        this.scenarioCorrente = opzione.getScenarioSuccessivo();
+        //this.idScenarioCorrente = opzione.getIdScenarioSuccessivo();
+        //Opzione non ha piu idScenarioSuccessivo
         return true;
     }
 
@@ -39,8 +40,8 @@ public class Partita {
     }
 
     // Getter
-    public int getScenarioCorrente() {
-        return scenarioCorrente;
+    public int getIdScenarioCorrente() {
+        return idScenarioCorrente;
     }
 
     public int getInventarioId() {
@@ -64,6 +65,6 @@ public class Partita {
     }
 
     public void terminaPartita() {
-        this.inCorso = false; // Metodo per terminare la partita
+        this.inCorso = false; // Metodo per terminare la partita
     }
 }

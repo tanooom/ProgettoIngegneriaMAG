@@ -1,25 +1,31 @@
 package com.example.myapp.Model;
 
-public class Opzione {
+import java.io.Serializable;
+
+public class Opzione implements Serializable{
     private final int id;
     private final String descrizione;
-    private final int scenarioSuccessivo;
+    //private final int idScenarioSuccessivo;
     private final boolean richiedeOggetto;
     private final String oggettoRichiesto;
     private final boolean richiedeIndovinello;
     private final String indovinello;
     private final String rispostaCorrettaIndovinello;
+    private final boolean rilasciaOggetto;
+    private final String oggettoRilasciato;
 
     // Costruttore
-    public Opzione(int id, String descrizione, int scenarioSuccessivo, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
+    public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello, boolean rilasciaOggetto, String oggettoRilasciato) {
         this.id = id;
         this.descrizione = descrizione;
-        this.scenarioSuccessivo = scenarioSuccessivo;
+        //this.idScenarioSuccessivo = idScenarioSuccessivo;
         this.richiedeOggetto = richiedeOggetto;
         this.oggettoRichiesto = oggettoRichiesto;
         this.indovinello = indovinello;
         this.richiedeIndovinello = richiedeIndovinello;
         this.rispostaCorrettaIndovinello = rispostaCorrettaIndovinello; // Inizializzazione della risposta corretta
+        this.rilasciaOggetto = rilasciaOggetto;
+        this.oggettoRilasciato = oggettoRilasciato;
     }
 
     // Getter
@@ -27,9 +33,9 @@ public class Opzione {
         return descrizione;
     }
 
-    public int getScenarioSuccessivo() {
-        return scenarioSuccessivo;
-    }
+    /*public int getIdScenarioSuccessivo() {
+        return idScenarioSuccessivo;
+    }*/
 
     public boolean isRichiedeOggetto() {
         return richiedeOggetto;
@@ -53,5 +59,13 @@ public class Opzione {
 
     public String getRispostaCorrettaIndovinello() {
         return rispostaCorrettaIndovinello;
+    }
+    
+    public boolean isRilasciaOggetto() {
+        return rilasciaOggetto;
+    }
+
+    public String getOggettoRilasciato() {
+        return oggettoRilasciato;
     }
 }
