@@ -20,7 +20,7 @@
     <main>
         <div class="form-container">
             <!-- Form per l'invio dei dati -->
-            <form id="scenario-form" method="POST" action="/aggiungiOpzione">
+            <form id="scenario-form" method="POST" > <!-- ho tolto action -->
                 <div>
                     <label for="nome-scenario">Nome Scenario:</label>
                     <input type="text" id="nome-scenario" name="nomeScenario" required>
@@ -30,39 +30,7 @@
                     <textarea id="descrizione-scenario" name="descrizioneScenario" required></textarea>
                 </div>
                 <div>
-                    <label>Richiede Indovinello?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="richiedeIndovinello" value="si"> Sì</label>
-                        <label><input type="radio" name="richiedeIndovinello" value="no" checked> No</label>
-                    </div>
-                    <div class="indovinello-fields" style="display:none;">
-                        <label for="scrivi-indovinello">Scrivi indovinello:</label>
-                        <textarea id="scrivi-indovinello" name="indovinello"></textarea>
-                        <label for="scrivi-risposta-indovinello">Scrivi la risposta:</label>
-                        <input type="text" id="scrivi-risposta-indovinello" name="rispostaIndovinello">
-                    </div>
-                </div>
-                <div>
-                    <label>Richiede Oggetto?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="richiedeOggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="richiedeOggetto" value="no" checked> No</label>
-                    </div>
-                    <div class="oggetto-fields" style="display:none;">
-                        <label for="scrivi-oggetto">Scrivi oggetto richiesto:</label>
-                        <input type="text" id="scrivi-oggetto" name="oggettoRichiesto">
-                    </div>
-                </div>
-                <div>
-                    <label>Rilascia Oggetto?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="rilasciaOggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="rilasciaOggetto" value="no" checked> No</label>
-                    </div>
-                    <div class="rilascia-fields" style="display:none;">
-                        <label for="scrivi-rilascia-oggetto">Scrivi oggetto rilasciato:</label>
-                        <input type="text" id="scrivi-rilascia-oggetto" name="oggettoRilasciato">
-                    </div>
+                    <button type="button" onclick="window.location.href='scriviOpzione'">Aggiungi Opzione</button>
                 </div>
                 <button type="submit" id="save-scenario-button">Salva Scenario</button>
             </form>
@@ -74,27 +42,6 @@
     </footer>
 
     <script>
-        document.querySelectorAll('input[name="richiedeIndovinello"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const indovinelloFields = document.querySelector('.indovinello-fields');
-                indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
-            });
-        });
-
-        document.querySelectorAll('input[name="richiedeOggetto"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const oggettoFields = document.querySelector('.oggetto-fields');
-                oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
-            });
-        });
-
-        document.querySelectorAll('input[name="rilasciaOggetto"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const rilasciaFields = document.querySelector('.rilascia-fields');
-                rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
-            });
-        });
-
         function confermaTornaIndietro() {
             const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato lo scenario!");
             if (conferma) {

@@ -3,6 +3,8 @@ package com.example.myapp.Model;
 import java.io.Serializable;
 
 public class Opzione implements Serializable{
+    //private static final long serialVersionUID = 1L; // Cambia il valore se necessario
+
     private final int id;
     private final String descrizione;
     //private final int idScenarioSuccessivo;
@@ -14,7 +16,6 @@ public class Opzione implements Serializable{
     private final boolean rilasciaOggetto;
     private final String oggettoRilasciato;
 
-    // Costruttore
     public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello, boolean rilasciaOggetto, String oggettoRilasciato) {
         this.id = id;
         this.descrizione = descrizione;
@@ -68,4 +69,5 @@ public class Opzione implements Serializable{
     public String getOggettoRilasciato() {
         return oggettoRilasciato;
     }
+
 }

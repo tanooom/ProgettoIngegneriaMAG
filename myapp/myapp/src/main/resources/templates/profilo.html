@@ -36,10 +36,6 @@
                 <label>Username: </label>
                 <input type="text" name="username" th:value="${user.username}" readonly>
             </div>
-            <!--<div class="profile-field">
-                <label>Password: </label>
-                <input type="password" name="password" th:value="''" readonly>
-            </div>-->
             <div class="profile-field">
                 <a href="#" id="delete-account-link" onclick="confermaEliminaAccount(); return false;">Elimina Account</a>
                 <button type="button" id="logout-button" onclick="window.location.href='/logout'">Logout</button>
