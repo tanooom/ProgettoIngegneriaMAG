@@ -1,9 +1,10 @@
 package com.example.myapp.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Storia{
+public class Storia implements Serializable{
     private int id;
     private final String titolo;
     private final String username; // Username dello scrittore

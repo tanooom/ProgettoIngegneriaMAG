@@ -18,18 +18,18 @@
     </header>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Cerca per titolo..." oninput="filterStorie()">
-        <select id="filterUsername" onchange="filterStorie()">
+        <input type="text" id="searchInput" placeholder="Cerca per titolo...">
+        <select id="filterUsername">
             <option value="">Filtra per username</option>
             <!-- TODO: Popola con gli username disponibili -->
         </select>
-        <select id="filterLunghezza" onchange="filterStorie()">
+        <select id="filterLunghezza">
             <option value="">Filtra per lunghezza</option>
             <option value="0-5">0-5 scenari</option>
             <option value="5-10">5-10 scenari</option>
             <option value="10+">10+ scenari</option>
         </select>
-        <select id="filterStato" onchange="filterStorie()">
+        <select id="filterStato">
             <option value="">Filtra per stato</option>
             <option value="non_iniziato">Non iniziato</option>
             <option value="in_corso">In corso</option>
@@ -48,22 +48,48 @@
 
         // Fetch delle storie
         fetch('/api/storie')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nel recupero delle storie');
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log("Storie recuperate:", data);  // Aggiungi questo log per vedere cosa viene recuperato
                 storie = data;
                 displayStorie(storie);
+            })
+            .catch(error => {
+                console.error('Errore durante il recupero delle storie:', error);
             });
         
         // Fetch degli username
         fetch('/api/usernames')
-            .then(response => response.json())
-            .then(data => {
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Errore ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Usernames recuperati:", data); // Log della risposta
+            if (Array.isArray(data)) {
                 usernames = data;
                 populateUsernameFilter(usernames);
-            });
+            } else {
+                console.error('Usernames non è un array:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Errore durante il recupero degli username:', error);
+        });
 
         // Funzione per popolare il filtro degli username
         function populateUsernameFilter(usernames) {
+            if (!Array.isArray(usernames)) {
+                console.error('usernames non è un array:', usernames);
+                return; // Previene ulteriori esecuzioni se non è un array
+            }
             const filterUsername = document.getElementById('filterUsername');
             usernames.forEach(username => {
                 const option = document.createElement('option');
@@ -78,19 +104,62 @@
             const container = document.getElementById('storieContainer');
             container.innerHTML = ''; // Svuota il container
 
+            if (storieDaVisualizzare.length === 0) {
+                container.innerHTML = '<p>Nessuna storia trovata.</p>';
+                return;
+            }
+
             storieDaVisualizzare.forEach(storia => {
                 const storiaDiv = document.createElement('div');
                 storiaDiv.className = 'storia-box';
+                let descrizioneScenarioIniziale;
 
-                storiaDiv.innerHTML = `
-                    <h2>${storia.titolo}</h2>
-                    <p>${storia.descrizione}</p>
-                    <p><strong>Primo Scenario:</strong> ${storia.scenarioIniziale.descrizione}</p>
-                    <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
-                    ${storia.giocata ? `<button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
-                                       <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>` : ''}
-                `;
-                container.appendChild(storiaDiv);
+                // Aggiungi la logica per ottenere la descrizione dello scenario iniziale
+                if (storia.idScenarioIniziale) {
+                    console.log("Ci arriva?")
+                    fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione') // Assicurati di avere l'endpoint corretto
+                    .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Errore nel recupero dello scenario iniziale');
+                            }
+                            return response.text();
+                        })
+                    .then(text => {
+                        descrizioneScenarioIniziale = text;
+                        console.log(descrizioneScenarioIniziale); 
+                    })
+                    .then(scenario => {
+                        //descrizioneScenarioIniziale; // Prendi la descrizione
+                        console.log("Descrizione scenario iniziale: " + descrizioneScenarioIniziale)
+                        // Crea il contenuto della storia
+                        storiaDiv.innerHTML = `
+                            <h2>${storia.titolo}</h2>
+                            <p><strong>Primo Scenario:</strong> ${descrizioneScenarioIniziale}</p>
+                            <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
+                            ${storia.giocata ? `
+                                <button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
+                                <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>
+                            ` : ''}
+                        `;
+                        container.appendChild(storiaDiv); // Append l'elemento dopo aver recuperato la descrizione
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il recupero della descrizione dello scenario iniziale:', error);
+                    });
+                } else {
+                    // Se non c'è uno scenario iniziale, mostra solo il titolo e la descrizione della storia
+                    storiaDiv.innerHTML = `
+                        <h2>${storia.titolo}</h2>
+                        <p>${storia.descrizione}</p>
+                        <p><strong>Primo Scenario:</strong> Nessun scenario iniziale trovato</p>
+                        <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
+                        ${storia.giocata ? `
+                            <button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
+                            <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>
+                        ` : ''}
+                    `;
+                    container.appendChild(storiaDiv);
+                }
             });
         }
 
@@ -101,18 +170,44 @@
             const lunghezza = document.getElementById('filterLunghezza').value;
             const stato = document.getElementById('filterStato').value;
 
-            const storieFiltrate = storie.filter(storia => {
-                return (storia.titolo.toLowerCase().includes(searchTerm) || !searchTerm) &&
-                       (storia.username === username || !username) &&
-                       (storia.lunghezza === lunghezza || !lunghezza) &&
-                       (storia.stato === stato || !stato);
-            });
+            console.log("search term: " +searchTerm);
+            console.log("username: " +username);
+            console.log("lunghezza: " + lunghezza);
+            console.log("stato: " + stato);
+            // Costruisci la query string con i filtri
+            let query = `/api/storieFiltrate?`;
+            if (searchTerm) query += `searchTerm=${searchTerm}`;
+            if (username) query += `username=${username}`;
+            if (lunghezza) query += `lunghezza=${lunghezza}`;
+            if (stato) query += `stato=${stato}`;
+            
+            console.log("query: " + query);
 
-            displayStorie(storieFiltrate);
+            // Fetch delle storie con i filtri applicati
+            fetch(query)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Errore ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Storie filtrate:", data); // Aggiungi questo log
+                    if (Array.isArray(data)) {
+                        displayStorie(data);
+                    } else {
+                        console.error("Errore: I dati ricevuti non sono un array.", data);
+                        displayStorie([]); // Mostra un messaggio che non ci sono storie
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante il recupero delle storie filtrate:', error);
+                    displayStorie([]); // Mostra un messaggio che non ci sono storie
+                });
         }
 
         function giocaStoria(storiaId) {
-            window.location.href = '/gioca.html?storiaId=${storiaId}';
+            window.location.href = `/giocaStoria.html?storiaId=${storiaId}`;
         }
 
         function riprendiStoria(storiaId) {

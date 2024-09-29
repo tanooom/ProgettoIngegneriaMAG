@@ -2,6 +2,7 @@ package com.example.myapp.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +87,11 @@ public class MapDBService {
     // Metodo per ottenere una storia per ID
     public Storia getStoryById(int id) {
         return storyMap.get(id);
+    }
+
+    // Metodo per ottenere tutte le storie
+    public Collection<Storia> getAllStories() {
+        return storyMap.values(); // Ritorna tutte le storie come una collection
     }
 
     // Metodo per salvare uno scenario

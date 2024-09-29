@@ -11,4 +11,3 @@ public class ScenarioController {
         return "scriviScenario"; // Nome del file HTML da restituire, senza estensione
     }
 }
-

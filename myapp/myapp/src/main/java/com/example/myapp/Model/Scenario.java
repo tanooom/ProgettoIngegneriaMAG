@@ -1,9 +1,10 @@
 package com.example.myapp.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scenario {
+public class Scenario implements Serializable{
     private final int id;
     private final String nome;
     private final String descrizione;
