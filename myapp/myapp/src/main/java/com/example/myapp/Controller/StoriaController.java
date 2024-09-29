@@ -43,7 +43,7 @@ public class StoriaController {
         System.out.println("Salvataggio storia iniziato...");
         try {
             // Creazione di una nuova storia fittizia TEMPORANEA
-            Storia nuovaStoria = new Storia(
+            Storia storia = new Storia(
                 id,
                 titolo,
                 username,
@@ -51,13 +51,7 @@ public class StoriaController {
                 stato
             );
 
-            // Aggiunta di scenari fittizi
-            nuovaStoria.aggiungiScenario(101); // ID di un scenario fittizio
-            nuovaStoria.aggiungiScenario(102);
-            nuovaStoria.aggiungiScenario(103);
-            nuovaStoria.setIdScenarioIniziale(101); // Impostazione dello scenario iniziale
-
-            //Storia nuovaStoria = storiaService.creaStoria(storia);
+            Storia nuovaStoria = storiaService.creaStoria(storia);
 
             // Salva la storia nel database DA TENERE:
             mapDBService.saveStory(nuovaStoria);
@@ -79,53 +73,69 @@ public class StoriaController {
         return ResponseEntity.ok(storie);
     }
 
-    @GetMapping("/api/storieFiltrate?")
-    public ResponseEntity<List<Storia>> getStorieFiltrate(  @RequestParam String searchTerm,
-                                                            @RequestParam String username,
-                                                            @RequestParam Integer lunghezza, 
-                                                            @RequestParam String stato) {
-        List<Storia> storie = storiaService.getAllStorie(); // Cambia 'Storie' in 'Storia'
+    @GetMapping("/api/storieFiltrate")
+    public ResponseEntity<List<Storia>> getStorieFiltrate(  @RequestParam(required = false) String searchTerm,
+                                                            @RequestParam(required = false) String username,
+                                                            @RequestParam(required = false) String lunghezza, 
+                                                            @RequestParam(required = false) String stato) {
+    
+        List<Storia> storie = storiaService.getAllStorie();
         List<Storia> storieResult = new ArrayList<>();
-        System.out.println("GET ALL STORIE: " + storie);
+    
         if (storie == null || storie.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(storie);
         }
-        //spazi, lowercase, replace per uguaglianze
-
-        if(searchTerm != null && !searchTerm.isEmpty()){
-            for(Storia storia : storie){
-                if(storia.getTitolo().contains(searchTerm)){
-                    storieResult.add(storia);
+    
+        // Normalizzazione dei parametri di input
+        if (searchTerm != null) searchTerm = searchTerm.trim().toLowerCase();
+        if (username != null) username = username.trim().toLowerCase();
+        if (stato != null) stato = stato.trim().toLowerCase();
+    
+        // Verifica delle storie in base ai filtri
+        for (Storia storia : storie) {
+            boolean matches = true;  // Flag per tenere traccia dei filtri soddisfatti
+    
+            // Filtro per searchTerm (titolo)
+            if (searchTerm != null && !storia.getTitolo().trim().toLowerCase().contains(searchTerm)) {
+                matches = false;
+            }
+    
+            // Filtro per username
+            if (username != null && !storia.getUsername().trim().toLowerCase().equals(username)) {
+                matches = false;
+            }
+    
+            // Filtro per lunghezza (range 0-5, 5-10, 10+)
+            if (lunghezza != null) {
+                int numScenari = storia.getLunghezza();  // Assumo che lunghezza sia il numero di scenari
+                switch (lunghezza) {
+                    case "range0-5" -> {
+                        if (numScenari < 0 || numScenari > 5) { matches = false; }
+                    }
+                    case "range5-10" -> {
+                        if (numScenari < 5 || numScenari > 10) { matches = false; }
+                    }
+                    case "range10+" -> {
+                        if (numScenari <= 10) { matches = false; }
+                    }
+                    default -> matches = false;
                 }
             }
-        }
-
-        if(username != null && !username.isEmpty()){
-            for(Storia storia : storie){
-                if(storia.getUsername().equals(username)){
-                    storieResult.add(storia);
-                }
+    
+            // Filtro per stato
+            if (stato != null && !storia.getStato().trim().toLowerCase().equals(stato)) {
+                matches = false;
+            }
+    
+            // Se la storia soddisfa tutti i filtri, viene aggiunta alla lista dei risultati
+            if (matches) {
+                storieResult.add(storia);
             }
         }
-
-        if(lunghezza != null && lunghezza != 0){
-            for(Storia storia : storie){
-                if(storia.getLunghezza() == lunghezza){
-                    storieResult.add(storia);
-                }
-            }
-        }
-
-        if(stato != null && !stato.isEmpty()){
-            for(Storia storia : storie){
-                if(storia.getStato().equals(stato)){
-                    storieResult.add(storia);
-                }
-            }
-        }
-
+    
         return ResponseEntity.ok(storieResult);
     }
+    
 
     @GetMapping("/visualizzaStoria/{id}")
     public String visualizzaStoria(@PathVariable int id, Model model) {

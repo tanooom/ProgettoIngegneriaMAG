@@ -113,29 +113,60 @@ body button:hover {
 
 /* Stile per le storie */
 .storia-box {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto 15px auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
     padding: 15px;
-    margin-bottom: 15px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.storia-box h2 {
-    margin: 0 0 10px 0;
-}
-
-.storia-box p {
-    margin: 0 0 10px 0;
-}
-
-.storia-box button {
-    align-self: flex-start;
-    margin-right: 10px;
+.storia-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
     margin-bottom: 10px;
+}
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px; 
+    align-items: center; 
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+/* Pulsanti nello header delle storie */
+.storia-header button {
+    padding: 10px 24px; 
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0;
+    font-weight: bold;
+    align-self: flex-end;
+}
+
+.storia-header button:hover {
+    background-color: #025cbd;
+}
+
+.storia-header h2 {
+    margin: 0;
+    font-size: 24px;
 }
 
 /* Pulsante di ritorno */

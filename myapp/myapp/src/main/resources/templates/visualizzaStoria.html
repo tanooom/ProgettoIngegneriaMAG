@@ -21,7 +21,6 @@
         <input type="text" id="searchInput" placeholder="Cerca per titolo...">
         <select id="filterUsername">
             <option value="">Filtra per username</option>
-            <!-- TODO: Popola con gli username disponibili -->
         </select>
         <select id="filterLunghezza">
             <option value="">Filtra per lunghezza</option>
@@ -31,9 +30,9 @@
         </select>
         <select id="filterStato">
             <option value="">Filtra per stato</option>
-            <option value="non_iniziato">Non iniziato</option>
-            <option value="in_corso">In corso</option>
-            <option value="concluso">Concluso</option>
+            <option value="Non iniziato">Non iniziato</option>
+            <option value="In corso">In corso</option>
+            <option value="Concluso">Concluso</option>
         </select>
         <button class="search-button" onclick="filterStorie()">
             <img src="/css/images/search-icon.png" alt="Cerca">
@@ -129,17 +128,23 @@
                         console.log(descrizioneScenarioIniziale); 
                     })
                     .then(scenario => {
-                        //descrizioneScenarioIniziale; // Prendi la descrizione
                         console.log("Descrizione scenario iniziale: " + descrizioneScenarioIniziale)
                         // Crea il contenuto della storia
                         storiaDiv.innerHTML = `
-                            <h2>${storia.titolo}</h2>
-                            <p><strong>Primo Scenario:</strong> ${descrizioneScenarioIniziale}</p>
-                            <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
-                            ${storia.giocata ? `
-                                <button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
-                                <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>
-                            ` : ''}
+                            <div class="storia-header">
+                                <div class="info-container">
+                                    <h2>${storia.titolo}</h2>
+                                    <p><strong>Scenario iniziale:</strong> ${descrizioneScenarioIniziale}</p>
+                                </div>
+                                <div class="button-container">
+                                    <button onclick="giocaStoria('${storia.id}')">Gioca</button>
+                                    ${storia.giocata ? `
+                                        <button onclick="riprendiStoria('${storia.id}')">Riprendi partita</button>
+                                        <button onclick="eliminaPartita('${storia.id}')">Elimina partita</button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            
                         `;
                         container.appendChild(storiaDiv); // Append l'elemento dopo aver recuperato la descrizione
                     })
@@ -174,12 +179,21 @@
             console.log("username: " +username);
             console.log("lunghezza: " + lunghezza);
             console.log("stato: " + stato);
+
             // Costruisci la query string con i filtri
             let query = `/api/storieFiltrate?`;
-            if (searchTerm) query += `searchTerm=${searchTerm}`;
-            if (username) query += `username=${username}`;
-            if (lunghezza) query += `lunghezza=${lunghezza}`;
-            if (stato) query += `stato=${stato}`;
+            if (searchTerm) query += `searchTerm=${encodeURIComponent(searchTerm)}&`;
+            if (username) query += `username=${encodeURIComponent(username)}&`;
+
+            if (lunghezza === "0-5") {
+                query += `lunghezza=range0-5&`;
+            } else if (lunghezza === "5-10") {
+                query += `lunghezza=range5-10&`;
+            } else if (lunghezza === "10+") {
+                query += `lunghezza=range10+&`;  // Questo invia un parametro per il range 10+
+            }
+
+            if (stato) query += `stato=${encodeURIComponent(stato)}&`;
             
             console.log("query: " + query);
 

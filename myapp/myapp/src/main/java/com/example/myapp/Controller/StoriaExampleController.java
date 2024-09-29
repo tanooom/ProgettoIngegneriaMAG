@@ -30,17 +30,17 @@ public class StoriaExampleController {
     public String creaStoriaExample(Model model) {
         // Crea una storia fittizia con valori predefiniti
         Storia nuovaStoria = new Storia(
-                2, // ID fisso
-                "La piccola avventura",
-                "Tizio Caio",
-                7, // Lunghezza fissa
-                "Non iniziato" // Stato fittizio
+                1,
+                "La grande avventura",
+                "Sempronio",
+                3,
+                "Non iniziato"
         );
 
         // Crea scenari fittizi
-        Scenario primoScenario = new Scenario(104, "Scenario 1", "C'era una volta...");
-        Scenario secondoScenario = new Scenario(105, "Scenario 2", "Gira a destra");
-        Scenario terzoScenario = new Scenario(106, "Scenario 3", "Gira a sinistra");
+        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...");
+        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra");
+        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra");
 
         // Aggiungi gli ID degli scenari alla storia
         nuovaStoria.aggiungiScenario(primoScenario.getId());
@@ -64,17 +64,17 @@ public class StoriaExampleController {
     public ResponseEntity<Map<String, Object>> getStoriaExample() {
         // Crea una storia fittizia con valori predefiniti
         Storia nuovaStoria = new Storia(
-                2, 
-                "La piccola avventura",
-                "Tizio Caio",
-                7,
+                1, 
+                "La grande avventura",
+                "Sempronio",
+                3,
                 "Non iniziato"
         );
 
         // Crea scenari fittizi
-        Scenario primoScenario = new Scenario(104, "Scenario 4", "C'era una volta...");
-        Scenario secondoScenario = new Scenario(105, "Scenario 5", "Gira a destra");
-        Scenario terzoScenario = new Scenario(106, "Scenario 6", "Gira a sinistra");
+        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...");
+        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra");
+        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra");
 
         // Aggiungi gli scenari alla storia
         nuovaStoria.aggiungiScenario(primoScenario.getId());
