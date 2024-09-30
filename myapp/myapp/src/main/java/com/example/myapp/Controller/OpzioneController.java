@@ -77,9 +77,15 @@ public class OpzioneController {
         boolean richiedeOggettoBool = "si".equalsIgnoreCase(richiedeOggetto);
         boolean rilasciaOggettoBool = "si".equalsIgnoreCase(rilasciaOggetto);
 
+        // Recupera l'ultimo ID usato per le opzioni e lo incrementa
+        int newId = mapDBService.getAllOptions().keySet().stream()
+        .mapToInt(Integer::intValue)
+        .max()
+        .orElse(0) + 1;
+
         // Crea una nuova opzione con i dati dal form
         Opzione nuovaOpzione = new Opzione(
-            1187,  // ID dell'opzione
+            newId,  // ID dell'opzione
             descrizioneOpzione, // Descrizione dell'opzione dal form
             richiedeOggettoBool, // richiede oggetto
             oggettoRichiesto != null && !oggettoRichiesto.isEmpty() ? oggettoRichiesto : null, // oggetto richiesto
@@ -92,7 +98,6 @@ public class OpzioneController {
 
         mapDBService.saveOption(nuovaOpzione);
 
-        // Reindirizza alla pagina successiva o di conferma
         return "redirect:/scriviScenario";
 }
 

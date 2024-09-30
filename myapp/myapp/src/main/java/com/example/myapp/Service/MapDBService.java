@@ -20,6 +20,7 @@ import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Service
 public class MapDBService {
@@ -158,6 +159,9 @@ public class MapDBService {
     public void exportToJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
+        // Abilita la formattazione "bello" (pretty printing)
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        
         // Crea una mappa per tutti i dati
         Map<String, Object> allData = new HashMap<>();
         allData.put("storyMap", new HashMap<>(storyMap));
@@ -197,21 +201,6 @@ public class MapDBService {
         db.commit(); // Committa i dati al database
     }
 
-    /*// Metodo per eliminare un utente per username
-    public void deleteUser(String username) {
-        if (username == null || username.isEmpty()) {
-            throw new IllegalArgumentException("L'username non può essere nullo o vuoto.");
-        }
-
-        // Rimuove l'utente dalla mappa
-        if (userMap.containsKey(username)) {
-            userMap.remove(username);
-            db.commit(); // Commit dei cambiamenti al database
-        } else {
-            throw new IllegalArgumentException("L'utente con username " + username + " non esiste.");
-        }
-    }*/
-
     // Metodo per eliminare tutti gli utenti
     public void deleteAllUsers() {
         userMap.clear();  // Rimuove tutte le voci dalla mappa degli utenti
@@ -228,8 +217,17 @@ public class MapDBService {
         }
     }
 
+    public Map<Integer, Opzione> getAllOptions() {
+        return optionMap;
+    }
+
+    public Map<Integer, Scenario> getAllScenari() {
+        return scenarioMap; 
+    }
+
+    
     @PreDestroy
-    public void cleanup() {
+    public void cleanup(){
         db.close();
     }
 }
