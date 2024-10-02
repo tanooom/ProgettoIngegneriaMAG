@@ -56,4 +56,6 @@ public class SecurityConfig {
         
         return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
     }*/
+
+    /*commit */
 }
