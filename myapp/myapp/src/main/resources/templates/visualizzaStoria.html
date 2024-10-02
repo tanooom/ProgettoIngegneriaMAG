@@ -104,7 +104,7 @@
             container.innerHTML = ''; // Svuota il container
 
             if (storieDaVisualizzare.length === 0) {
-                container.innerHTML = '<p>Nessuna storia trovata.</p>';
+                container.innerHTML = '<p class="no-storie-message">Nessuna storia trovata.</p>';
                 return;
             }
 
@@ -115,7 +115,6 @@
 
                 // Aggiungi la logica per ottenere la descrizione dello scenario iniziale
                 if (storia.idScenarioIniziale) {
-                    console.log("Ci arriva?")
                     fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione') // Assicurati di avere l'endpoint corretto
                     .then(response => {
                             if (!response.ok) {
@@ -157,7 +156,7 @@
                         <h2>${storia.titolo}</h2>
                         <p>${storia.descrizione}</p>
                         <p><strong>Primo Scenario:</strong> Nessun scenario iniziale trovato</p>
-                        <button onclick="giocaStoria('${storia.id}')">Gioca Storia</button>
+                        <button onclick="giocaStoria('${storia.id}')">Gioca</button>
                         ${storia.giocata ? `
                             <button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
                             <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>
@@ -181,7 +180,7 @@
             console.log("stato: " + stato);
 
             // Costruisci la query string con i filtri
-            let query = `/api/storieFiltrate?`;
+            let query =`/api/storieFiltrate?`;
             if (searchTerm) query += `searchTerm=${encodeURIComponent(searchTerm)}&`;
             if (username) query += `username=${encodeURIComponent(username)}&`;
 
@@ -221,11 +220,12 @@
         }
 
         function giocaStoria(storiaId) {
-            window.location.href = `/giocaStoria.html?storiaId=${storiaId}`;
+            console.log("ID Storia selezionata:", storiaId);
+            window.location.href = `/api/gioca/${storiaId}/start`;
         }
 
         function riprendiStoria(storiaId) {
-            window.location.href = '/riprendi.html?storiaId=${storiaId}';
+            window.location.href = '/riprendi/{storiaId}';
         }
 
         function eliminaPartita(storiaId) {

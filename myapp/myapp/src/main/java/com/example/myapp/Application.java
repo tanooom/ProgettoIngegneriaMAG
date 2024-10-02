@@ -14,7 +14,7 @@ public class Application {
 	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
 
 	//TODO: alla fine sistema tutti i @media dei css
-	//TODO: alla fine togli tutti i console log e i system.out.println()
+	//TODO: alla fine togli tutti i console log e i system.out.println() di debug
 	//TODO: dopo che riusciamo a salvare una storia togli Storia_example.html e StoriaExampleController.java
 
 	// PER RIMUOVERE UN UTENTE: 
