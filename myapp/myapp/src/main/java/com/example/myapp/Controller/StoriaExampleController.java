@@ -21,6 +21,13 @@ public class StoriaExampleController {
     @Autowired
     private final MapDBService mapDBService;
 
+    private List<Integer> idOpzioni;
+    private List<Integer> idEntryScenari;
+    private List<Integer> idExitScenari;
+    private boolean scenarioIniziale;
+    private boolean scenarioFinale;
+
+
     public StoriaExampleController(MapDBService mapDBService) {
         this.mapDBService = mapDBService;
     }
@@ -38,9 +45,9 @@ public class StoriaExampleController {
         );
 
         // Crea scenari fittizi
-        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...");
-        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra");
-        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra");
+        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...", idOpzioni, "mappa", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
+        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra", idOpzioni, "chiave", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
+        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra", idOpzioni, "laccio", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
 
         // Aggiungi gli ID degli scenari alla storia
         nuovaStoria.aggiungiScenario(primoScenario.getId());
@@ -72,9 +79,9 @@ public class StoriaExampleController {
         );
 
         // Crea scenari fittizi
-        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...");
-        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra");
-        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra");
+        Scenario primoScenario = new Scenario(101, "Scenario 1", "C'era una volta...", idOpzioni, "mappa", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
+        Scenario secondoScenario = new Scenario(102, "Scenario 2", "Gira a destra", idOpzioni, "chiave", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
+        Scenario terzoScenario = new Scenario(103, "Scenario 3", "Gira a sinistra", idOpzioni, "laccio", idEntryScenari, idExitScenari, scenarioIniziale, scenarioFinale);
 
         // Aggiungi gli scenari alla storia
         nuovaStoria.aggiungiScenario(primoScenario.getId());

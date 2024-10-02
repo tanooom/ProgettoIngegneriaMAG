@@ -1,6 +1,8 @@
 package com.example.myapp.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,11 +49,27 @@ public class MapDBController {
 
     // Endpoint per gestire gli scenari
     @PostMapping("/putScenario")
-    public String putScenario(@RequestParam int id, @RequestParam String nome, @RequestParam String description) {
-        Scenario scenario = new Scenario(id, nome, description);
+    public String putScenario(@RequestParam int id, 
+                            @RequestParam String nome, 
+                            @RequestParam String description,
+                            @RequestParam(required = false) List<Integer> idOpzioni,
+                            @RequestParam(required = false) String oggettoRaccoglibile,
+                            @RequestParam(required = false) List<Integer> idEntryScenari,
+                            @RequestParam(required = false) List<Integer> idExitScenari,
+                            @RequestParam boolean scenarioIniziale,
+                            @RequestParam boolean scenarioFinale) {
+        
+        Scenario scenario = new Scenario(id, nome, description, 
+                                        idOpzioni != null ? idOpzioni : new ArrayList<>(),
+                                        oggettoRaccoglibile,
+                                        idEntryScenari != null ? idEntryScenari : new ArrayList<>(),
+                                        idExitScenari != null ? idExitScenari : new ArrayList<>(),
+                                        scenarioIniziale, 
+                                        scenarioFinale);
         mapDBService.saveScenario(scenario);
         return "Scenario aggiunto con successo!";
     }
+
 
     @GetMapping("/getScenario")
     public Scenario getScenarioById(@RequestParam int id) {
