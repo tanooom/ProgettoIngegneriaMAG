@@ -25,4 +25,8 @@ public class Application {
 
 	// PER RIMUOVERE UN'OPZIONE
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteOption?id=124"
+
+	// PER RIMUOVERE UNO SCENARIO
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteScenario?id=124"
+
 }

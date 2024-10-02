@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Service.MapDBService;
+import org.springframework.ui.Model;
 
 @Controller
 public class OpzioneController {
@@ -99,6 +100,17 @@ public class OpzioneController {
         mapDBService.saveOption(nuovaOpzione);
 
         return "redirect:/scriviScenario";
-}
+    }
+
+    @GetMapping("/scriviScenario")
+    public String mostraScenarioForm(Model model){
+
+        model.addAttribute("opzioni", mapDBService.getListAllOptions()); //Passa le opzioni alla lista come modello
+        model.addAttribute("scenari", mapDBService.getListAllScenari());
+        return "scriviScenario";
+    }
+    
+
+
 
 }

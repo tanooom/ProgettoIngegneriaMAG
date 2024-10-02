@@ -19,8 +19,7 @@
 
     <main>
         <div class="form-container">
-            <!-- Form per l'invio dei dati -->
-            <form id="scenario-form" method="POST" > <!-- ho tolto action -->
+            <form id="scenario-form" method="POST" action="/aggiungiScenario">
                 <div>
                     <label for="nome-scenario">Nome Scenario:</label>
                     <input type="text" id="nome-scenario" name="nomeScenario" required>
@@ -30,7 +29,37 @@
                     <textarea id="descrizione-scenario" name="descrizioneScenario" required></textarea>
                 </div>
                 <div>
+                    <label for="opzioni">Seleziona una o più opzioni:</label>
+                    <select id="opzioni" name="idOpzioni" multiple required>
+                        <option value="" disabled selected>Scegli una o più opzioni</option>
+                        <th:block th:each="opzione : ${opzioni}">
+                            <option th:value="${opzione.id}" th:text="${opzione.descrizione}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div>
                     <button type="button" onclick="window.location.href='scriviOpzione'">Aggiungi Opzione</button>
+                </div>
+                <div>
+                    <label>Questo scenario rilascia un oggetto?</label>
+                    <div class="option-group">
+                        <label><input type="radio" name="rilasciaOggetto" value="si"> Sì</label>
+                        <label><input type="radio" name="rilasciaOggetto" value="no" checked> No</label>
+                    </div>
+                    <div class="rilascia-fields" style="display:none;">
+                        <label for="scrivi-rilascia-oggetto">Scrivi oggetto rilasciato:</label>
+                        <input type="text" id="scrivi-rilascia-oggetto" name="oggettoRilasciato">
+                    </div>
+                </div>
+                <!-- Aggiungi il nuovo menu a tendina per gli scenari precedenti -->
+                <div>
+                    <label for="scenari-precedenti">Seleziona gli scenari precedenti:</label>
+                    <select id="scenari-precedenti" name="idEntryScenari" multiple>
+                        <option value="" disabled selected>Scegli gli scenari precedenti</option>
+                        <th:block th:each="scenario : ${scenari}">
+                            <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
+                        </th:block>
+                    </select>
                 </div>
                 <button type="submit" id="save-scenario-button">Salva Scenario</button>
             </form>
@@ -45,9 +74,23 @@
         function confermaTornaIndietro() {
             const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato lo scenario!");
             if (conferma) {
-                window.location.href = 'scriviStoria'; // Reindirizza alla pagina di scriviStoria
+                window.location.href = 'scriviStoria';
             }
         }
+
+        document.querySelectorAll('input[name="rilasciaOggetto"]').forEach(function(el) {
+            el.addEventListener('change', function() {
+                const rilasciaFields = document.querySelector('.rilascia-fields');
+                const oggettoRilasciatoInput = document.getElementById('scrivi-rilascia-oggetto');
+                if (el.value === 'si') {
+                    rilasciaFields.style.display = 'block';
+                    oggettoRilasciatoInput.setAttribute('required', 'required');
+                } else {
+                    rilasciaFields.style.display = 'none';
+                    oggettoRilasciatoInput.removeAttribute('required');
+                }
+            });
+        });
     </script>
 </body>
 </html>

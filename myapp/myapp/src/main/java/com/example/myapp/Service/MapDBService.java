@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -217,15 +219,32 @@ public class MapDBService {
         }
     }
 
+    // Metodo per rimuovere uno scenario
+    public void removeScenario(int id) {
+        if (scenarioMap.containsKey(id)) {
+            scenarioMap.remove(id);
+            db.commit(); // Salva le modifiche nel database
+        } else {
+            throw new IllegalArgumentException("Scenario con ID " + id + " non trovato.");
+        }
+    }
+
     public Map<Integer, Opzione> getAllOptions() {
         return optionMap;
+    }
+
+    public List<Opzione> getListAllOptions() { 
+        return new ArrayList<>(optionMap.values()); // Restituisce le opzioni come lista
     }
 
     public Map<Integer, Scenario> getAllScenari() {
         return scenarioMap; 
     }
 
-    
+    public List<Scenario> getListAllScenari() { 
+        return new ArrayList<>(scenarioMap.values()); // Restituisce gli scenari come lista
+    }
+
     @PreDestroy
     public void cleanup(){
         db.close();

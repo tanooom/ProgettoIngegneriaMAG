@@ -5,36 +5,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scenario implements Serializable{
+    private static final long serialVersionUID = 1308912331969162728L;
+
     private final int id;
     private final String nome;
     private final String descrizione;
-    private final List<Integer> opzioni;
-    private final List<String> oggettiRaccoglibili;
+    private final List<Integer> idOpzioni;
+    private final String oggettoRaccoglibile;
     private final List<Integer> idEntryScenari; // Scenario precedente
     private final List<Integer> idExitScenari; // Scenario successivo
-    private int idStoria; // Storia a cui appartiene lo scenario
-    private final boolean scenarioIniziale = false; // Se true è lo scenario iniziale
-    private final boolean scenarioFinale = false; // Se true è uno scenario finale
+    private final boolean scenarioIniziale; // Se true è lo scenario iniziale
+    private final boolean scenarioFinale; // Se true è uno scenario finale
 
-    // Costruttore
-    public Scenario(int id, String nome, String descrizione) {
-        this.id = id;
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.opzioni = new ArrayList<>();
-        this.oggettiRaccoglibili = new ArrayList<>();
-        this.idEntryScenari = new ArrayList<>();
-        this.idExitScenari = new ArrayList<>();
+    public Scenario(int id, String nome, String descrizione, List<Integer> idOpzioni, String oggettoRaccoglibile, 
+    List<Integer> idEntryScenari, List<Integer> idExitScenari, boolean scenarioIniziale, boolean scenarioFinale) {
+
+    this.id = id;
+    this.nome = nome;
+    this.descrizione = descrizione;
+    this.idOpzioni = idOpzioni != null ? idOpzioni : new ArrayList<>();
+    this.oggettoRaccoglibile = oggettoRaccoglibile;
+    this.idEntryScenari = idEntryScenari != null ? idEntryScenari : new ArrayList<>();
+    this.idExitScenari = idExitScenari != null ? idExitScenari : new ArrayList<>();
+    this.scenarioIniziale = scenarioIniziale;
+    this.scenarioFinale = scenarioFinale;
     }
 
     // Metodi per aggiungere opzioni
     public void aggiungiOpzione(int opzioneId) {
-        this.opzioni.add(opzioneId);
+        this.idOpzioni.add(opzioneId);
     }
 
-    public void aggiungiOggettoRaccoglibile(String oggetto) {
+    /*public void aggiungiOggettoRaccoglibile(String oggetto) {
         this.oggettiRaccoglibili.add(oggetto);
-    }
+    }*/
 
     // Aggiungi scenario precedente (EntryScenario)
     public void aggiungiIdEntryScenario(int idScenarioPrecedente) {
@@ -64,15 +68,11 @@ public class Scenario implements Serializable{
     }
 
     public List<Integer> getOpzioni() {
-        return opzioni;
+        return idOpzioni;
     }
     
-    public List<String> getOggettiRaccoglibili() {
-        return oggettiRaccoglibili;
-    }
-
-    public int getIdStoria() {
-        return idStoria;
+    public String getOggettoRaccoglibile() {
+        return oggettoRaccoglibile;
     }
 
     public List<Integer> getIdEntryScenari() {
@@ -81,10 +81,6 @@ public class Scenario implements Serializable{
 
     public List<Integer> getIdExitScenari() {
         return idExitScenari;
-    }
-
-    public void setIdStoria(int storia) {
-        this.idStoria = storia;
     }
 
     // Metodo per controllare se lo scenario è iniziale
@@ -105,13 +101,12 @@ public class Scenario implements Serializable{
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
-                ", opzioni=" + opzioni +
-                ", oggettiRaccoglibili=" + oggettiRaccoglibili +
+                ", idOpzioni=" + idOpzioni +
+                ", oggettoRaccoglibile=" + oggettoRaccoglibile +
                 ", EntryScenari=" + idEntryScenari +
                 ", ExitScenari=" + idExitScenari +
-                ", storiaId=" + idStoria +
                 ", scenarioIniziale=" + scenarioIniziale +
                 ", scenarioFinale=" + scenarioFinale +
-                '}';
-    }
+            '}';
+}
 }
