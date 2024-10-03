@@ -48,17 +48,6 @@
                         <input type="text" id="scrivi-oggetto" name="oggettoRichiesto">
                     </div>
                 </div>
-                <div>
-                    <label>Rilascia Oggetto?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="rilasciaOggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="rilasciaOggetto" value="no" checked> No</label>
-                    </div>
-                    <div class="rilascia-fields" style="display:none;">
-                        <label for="scrivi-rilascia-oggetto">Scrivi oggetto rilasciato:</label>
-                        <input type="text" id="scrivi-rilascia-oggetto" name="oggettoRilasciato">
-                    </div>
-                </div>
                 <button type="submit">Salva Opzione</button>
             </form>
         </div>
@@ -80,13 +69,6 @@
             el.addEventListener('change', function() {
                 const oggettoFields = document.querySelector('.oggetto-fields');
                 oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
-            });
-        });
-
-        document.querySelectorAll('input[name="rilasciaOggetto"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const rilasciaFields = document.querySelector('.rilascia-fields');
-                rilasciaFields.style.display = el.value === 'si' ? 'block' : 'none';
             });
         });
 

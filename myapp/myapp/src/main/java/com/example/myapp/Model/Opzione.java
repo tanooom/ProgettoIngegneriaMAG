@@ -14,10 +14,8 @@ public class Opzione implements Serializable{
     private final boolean richiedeIndovinello;
     private final String indovinello;
     private final String rispostaCorrettaIndovinello;
-    private final boolean rilasciaOggetto;
-    private final String oggettoRilasciato;
 
-    public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello, boolean rilasciaOggetto, String oggettoRilasciato) {
+    public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
         this.id = id;
         this.descrizione = descrizione;
         //this.idScenarioSuccessivo = idScenarioSuccessivo;
@@ -26,8 +24,6 @@ public class Opzione implements Serializable{
         this.indovinello = indovinello;
         this.richiedeIndovinello = richiedeIndovinello;
         this.rispostaCorrettaIndovinello = rispostaCorrettaIndovinello; // Inizializzazione della risposta corretta
-        this.rilasciaOggetto = rilasciaOggetto;
-        this.oggettoRilasciato = oggettoRilasciato;
     }
 
     // Getter
@@ -62,13 +58,4 @@ public class Opzione implements Serializable{
     public String getRispostaCorrettaIndovinello() {
         return rispostaCorrettaIndovinello;
     }
-    
-    public boolean isRilasciaOggetto() {
-        return rilasciaOggetto;
-    }
-
-    public String getOggettoRilasciato(){
-        return oggettoRilasciato;
-    }
-
 }

@@ -72,7 +72,7 @@ public class StoriaService {
         return scenario.getOpzioni().stream()
             .filter(opzioneIdFromList -> opzioneIdFromList == opzioneId) // Cambiato per confrontare con Integer
             .map(opzioneIdFromList -> {
-                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", false, null, false, null, null, false, null); // Sostituisci con il tuo metodo di recupero
+                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", false, null, false, null, null); // Sostituisci con il tuo metodo di recupero
             })
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Opzione non trovata per l'ID: " + opzioneId));

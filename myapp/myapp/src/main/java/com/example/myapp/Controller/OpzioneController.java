@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Service.MapDBService;
-import org.springframework.ui.Model;
 
 @Controller
 public class OpzioneController {
@@ -37,10 +37,8 @@ public class OpzioneController {
                             @RequestParam String oggettoRichiesto, 
                             @RequestParam boolean richiedeIndovinello, 
                             @RequestParam String indovinello,
-                            @RequestParam String rispostaCorrettaIndovinello,
-                            @RequestParam boolean rilasciaOggetto, 
-                            @RequestParam String oggettoRilasciato) {
-        Opzione opzione = new Opzione(id, description, richiedeOggetto, oggettoRichiesto, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello, rilasciaOggetto, oggettoRilasciato);
+                            @RequestParam String rispostaCorrettaIndovinello) {
+        Opzione opzione = new Opzione(id, description, richiedeOggetto, oggettoRichiesto, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello);
         mapDBService.saveOption(opzione);
         return "Opzione aggiunta con successo!";
     }
@@ -76,7 +74,6 @@ public class OpzioneController {
         // Converte i valori delle stringhe in boolean
         boolean richiedeIndovinelloBool = "si".equalsIgnoreCase(richiedeIndovinello);
         boolean richiedeOggettoBool = "si".equalsIgnoreCase(richiedeOggetto);
-        boolean rilasciaOggettoBool = "si".equalsIgnoreCase(rilasciaOggetto);
 
         // Recupera l'ultimo ID usato per le opzioni e lo incrementa
         int newId = mapDBService.getAllOptions().keySet().stream()
@@ -92,9 +89,7 @@ public class OpzioneController {
             oggettoRichiesto != null && !oggettoRichiesto.isEmpty() ? oggettoRichiesto : null, // oggetto richiesto
             richiedeIndovinelloBool, // richiede indovinello
             indovinello != null && !indovinello.isEmpty() ? indovinello : null, // indovinello (se applicabile)
-            rispostaIndovinello != null && !rispostaIndovinello.isEmpty() ? rispostaIndovinello : null, // risposta corretta indovinello (se applicabile)
-            rilasciaOggettoBool, // rilascia oggetto
-            oggettoRilasciato != null && !oggettoRilasciato.isEmpty() ? oggettoRilasciato : null // oggetto rilasciato
+            rispostaIndovinello != null && !rispostaIndovinello.isEmpty() ? rispostaIndovinello : null // risposta corretta indovinello (se applicabile)
         );
 
         mapDBService.saveOption(nuovaOpzione);
@@ -109,8 +104,4 @@ public class OpzioneController {
         model.addAttribute("scenari", mapDBService.getListAllScenari());
         return "scriviScenario";
     }
-    
-
-
-
 }
