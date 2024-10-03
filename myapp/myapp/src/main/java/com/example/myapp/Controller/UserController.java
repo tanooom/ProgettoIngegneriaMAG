@@ -53,7 +53,7 @@ public class UserController {
             @RequestParam String mail,
             Model model) {
         // Controlla se l'username esiste già nel database
-        if (userService.findByUsername(username) != null) {
+        if (userService.getUser(username) != null) {
             model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");
             return "register";
         }

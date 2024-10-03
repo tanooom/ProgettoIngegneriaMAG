@@ -115,6 +115,7 @@
 
                 // Aggiungi la logica per ottenere la descrizione dello scenario iniziale
                 if (storia.idScenarioIniziale) {
+                    console.log(`Fetching description for story ID: ${storia.id} with initial scenario ID: ${storia.idScenarioIniziale}`);
                     fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione') // Assicurati di avere l'endpoint corretto
                     .then(response => {
                             if (!response.ok) {
@@ -220,12 +221,11 @@
         }
 
         function giocaStoria(storiaId) {
-            console.log("ID Storia selezionata:", storiaId);
-            window.location.href = `/api/gioca/${storiaId}/start`;
+            window.location.href = `/giocaStoria?storiaId=${storiaId}`;
         }
 
         function riprendiStoria(storiaId) {
-            window.location.href = '/riprendi/{storiaId}';
+            window.location.href = `/giocaStoria?storiaId=${storiaId}&riprendi=true`;
         }
 
         function eliminaPartita(storiaId) {

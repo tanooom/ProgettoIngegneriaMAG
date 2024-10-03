@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +18,6 @@ import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
 import com.example.myapp.Service.PartitaService;
-import com.example.myapp.Service.StoriaService;
 import com.example.myapp.Service.UserService;
 
 @RestController
@@ -30,18 +28,14 @@ public class PartitaController {
     private final PartitaService partitaService;
 
     @Autowired
-    private final StoriaService storiaService;
-
-    @Autowired
     private final UserService userService;
 
     @Autowired
     private final MapDBController mapDBController;
 
     // Costruttore
-    public PartitaController(PartitaService partitaService, StoriaService storiaService, UserService userService, MapDBController mapDBController) {
+    public PartitaController(PartitaService partitaService, UserService userService, MapDBController mapDBController) {
         this.partitaService = partitaService;
-        this.storiaService = storiaService;
         this.userService = userService;
         this.mapDBController = mapDBController;
     }
@@ -52,13 +46,25 @@ public class PartitaController {
     }
 
     @GetMapping("/gioca/{storiaId}/start")
-    public String giocaStoria(@PathVariable int storiaId, Model model) {
-        System.out.printf("STORIA ID:", storiaId);
-        Storia storia = storiaService.getStoriaById(storiaId);
-        model.addAttribute("storia", storia);
-        Scenario scenarioCorrente = mapDBController.getScenarioById(storia.getIdScenarioIniziale());
-        model.addAttribute("scenario", scenarioCorrente);
-        return "giocaStoria"; 
+    public Map<String, Object> giocaStoria(@PathVariable int storiaId) {
+        // Ottieni l'utente autenticato
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+        
+        // Carica la partita per l'utente e la storia selezionata
+        Partita partita = partitaService.caricaPartita(storiaId, user);
+        
+        // Ottieni lo scenario corrente
+        Scenario scenarioCorrente = mapDBController.getScenarioById(partita.getIdScenarioCorrente());
+        
+        // Costruisci la risposta con tutte le informazioni necessarie
+        Map<String, Object> response = new HashMap<>();
+        response.put("titolo", partita.getStoria().getTitolo());
+        response.put("scenarioCorrente", scenarioCorrente);
+        response.put("inventario", partita.getInventarioId()); // Associa l'inventario dell'utente
+        
+        return response;
     }
 
     @GetMapping("/gioca/{storiaId}/scenario")
@@ -76,6 +82,7 @@ public class PartitaController {
 
     @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")
     public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId, InventarioController inventarioController) {
+        // Ottieni l'utente autenticato
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);

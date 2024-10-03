@@ -245,6 +245,10 @@ public class MapDBService {
         return new ArrayList<>(scenarioMap.values()); // Restituisce gli scenari come lista
     }
 
+    public Map<Integer, Storia> getAllStorie() {
+        return storyMap; 
+    }
+
     @PreDestroy
     public void cleanup(){
         db.close();

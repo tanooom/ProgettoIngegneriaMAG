@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storia implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private final String titolo;
     private final String username; // Username dello scrittore
@@ -13,13 +15,15 @@ public class Storia implements Serializable{
     private int idScenarioIniziale;
     private final List<Integer> idScenari; // Lista ID scenari
 
-    public Storia(int id, String titolo, String username, int lunghezza, String stato) {
+    public Storia(int id, String titolo, String username, int lunghezza, 
+    String stato, int idScenarioIniziale, List<Integer> idScenari) {
         this.id = id;
         this.titolo = titolo;
         this.username = username;
         this.lunghezza = lunghezza;
         this.stato = stato;
-        this.idScenari = new ArrayList<>();
+        this.idScenarioIniziale = idScenarioIniziale;
+        this.idScenari = idScenari != null ? idScenari : new ArrayList<>();
     }
 
     public void aggiungiScenario(int scenarioId) {

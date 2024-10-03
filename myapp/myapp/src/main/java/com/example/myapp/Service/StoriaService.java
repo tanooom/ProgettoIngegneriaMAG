@@ -16,7 +16,6 @@ import com.example.myapp.Model.Storia;
 @Service
 public class StoriaService {
 
-    // TODO: da popolare con le storie dal database
     private final List<Storia> tutteLeStorie = new ArrayList<>();
 
     @Autowired
@@ -60,7 +59,6 @@ public class StoriaService {
 
     // Recupera storie dal database
     public Storia getStoriaById(int storiaId) {
-        // TODO: Logica per recuperare una storia dal database o da una lista
         return tutteLeStorie.stream()
             .filter(storia -> storia.getId() == storiaId) // Assicurati di avere un metodo getId()
             .findFirst()

@@ -30,17 +30,18 @@ public class MapDBController {
         return "Storia salvata con successo!";
     }
 
-    public String putStory( @RequestParam int id, 
+    /*public String putStory( @RequestParam int id, 
                             @RequestParam String title, 
                             @RequestParam String username, 
                             @RequestParam int lunghezza, 
                             @RequestParam String stato, 
-                            @RequestParam int scenarioId) {
-        Storia storia = new Storia(id, title, username, lunghezza, stato);
-        storia.aggiungiScenario(scenarioId);
+                            @RequestParam int scenarioinizialeId,
+                            @RequestParam List<Integer> scenariId) {
+        Storia storia = new Storia(id, title, username, lunghezza, stato, scenarioinizialeId, scenariId);
+        storia.aggiungiScenario(scenarioinizialeId);
         mapDBService.saveStory(storia);
         return "Storia aggiunta con successo!";
-    }
+    }*/
 
     @GetMapping("/getStory")
     public Storia getStory(@RequestParam int id) {

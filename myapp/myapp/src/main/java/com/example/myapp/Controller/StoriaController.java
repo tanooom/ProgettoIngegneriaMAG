@@ -1,6 +1,7 @@
 package com.example.myapp.Controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,35 +34,40 @@ public class StoriaController {
         this.mapDBService = mapDBService;
     }
 
-    // Aggiungiamo un metodo POST per salvare la storia
-    @PostMapping("/api/storie")
-    public ResponseEntity<Storia> salvaStoria(  @RequestParam(required = false, defaultValue = "0") int id,
-                                                @RequestParam String titolo,
-                                                @RequestParam String username,
-                                                @RequestParam int lunghezza,
-                                                @RequestParam String stato) {
-        System.out.println("Salvataggio storia iniziato...");
-        try {
-            // Creazione di una nuova storia fittizia TEMPORANEA
-            Storia storia = new Storia(
-                id,
-                titolo,
-                username,
-                lunghezza,
-                stato
-            );
+    @PostMapping("/aggiungiStoria")
+    public String aggiungiStoria(
+        @RequestParam String titoloStoria
+        //@RequestParam String descrizioneStoria
+        ) {
+        
+        int newId = mapDBService.getAllStorie().keySet().stream()
+        .mapToInt(Integer::intValue)
+        .max()
+        .orElse(0) + 1;
 
-            Storia nuovaStoria = storiaService.creaStoria(storia);
+        List<Integer> idScenari = Arrays.asList(1, 2, 3); // Questa logica potrebbe cambiare in base alla tua implementazione
+        String username = "abcd";
+        int lunghezza = 2;
+        String stato = "Conclusa";
+        int idScenarioIniziale = 1;
 
-            // Salva la storia nel database DA TENERE:
-            mapDBService.saveStory(nuovaStoria);
-            
-            System.out.println("QUESTA E' LA NUOVA STORIA:" +  nuovaStoria.toString());
-            return ResponseEntity.ok(nuovaStoria);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(null); // Errore generico
-        }
+        // Creare un nuovo scenario temporaneo per calcolare le proprietà
+        Storia nuovaStoria = new Storia(
+            newId, 
+            titoloStoria,
+            username, 
+            //descrizioneStoria,
+            lunghezza,
+            stato,
+            idScenarioIniziale,
+            idScenari
+        );
+
+        mapDBService.saveStory(nuovaStoria);
+
+        return "redirect:/scriviStoria";
     }
+
 
     @GetMapping("/api/storie")
     public ResponseEntity<List<Storia>> getStorie() {

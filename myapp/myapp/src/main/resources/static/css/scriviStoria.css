@@ -112,7 +112,7 @@ body button {
     padding: 10px 20px; 
     border-radius: 4px; 
     cursor: pointer; 
-    font-size: 16px; 
+    font-size: 14px; 
     margin-right: 10px; 
 }
 
@@ -188,19 +188,39 @@ body button:hover {
     margin-top: -10px;
 }
 
-/* Stile per il pulsante di Salvataggio */
-.save-button {
+/* Stile per il pulsante di Salvataggio Storia*/
+#save-storia-button {
+    display: block;
+    margin: 20px auto;
     background-color: #007bff; 
     color: white;
     border: none;
     padding: 10px 20px; 
     border-radius: 4px; 
     cursor: pointer;
-    font-size: 14px; 
+    font-size: 18px; 
 }
 
-.save-button:hover {
-    background-color: #025cbd; 
+/* Stile per il pulsante di Salvataggio Opzione*/
+#save-opzione-button {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer;
+    font-size: 16px; 
+}
+
+/* Stile per il pulsante di Salvataggio Scenario*/
+#save-scenario-button {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer;
+    font-size: 16px; 
 }
 
 /* Stile per il pulsante di Eliminazione */

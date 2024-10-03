@@ -67,9 +67,7 @@ public class OpzioneController {
         @RequestParam(required = false) String rispostaIndovinello,
         @RequestParam String richiedeIndovinello,
         @RequestParam String richiedeOggetto,
-        @RequestParam(required = false) String oggettoRichiesto,
-        @RequestParam String rilasciaOggetto,
-        @RequestParam(required = false) String oggettoRilasciato) {
+        @RequestParam(required = false) String oggettoRichiesto) {
 
         // Converte i valori delle stringhe in boolean
         boolean richiedeIndovinelloBool = "si".equalsIgnoreCase(richiedeIndovinello);

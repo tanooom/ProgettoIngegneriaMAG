@@ -54,13 +54,9 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
-    public Utente findByUsername(String username) {
-        return getUser(username);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Utente user = findByUsername(username);
+        Utente user = getUser(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
