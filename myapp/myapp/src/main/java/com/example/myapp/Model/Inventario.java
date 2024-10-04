@@ -7,16 +7,21 @@ public class Inventario {
 
     private final int id;
     private final List<String> oggetti;
-    //TODO: aggiungi riferimento partita
+    private final int idPartita;
 
     // Costruttore: inizializza un inventario vuoto
-    public Inventario(int id) {
+    public Inventario(int id, int idPartita) {
         this.id = id;
         this.oggetti = new ArrayList<>();
+        this.idPartita = idPartita;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getIdPartita() {
+        return idPartita;
     }
 
     // Aggiunge un oggetto all'inventario

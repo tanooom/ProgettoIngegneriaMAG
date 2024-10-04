@@ -24,19 +24,37 @@
                     <label for="titolo">Titolo:</label>
                     <input type="text" id="titoloStoria" name="titoloStoria">
                 </div>
-                <div>
+                <!--<div>
                     <label for="descrizione">Descrizione:</label>
                     <textarea id="descrizione" name="descrizione"></textarea>
                 </div>
                 <div>
                     <label for="scenario-iniziale">Scenario Iniziale:</label>
                     <textarea id="scenario-iniziale" name="scenario-iniziale"></textarea>
+                </div>-->
+                <div>
+                    <label for="scenario-iniziale">Seleziona lo scenario iniziale:</label>
+                    <select id="scenario-iniziale" name="idScenarioIniziale">
+                        <option value="" disabled selected>Scegli lo scenario iniziale</option>
+                        <th:block th:each="scenario : ${scenari}">
+                            <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
+                        </th:block>
+                    </select>
                 </div>
                 <div>
                     <button type="button" id="add-scenario-button" onclick="window.location.href='scriviScenario'">Aggiungi Scenario</button>
                 </div>
                 <div>
-                    <button id="save-storia-button">Salva storia</button>
+                    <label for="scenari-successivi">Seleziona gli scenari successivi:</label>
+                    <select id="scenari-successivi" name="idScenari" multiple>
+                        <option value="" disabled selected>Scegli gli scenari successivi</option>
+                        <th:block th:each="scenario : ${scenari}">
+                            <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div>
+                    <button id="save-button">Salva storia</button>
                 </div>
             </form>
         </div>

@@ -92,6 +92,20 @@ public class MapDBService {
         return storyMap.get(id);
     }
 
+    public Map<Integer, Storia> getAllStorie() {
+        return storyMap; 
+    }
+
+    // Metodo per rimuovere una storia
+    public void removeStoria(int id) {
+        if (storyMap.containsKey(id)) {
+            storyMap.remove(id);
+            db.commit(); // Salva le modifiche nel database
+        } else {
+            throw new IllegalArgumentException("Storia con ID " + id + " non trovata.");
+        }
+    }
+
     // Metodo per ottenere tutte le storie
     public Collection<Storia> getAllStories() {
         return storyMap.values(); // Ritorna tutte le storie come una collection
@@ -243,10 +257,6 @@ public class MapDBService {
 
     public List<Scenario> getListAllScenari() { 
         return new ArrayList<>(scenarioMap.values()); // Restituisce gli scenari come lista
-    }
-
-    public Map<Integer, Storia> getAllStorie() {
-        return storyMap; 
     }
 
     @PreDestroy

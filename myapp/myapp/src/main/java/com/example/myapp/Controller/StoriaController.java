@@ -7,8 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -141,7 +144,6 @@ public class StoriaController {
     
         return ResponseEntity.ok(storieResult);
     }
-    
 
     @GetMapping("/visualizzaStoria/{id}")
     public String visualizzaStoria(@PathVariable int id, Model model) {
@@ -171,5 +173,23 @@ public class StoriaController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/deleteStoria")
+    public ResponseEntity<String> deleteStory(@RequestParam int id) {
+        try {
+            mapDBService.removeStoria(id);
+            return ResponseEntity.ok("Storia eliminata con successo!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore interno del server: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/scriviStoria")
+    public String scriviStoria(Model model) {
+        model.addAttribute("scenari", mapDBService.getListAllScenari());
+        return "scriviStoria";
     }
 }

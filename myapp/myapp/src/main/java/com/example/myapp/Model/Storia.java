@@ -93,7 +93,7 @@ public class Storia implements Serializable{
                 ", username='" + username + '\'' +
                 ", lunghezza=" + lunghezza +
                 ", stato='" + stato + '\'' +
-                ", scenari=" + idScenari.toString() +
+                ", idScenari=" + idScenari.toString() +
                 '}';
     }
 }

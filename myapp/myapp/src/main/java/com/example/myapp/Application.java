@@ -11,11 +11,11 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
-
+	
 	//TODO: alla fine sistema tutti i @media dei css
 	//TODO: alla fine togli tutti i console log e i system.out.println() di debug
-	//TODO: dopo che riusciamo a salvare una storia togli Storia_example.html e StoriaExampleController.java
+
+	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
 
 	// PER RIMUOVERE UN UTENTE: 
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteUser?username=andre2"
@@ -29,4 +29,6 @@ public class Application {
 	// PER RIMUOVERE UNO SCENARIO
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteScenario?id=124"
 
+	// PER RIMUOVERE UNA STORIA
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteStoria?id=124"
 }

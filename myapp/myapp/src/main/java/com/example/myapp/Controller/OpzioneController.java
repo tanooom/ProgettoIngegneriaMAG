@@ -19,10 +19,10 @@ public class OpzioneController {
     @Autowired
     private MapDBService mapDBService;
 
-    @GetMapping("/scriviStoria")
+    /*@GetMapping("/scriviStoria")
     public String scriviStoria() {
         return "scriviStoria";
-    }
+    }*/
 
     @GetMapping("/scriviOpzione")
     public String scriviOpzione() {
