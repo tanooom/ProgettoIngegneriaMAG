@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.myapp.Model.Inventario;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
@@ -33,11 +34,15 @@ public class PartitaController {
     @Autowired
     private final MapDBController mapDBController;
 
+    @Autowired
+    private final InventarioController inventarioController;
+
     // Costruttore
-    public PartitaController(PartitaService partitaService, UserService userService, MapDBController mapDBController) {
+    public PartitaController(PartitaService partitaService, UserService userService, MapDBController mapDBController, InventarioController inventarioController) {
         this.partitaService = partitaService;
         this.userService = userService;
         this.mapDBController = mapDBController;
+        this.inventarioController = inventarioController;
     }
 
     @GetMapping("/storie-disponibili")
@@ -45,27 +50,57 @@ public class PartitaController {
         return partitaService.getStorieDisponibili();
     }
 
-    @GetMapping("/gioca/{storiaId}/start")
+    @GetMapping("/api/gioca/{storiaId}/start")
     public Map<String, Object> giocaStoria(@PathVariable int storiaId) {
-        // Ottieni l'utente autenticato
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
-        // Carica la partita per l'utente e la storia selezionata
         Partita partita = partitaService.caricaPartita(storiaId, user);
+        if (partita == null) {
+            throw new RuntimeException("Partita non trovata per l'utente: " + username);
+        }
         
-        // Ottieni lo scenario corrente
         Scenario scenarioCorrente = mapDBController.getScenarioById(partita.getIdScenarioCorrente());
+        if (scenarioCorrente == null) {
+            throw new RuntimeException("Scenario non trovato per ID: " + partita.getIdScenarioCorrente());
+        }
         
-        // Costruisci la risposta con tutte le informazioni necessarie
+        Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+        
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
         response.put("scenarioCorrente", scenarioCorrente);
-        response.put("inventario", partita.getInventarioId()); // Associa l'inventario dell'utente
-        
+        response.put("inventario", inventario.getOggetti());
+        response.put("partitaConclusa", !partita.isInCorso());
+
         return response;
     }
+
+    @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")
+    public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+
+        boolean isUltimoScenario = partitaService.isUltimoScenario(opzioneId);
+        
+        if (isUltimoScenario) {
+            partitaService.terminaPartita(storiaId);
+        } else {
+            partitaService.faiScelta(storiaId, opzioneId, user, inventarioController);
+        }
+    }
+
+    @PostMapping("/gioca/{storiaId}/salva")
+    public void salvaPartita(@PathVariable int storiaId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+        
+        partitaService.salvaPartita(storiaId, user);
+    }
+
 
     @GetMapping("/gioca/{storiaId}/scenario")
     public Map<String, Object> caricaScenario(@PathVariable int storiaId) {
@@ -80,13 +115,24 @@ public class PartitaController {
         return response;
     }
 
-    @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")
-    public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId, InventarioController inventarioController) {
-        // Ottieni l'utente autenticato
+    @GetMapping("/gioca/{storiaId}/controllaOggetto/{oggetto}")
+    public Map<String, Boolean> controllaOggetto(@PathVariable int storiaId, @PathVariable String oggetto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-        // Usa l'utente per caricare scenari personalizzati o eseguire logiche specifiche
-        partitaService.faiScelta(storiaId, opzioneId, user, inventarioController);
+    
+        // Carica la partita dell'utente
+        Partita partita = partitaService.caricaPartita(storiaId, user);
+    
+        // Ottieni l'inventario associato alla partita
+        Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+    
+        // Controlla se l'inventario contiene l'oggetto richiesto
+        boolean possiedeOggetto = inventario.contieneOggetto(oggetto);
+    
+        // Risposta con il risultato
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("possiedeOggetto", possiedeOggetto);
+        return response;
     }
 }

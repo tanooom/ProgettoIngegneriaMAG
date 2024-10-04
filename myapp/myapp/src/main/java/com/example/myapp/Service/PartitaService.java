@@ -1,8 +1,6 @@
 package com.example.myapp.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -15,12 +13,14 @@ import com.example.myapp.Model.Utente;
 @Service
 public class PartitaService {
 
-    private final Map<Integer, Partita> partiteAttive = new HashMap<>();
+    private final List<Partita> partiteAttive;
     private final StoriaService storiaService;
+    
 
     // Costruttore
-    public PartitaService(StoriaService storiaService) {
+    public PartitaService(StoriaService storiaService, List<Partita> partiteAttive) {
         this.storiaService = storiaService;
+        this.partiteAttive = partiteAttive;
     }
 
     public List<Storia> getStorieDisponibili() {
@@ -29,19 +29,11 @@ public class PartitaService {
     }
 
     public Partita caricaPartita(int storiaId, Utente user) {
-        // Controlla se esiste già una partita attiva per questa storia
-        Partita partita = partiteAttive.get(storiaId);
-        if (partita == null) {
-            // Recupera la storia dal controller
-            Storia storia = storiaService.getStoriaById(storiaId);
-            //TODO: fixare id
-            int id = 0;
-            int inventarioId = 0;
-            // Inizializza una nuova partita con la storia recuperata
-            partita = new Partita(id, storia, user.getUsername(), inventarioId);
-            partiteAttive.put(storiaId, partita);
-        }
-        return partita;
+        // Trova la partita attiva dell'utente per la storia specificata
+        return partiteAttive.stream()
+                .filter(partita -> partita.getStoria().getId() == storiaId && partita.getUsername().equals(user.getUsername()))
+                .findFirst()
+                .orElse(null); // Restituisce null se non trovata
     }
 
     public void terminaPartita(int storiaId) {
@@ -68,6 +60,20 @@ public class PartitaService {
         } else {
             throw new RuntimeException("Partita non trovata per l'ID: " + storiaId);
         }
+    }
+
+    public void salvaPartita(int storiaId, Utente user) {
+        Partita partita = partiteAttive.get(storiaId);
+        if (partita != null) {
+            // Logica per salvare la partita sul database o sistema di salvataggio
+            // Ad esempio, aggiorna lo stato della partita e salva l'inventario
+        }
+    }
+
+    public boolean isUltimoScenario(int opzioneId) {
+        // Puoi implementare questa logica come desideri.
+        // Potrebbe essere necessario passare l'ID dello scenario successivo o altro.
+        return false; // Placeholder, dovresti implementare la logica corretta
     }
     
     /*private Partita inizializzaNuovaPartita(int storiaId, String username, int lunghezza, String stato) {

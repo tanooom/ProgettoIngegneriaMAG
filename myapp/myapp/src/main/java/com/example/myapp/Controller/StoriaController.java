@@ -1,7 +1,7 @@
 package com.example.myapp.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +39,25 @@ public class StoriaController {
 
     @PostMapping("/aggiungiStoria")
     public String aggiungiStoria(
-        @RequestParam String titoloStoria
+        @RequestParam String titoloStoria,
         //@RequestParam String descrizioneStoria
-        ) {
-        
+        @RequestParam List<Integer> idScenari,
+        @RequestParam int idScenarioIniziale
+    ) {
+        // Ottieni l'utente autenticato
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        // Calcola il nuovo ID per la storia
         int newId = mapDBService.getAllStorie().keySet().stream()
-        .mapToInt(Integer::intValue)
-        .max()
-        .orElse(0) + 1;
+            .mapToInt(Integer::intValue)
+            .max()
+            .orElse(0) + 1;
 
-        List<Integer> idScenari = Arrays.asList(1, 2, 3); // Questa logica potrebbe cambiare in base alla tua implementazione
-        String username = "abcd";
-        int lunghezza = 2;
-        String stato = "Conclusa";
-        int idScenarioIniziale = 1;
+        int lunghezza = idScenari.size() + 1;
+        String stato = "Non iniziata";
 
-        // Creare un nuovo scenario temporaneo per calcolare le proprietà
+        // Crea un nuovo oggetto Storia
         Storia nuovaStoria = new Storia(
             newId, 
             titoloStoria,
@@ -63,14 +66,14 @@ public class StoriaController {
             lunghezza,
             stato,
             idScenarioIniziale,
-            idScenari
+            idScenari.isEmpty() ? Collections.emptyList() : idScenari
         );
 
+        // Salva la storia nel database
         mapDBService.saveStory(nuovaStoria);
 
         return "redirect:/scriviStoria";
     }
-
 
     @GetMapping("/api/storie")
     public ResponseEntity<List<Storia>> getStorie() {
@@ -192,4 +195,8 @@ public class StoriaController {
         model.addAttribute("scenari", mapDBService.getListAllScenari());
         return "scriviStoria";
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

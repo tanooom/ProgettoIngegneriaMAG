@@ -14,6 +14,11 @@ public class Application {
 	
 	//TODO: alla fine sistema tutti i @media dei css
 	//TODO: alla fine togli tutti i console log e i system.out.println() di debug
+<<<<<<< Updated upstream
+=======
+	//TODO: controlla i metodi che non sono mai stati utilizzati ed eliminali
+	//TODO: sistema i commenti
+>>>>>>> Stashed changes
 
 	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
 
@@ -31,4 +36,8 @@ public class Application {
 
 	// PER RIMUOVERE UNA STORIA
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteStoria?id=124"
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

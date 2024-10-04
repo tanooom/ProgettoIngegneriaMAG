@@ -2,30 +2,30 @@
   "storyMap" : {
     "1" : {
       "id" : 1,
-      "titolo" : "Prima storia",
-      "username" : "abcd",
+      "titolo" : "",
+      "username" : "Smartis",
       "lunghezza" : 2,
-      "stato" : "Conclusa",
+      "stato" : "Non iniziata",
       "idScenarioIniziale" : 1,
-      "idScenari" : [ 1, 2, 3 ]
+      "idScenari" : [ 1 ]
     },
     "2" : {
       "id" : 2,
-      "titolo" : "Seconda storia",
-      "username" : "abcd",
-      "lunghezza" : 2,
-      "stato" : "Conclusa",
+      "titolo" : "Prima storia",
+      "username" : "Smartis",
+      "lunghezza" : 3,
+      "stato" : "Non iniziata",
       "idScenarioIniziale" : 1,
-      "idScenari" : [ 1, 2, 3 ]
+      "idScenari" : [ 3, 2 ]
     }
   },
   "matchMap" : { },
   "scenarioMap" : {
     "1" : {
       "id" : 1,
-      "nome" : "Primo scenario",
-      "descrizione" : "Desc primo scenario",
-      "oggettoRaccoglibile" : null,
+      "nome" : "Scenario iniziale",
+      "descrizione" : "Descrizione scenario iniziale",
+      "oggettoRaccoglibile" : "Mappa",
       "idEntryScenari" : [ ],
       "idExitScenari" : [ 1, 2, 3 ],
       "scenarioIniziale" : true,
@@ -34,49 +34,96 @@
     },
     "2" : {
       "id" : 2,
-      "nome" : "Secondo scenario",
-      "descrizione" : "Desc secondo scenario",
-      "oggettoRaccoglibile" : "Chiave",
+      "nome" : "Scenario A",
+      "descrizione" : "descrizione scenario A",
+      "oggettoRaccoglibile" : null,
       "idEntryScenari" : [ 1 ],
       "idExitScenari" : [ 1, 2, 3 ],
       "scenarioIniziale" : false,
       "scenarioFinale" : false,
-      "opzioni" : [ 2, 1 ]
+      "opzioni" : [ 3 ]
     },
     "3" : {
       "id" : 3,
-      "nome" : "Scenario 3",
-      "descrizione" : "scen 3",
+      "nome" : "Scenario B",
+      "descrizione" : "descrizione scenario B",
       "oggettoRaccoglibile" : null,
-      "idEntryScenari" : [ ],
+      "idEntryScenari" : [ 1 ],
       "idExitScenari" : [ 1, 2, 3 ],
-      "scenarioIniziale" : true,
+      "scenarioIniziale" : false,
       "scenarioFinale" : false,
-      "opzioni" : [ 2, 1 ]
+      "opzioni" : [ 5, 3 ]
+    },
+    "4" : {
+      "id" : 4,
+      "nome" : "Scenario C",
+      "descrizione" : "descrizione scenario C",
+      "oggettoRaccoglibile" : null,
+      "idEntryScenari" : [ 3 ],
+      "idExitScenari" : [ 1, 2, 3 ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : false,
+      "opzioni" : [ 6 ]
     }
   },
   "inventoryMap" : { },
   "optionMap" : {
     "1" : {
       "id" : 1,
-      "descrizione" : "Opzione A",
-      "richiedeOggetto" : true,
-      "oggettoRichiesto" : "Chiave",
-      "richiedeIndovinello" : false,
-      "indovinello" : null,
-      "rispostaCorrettaIndovinello" : null
-    },
-    "2" : {
-      "id" : 2,
-      "descrizione" : "Opzione B",
+      "descrizione" : "Opzione 1",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
       "richiedeIndovinello" : true,
       "indovinello" : "Come va?",
       "rispostaCorrettaIndovinello" : "Bene"
+    },
+    "2" : {
+      "id" : 2,
+      "descrizione" : "Opzione 2",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "3" : {
+      "id" : 3,
+      "descrizione" : "Opzione 3",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "4" : {
+      "id" : 4,
+      "descrizione" : "Opzione 3",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Mappa",
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "5" : {
+      "id" : 5,
+      "descrizione" : "Opzione 4",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Mappa",
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "6" : {
+      "id" : 6,
+      "descrizione" : "Opzione 5",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
     }
   },
   "userMap" : {
-    "Smartis" : "$2a$10$s2xGCQdR4c3jjrVdsgL1i.Qmks8PIZm6J3tTwpd9vYQqrOPltb4dS;Martina;Samorè;marti.samore@gmail.com"
+    "Smartis" : "$2a$10$zcoztPmvmq1kndArU1t4weH7FZNHVn7HgqpkqcOrJAWTjdCAhtVQS;Martina;Samorè;marti.samore@gmail.com"
   }
 }

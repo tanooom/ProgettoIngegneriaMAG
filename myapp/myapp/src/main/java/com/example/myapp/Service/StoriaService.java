@@ -45,7 +45,6 @@ public class StoriaService {
             .filter(storia -> (stato == null || stato.isEmpty() || storia.getStato().equalsIgnoreCase(stato)))
             .collect(Collectors.toList());
     }
-    
 
     private boolean matchesLunghezza(Storia storia, String lunghezza) {
         int numScenari = storia.getLunghezza();

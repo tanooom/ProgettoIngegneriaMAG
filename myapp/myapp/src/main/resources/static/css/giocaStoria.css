@@ -7,46 +7,72 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Intestazione */
 header {
     background: #333; 
     color: #fff;
-    padding: 10px 20px; 
+    padding: 15px 20px; 
     text-align: center;
     position: relative;
     width: 100%;
-    margin-left: -20px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 1.5em;
-    flex-grow: 1; 
-    text-align: center; 
+    font-size: 2em;
     color: white;
-    margin-right: 180px;
 }
 
 .header-content {
     display: flex;
-    align-items: center;  
+    align-items: center;
     justify-content: space-between; 
-    padding: 0 20px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Contenuto principale */
 .container {
-    width: 80%;
+    width: 90%;
     max-width: 1200px;
     margin: auto;
-    display: flex;         
-    justify-content: center;   
-    align-items: center;      
-    flex-direction: row;      
-    gap: 10px;                
-    padding: 20px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row; 
+    gap: 20px;
+    padding: 40px 20px;
+    flex-grow: 1; /* Per centrare verticalmente quando la pagina è più alta */
+}
+
+/* Box Inventario */
+.inventario-box {
+    flex: 1; /* Permette all'inventario di occupare spazio */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.inventario-box h2 {
+    margin-top: 0; /* Rimuovi margine superiore per allineare meglio */
+}
+
+/* Box Scenario */
+.scenario-box {
+    flex: 3; /* Permette allo scenario di occupare più spazio */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 /* Pulsanti */
@@ -54,59 +80,80 @@ header h1 {
     display: inline-block;
     background-color: #007bff;
     color: white;
-    padding: 15px 32px;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 16px; /* Aumentato per migliore visibilità */
+    margin: 4px 0;
     cursor: pointer;
     border-radius: 4px;
     border: none;
+    transition: background-color 0.3s ease;
 }
 
 .button:hover {
     background-color: #025cbd; 
 }
 
-/* Pulsante di ritorno */
-.back-button {
+/* Pulsante di salvataggio */
+.save-button {
     display: flex;
-    justify-content: center;
     align-items: center;
     background-color: #007bff; 
-    border: none;    
-    cursor: pointer;     
-    padding: 10px;   
-    border-radius: 4px; 
-    gap: 5px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;   
+    border-radius: 4px;
+    gap: 10px;
     color: white;
     font-weight: bold;
 }
 
-.back-button img {
-    width: 24px;  
-    height: 24px; 
+.save-button img {
+    width: 24px;
+    height: 24px;
 }
 
-.back-button:hover {
+.save-button:hover {
     background-color: #025cbd; 
 }
 
 /* Footer */
-footer{
+footer {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 5px 0;
-    position: fixed;
+    padding: 10px 0;
+    position: relative; 
     width: 100%;
-    bottom: 0;
+    margin-top: auto; /* Footer posizionato in fondo, ma non fisso */
 }
 
 /* Adattamento per schermi piccoli */
-@media (max-width: 600px) {
-    .search-box {
-        flex-direction: column;  
-        gap: 5px;      
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .button, .back-button {
+        font-size: 16px; /* Ridotto leggermente */
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em; /* Testo dell'header ridotto su schermi molto piccoli */
+    }
+
+    .button, .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
     }
 }

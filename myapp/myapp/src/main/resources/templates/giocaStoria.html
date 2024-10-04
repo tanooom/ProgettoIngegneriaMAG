@@ -10,57 +10,115 @@
 <body class="giocaStoria">
     <header>
         <div class="header-content">
-            <button class="back-button" onclick="window.location.href='home'">
-                <img src="/css/images/arrow.png" alt="Indietro">
-                <span class="back-text">Torna Indietro</span>
+            <button class="save-button" onclick="salvaEdEsci()">
+                <img src="/css/images/save-icon.png" alt="Salva">
+                <span class="save-text">Salva ed esci</span>
             </button>
-            <h1>Storia "titolo"</titolo></h1>
+            <h1 id="titoloStoria"></h1>
         </div>
     </header>
 
-    <h1 id="titoloStoria"></h1>
-    <div id="scenario"></div>
-    <div id="opzioni"></div>
-    <div id="inventario"></div>
+    <div class="container">
+        <div class="inventario-box">
+            <h2>Inventario:</h2>
+            <div id="inventario">Inventario vuoto</div>
+        </div>
+        <div class="scenario-box">
+            <h2>Scenario:</h2>
+            <h2 id="titoloScenario"></h2>
+            <p id="descrizioneScenario"></p>
+            <div id="opzioni"></div>
+        </div>
+    </div>
 
-    
     <script>
         const params = new URLSearchParams(window.location.search);
         const storiaId = params.get('storiaId');
         const riprendi = params.get('riprendi') === 'true';
 
         function caricaScenario() {
-            const url = riprendi ? `/api/gioca/${storiaId}/start` : `/api/gioca/${storiaId}/start`;
+            const url = `/api/gioca/${storiaId}/start`;
             fetch(url)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Errore di rete: ' + response.statusText);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    document.getElementById('titoloStoria').innerText = data.titolo;
-                    document.getElementById('scenario').innerText = data.scenarioCorrente.descrizione;
+                    // Assicurati che i dati siano definiti
+                    if (data) {
+                        // Visualizza titolo storia e scenario corrente
+                        document.getElementById('titoloStoria').innerText = data.titolo;
+                        document.getElementById('titoloScenario').innerText = data.scenarioCorrente.titolo;
+                        document.getElementById('descrizioneScenario').innerText = data.scenarioCorrente.descrizione;
 
-                    const opzioniDiv = document.getElementById('opzioni');
-                    opzioniDiv.innerHTML = '';
-                    data.scenarioCorrente.opzioni.forEach(opzione => {
-                        const button = document.createElement('button');
-                        button.innerText = opzione.descrizione;
-                        button.onclick = () => faiScelta(opzione.id);
-                        opzioniDiv.appendChild(button);
-                    });
+                        // Gestione delle opzioni
+                        const opzioniDiv = document.getElementById('opzioni');
+                        opzioniDiv.innerHTML = '';
+                        data.scenarioCorrente.opzioni.forEach(opzione => {
+                            const button = document.createElement('button');
+                            button.innerText = opzione.descrizione;
+                            button.onclick = () => faiScelta(opzione);
+                            opzioniDiv.appendChild(button);
+                        });
 
-                    // Gestione dell'inventario
-                    const inventarioDiv = document.getElementById('inventario');
-                    inventarioDiv.innerHTML = '<h2>Inventario:</h2>';
-                    data.inventario.forEach(oggetto => {
-                        const item = document.createElement('p');
-                        item.innerText = oggetto;
-                        inventarioDiv.appendChild(item);
-                    });
+                        // Gestione dell'inventario
+                        const inventarioDiv = document.getElementById('inventario');
+                        inventarioDiv.innerHTML = data.inventario.length ? '' : 'Inventario vuoto';
+                        data.inventario.forEach(oggetto => {
+                            const item = document.createElement('p');
+                            item.innerText = oggetto;
+                            inventarioDiv.appendChild(item);
+                        });
+
+                        // Se la partita è conclusa, mostra "The End"
+                        if (data.partitaConclusa) {
+                            opzioniDiv.innerHTML = '<p>The End</p>';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Si è verificato un errore:', error);
+                    alert('Si è verificato un errore: ' + error.message);
                 });
-            }
+        }
 
-        function faiScelta(opzioneId) {
+        function faiScelta(opzione) {
+            // Controlla il tipo di opzione
+            if (opzione.tipo === 'INDOVINELLO') {
+                const risposta = prompt(opzione.indovinelloDomanda);
+                if (risposta === opzione.indovinelloRisposta) {
+                    eseguiScelta(opzione.id);
+                } else {
+                    alert('Risposta errata!');
+                }
+            } else if (opzione.tipo === 'OGGETTO') {
+                const urlInventario = `/api/gioca/${storiaId}/controllaOggetto/${opzione.oggettoRichiesto}`;
+                fetch(urlInventario)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.possiedeOggetto) {
+                            eseguiScelta(opzione.id);
+                        } else {
+                            alert('Non possiedi l\'oggetto richiesto!');
+                        }
+                    });
+            } else {
+                eseguiScelta(opzione.id);
+            }
+        }
+
+        function eseguiScelta(opzioneId) {
             fetch(`/api/gioca/${storiaId}/scelta/${opzioneId}`, {
                 method: 'POST'
             }).then(() => caricaScenario());
+        }
+
+        function salvaEdEsci() {
+            fetch(`/api/gioca/${storiaId}/salva`, {
+                method: 'POST'
+            }).then(() => window.location.href = 'visualizzaStoria');
         }
 
         caricaScenario();
