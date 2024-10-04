@@ -195,8 +195,4 @@ public class StoriaController {
         model.addAttribute("scenari", mapDBService.getListAllScenari());
         return "scriviStoria";
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

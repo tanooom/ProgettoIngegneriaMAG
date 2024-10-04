@@ -56,8 +56,4 @@ public class SecurityConfig {
         
         return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
     }*/
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
