@@ -19,22 +19,14 @@
 
     <main>
         <div class="form-container">
-            <form id="storia-form" method="POST" action="/aggiungiStoria">
+            <form id="storia-form" method="POST" action="/aggiungiStoria" onsubmit="salvaStoria(event)">
                 <div>
                     <label for="titolo">Titolo:</label>
-                    <input type="text" id="titoloStoria" name="titoloStoria">
+                    <input type="text" id="titoloStoria" name="titoloStoria" required>
                 </div>
-                <!--<div>
-                    <label for="descrizione">Descrizione:</label>
-                    <textarea id="descrizione" name="descrizione"></textarea>
-                </div>
-                <div>
-                    <label for="scenario-iniziale">Scenario Iniziale:</label>
-                    <textarea id="scenario-iniziale" name="scenario-iniziale"></textarea>
-                </div>-->
                 <div>
                     <label for="scenario-iniziale">Seleziona lo scenario iniziale:</label>
-                    <select id="scenario-iniziale" name="idScenarioIniziale">
+                    <select id="scenario-iniziale" name="idScenarioIniziale" required>
                         <option value="" disabled selected>Scegli lo scenario iniziale</option>
                         <th:block th:each="scenario : ${scenari}">
                             <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
@@ -65,12 +57,35 @@
     </footer>
 
     <script>
-
         function confermaTornaIndietro() {
             const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato la storia!");
             if (conferma) {
-                window.location.href = 'home'; // Reindirizza alla pagina home
+                window.location.href = 'home';
             }
+        }
+
+        function salvaStoria(event) {
+            event.preventDefault(); // Impedisce il ricaricamento della pagina
+
+            const form = document.getElementById('storia-form');
+            const formData = new FormData(form);
+
+            fetch('/aggiungiStoria', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Storia salvata con successo');
+                    form.reset(); // Resetta il form dopo il salvataggio
+                } else {
+                    alert('Errore durante il salvataggio della storia');
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore');
+            });
         }
     </script>
 </body>

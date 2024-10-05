@@ -33,7 +33,7 @@ public class ScenarioController {
     public String aggiungiScenario(
         @RequestParam String nomeScenario,
         @RequestParam String descrizioneScenario,
-        @RequestParam List<Integer> idOpzioni,
+        @RequestParam(required = false) List<Integer> idOpzioni, // parametro opzionale
         @RequestParam(defaultValue = "no") String rilasciaOggetto,
         @RequestParam String oggettoRilasciato,
         @RequestParam(defaultValue = "") List<Integer> idEntryScenari
@@ -46,6 +46,11 @@ public class ScenarioController {
         // Verifica se l'oggetto rilasciato deve essere null
         if ("no".equals(rilasciaOggetto) || (oggettoRilasciato == null || oggettoRilasciato.trim().isEmpty())) {
             oggettoRilasciato = null;
+        }
+
+        // Se idOpzioni è null, assegnare una lista vuota
+        if (idOpzioni == null) {
+            idOpzioni = Collections.emptyList();
         }
 
         List<Integer> idExitScenari = Arrays.asList(1, 2, 3); // Questa logica potrebbe cambiare in base alla tua implementazione
@@ -83,7 +88,7 @@ public class ScenarioController {
         mapDBService.saveScenario(nuovoScenario);
 
         return "redirect:/scriviStoria";
-    }
+}
 
     @DeleteMapping("/deleteScenario")
     public ResponseEntity<String> deleteScenario(@RequestParam int id) {
@@ -94,7 +99,7 @@ public class ScenarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore interno del server: " + e.getMessage());
-      }
+        }
     }
 
 }

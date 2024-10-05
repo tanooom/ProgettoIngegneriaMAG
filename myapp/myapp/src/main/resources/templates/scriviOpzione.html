@@ -1,83 +1,108 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrivi Opzione</title>
-    <link rel="stylesheet" href="/css/scriviStoria.css">
-</head>
-<body class="scriviStoria">
-    <header>
-        <div class="header-content">
-            <button class="back-button" onclick="confermaTornaIndietro()">
-                <img src="/css/images/arrow.png" alt="Indietro">
-                <span class="back-text">Torna Indietro</span>
-            </button>
-            <h1>Scrivi Opzione</h1>
-        </div>
-    </header>
+<!DOCTYPE html> 
+<html lang="it"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <title>Scrivi Opzione</title>     
+    <link rel="stylesheet" href="/css/scriviStoria.css"> 
+</head> 
+<body class="scriviStoria">     
+    <header>         
+        <div class="header-content">             
+            <button class="back-button" onclick="confermaTornaIndietro()">                 
+                <img src="/css/images/arrow.png" alt="Indietro">                 
+                <span class="back-text">Torna Indietro</span>             
+            </button>             
+            <h1>Scrivi Opzione</h1>         
+        </div>     
+    </header>      
 
-    <main>
-        <div class="form-container">
-            <form id="opzione-form" method="POST" action="/aggiungiOpzione">
-                <div>
-                    <label for="descrizione-opzione">Descrizione Opzione:</label>
-                    <textarea id="descrizione-opzione" name="descrizioneOpzione" required></textarea>
-                </div>
-                <div>
-                    <label>Richiede Indovinello?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="richiedeIndovinello" value="si"> Sì</label>
-                        <label><input type="radio" name="richiedeIndovinello" value="no" checked> No</label>
-                    </div>
-                    <div class="indovinello-fields" style="display:none;">
-                        <label for="scrivi-indovinello">Scrivi indovinello:</label>
-                        <textarea id="scrivi-indovinello" name="indovinello"></textarea>
-                        <label for="scrivi-risposta-indovinello">Scrivi la risposta:</label>
-                        <input type="text" id="scrivi-risposta-indovinello" name="rispostaIndovinello">
-                    </div>
-                </div>
-                <div>
-                    <label>Richiede Oggetto?</label>
-                    <div class="option-group">
-                        <label><input type="radio" name="richiedeOggetto" value="si"> Sì</label>
-                        <label><input type="radio" name="richiedeOggetto" value="no" checked> No</label>
-                    </div>
-                    <div class="oggetto-fields" style="display:none;">
-                        <label for="scrivi-oggetto">Scrivi oggetto richiesto:</label>
-                        <input type="text" id="scrivi-oggetto" name="oggettoRichiesto">
-                    </div>
-                </div>
-                <button type="submit" id="save-opzione-button">Salva Opzione</button>
-            </form>
-        </div>
-    </main>
+    <main>         
+        <div class="form-container">             
+            <form id="opzione-form" method="POST" action="/aggiungiOpzione">                 
+                <div>                     
+                    <label for="descrizione-opzione">Descrizione Opzione:</label>                     
+                    <textarea id="descrizione-opzione" name="descrizioneOpzione" required></textarea>                 
+                </div>                 
+                <div>                     
+                    <label>Richiede Indovinello?</label>                     
+                    <div class="option-group">                         
+                        <label><input type="radio" name="richiedeIndovinello" value="si"> Sì</label>                         
+                        <label><input type="radio" name="richiedeIndovinello" value="no" checked> No</label>                     
+                    </div>                     
+                    <div class="indovinello-fields" style="display:none;">                         
+                        <label for="scrivi-indovinello">Scrivi indovinello:</label>                         
+                        <textarea id="scrivi-indovinello" name="indovinello"></textarea>                         
+                        <label for="scrivi-risposta-indovinello">Scrivi la risposta:</label>                         
+                        <input type="text" id="scrivi-risposta-indovinello" name="rispostaIndovinello">                     
+                    </div>                 
+                </div>                 
+                <div>                     
+                    <label>Richiede Oggetto?</label>                     
+                    <div class="option-group">                         
+                        <label><input type="radio" name="richiedeOggetto" value="si"> Sì</label>                         
+                        <label><input type="radio" name="richiedeOggetto" value="no" checked> No</label>                     
+                    </div>                     
+                    <div class="oggetto-fields" style="display:none;">                         
+                        <label for="scrivi-oggetto">Scrivi oggetto richiesto:</label>                         
+                        <input type="text" id="scrivi-oggetto" name="oggettoRichiesto">                     
+                    </div>                 
+                </div>                 
+                <button type="submit" id="save-opzione-button">Salva Opzione</button>             
+            </form>         
+        </div>     
+    </main>      
 
-    <footer>
-        <p>&copy; 2024 MyApp</p>
-    </footer>
+    <footer>         
+        <p>&copy; 2024 MyApp</p>     
+    </footer>      
 
-    <script>
-        document.querySelectorAll('input[name="richiedeIndovinello"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const indovinelloFields = document.querySelector('.indovinello-fields');
-                indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';
+    <script>         
+        document.querySelectorAll('input[name="richiedeIndovinello"]').forEach(function(el) {             
+            el.addEventListener('change', function() {                 
+                const indovinelloFields = document.querySelector('.indovinello-fields');                 
+                indovinelloFields.style.display = el.value === 'si' ? 'block' : 'none';             
+            });         
+        });          
+
+        document.querySelectorAll('input[name="richiedeOggetto"]').forEach(function(el) {             
+            el.addEventListener('change', function() {                 
+                const oggettoFields = document.querySelector('.oggetto-fields');                 
+                oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';             
+            });         
+        });          
+
+        function confermaTornaIndietro() {             
+            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato l'opzione!");             
+            if (conferma) {                 
+                window.location.href = 'scriviScenario';             
+            }         
+        }          
+
+        // Mostra alert dopo il submit
+        const form = document.getElementById('opzione-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  // Previene l'invio immediato del modulo
+            const formData = new FormData(form);
+            
+            // Invio del modulo tramite fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Opzione salvata con successo');
+                    form.reset();  // Opzionale: resetta il form dopo il salvataggio
+                } else {
+                    alert('Errore durante il salvataggio. Riprova.');
+                }
+            })
+            .catch(error => {
+                alert('Si è verificato un errore. Riprova.');
+                console.error('Error:', error);
             });
         });
-
-        document.querySelectorAll('input[name="richiedeOggetto"]').forEach(function(el) {
-            el.addEventListener('change', function() {
-                const oggettoFields = document.querySelector('.oggetto-fields');
-                oggettoFields.style.display = el.value === 'si' ? 'block' : 'none';
-            });
-        });
-
-        function confermaTornaIndietro() {
-            const conferma = confirm("Sei sicuro di tornare indietro? Assicurati di aver salvato l'opzione!");
-            if (conferma) {
-                window.location.href = 'scriviScenario';
-            }
-        }
-    </script>
-</body>
+    </script> 
+</body> 
 </html>
