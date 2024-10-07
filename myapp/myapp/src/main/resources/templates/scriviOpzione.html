@@ -93,7 +93,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Opzione salvata con successo');
-                    form.reset();  // Opzionale: resetta il form dopo il salvataggio
+                    window.location.href = 'scriviScenario';
                 } else {
                     alert('Errore durante il salvataggio. Riprova.');
                 }
@@ -104,5 +104,5 @@
             });
         });
     </script> 
-</body> 
+</body>
 </html>

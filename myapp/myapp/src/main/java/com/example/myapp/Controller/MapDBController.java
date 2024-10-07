@@ -55,7 +55,7 @@ public class MapDBController {
                             @RequestParam String description,
                             @RequestParam(required = false) List<Integer> idOpzioni,
                             @RequestParam(required = false) String oggettoRaccoglibile,
-                            @RequestParam(required = false) List<Integer> idEntryScenari,
+                            @RequestParam int idScenarioPrecedente,
                             @RequestParam(required = false) List<Integer> idExitScenari,
                             @RequestParam boolean scenarioIniziale,
                             @RequestParam boolean scenarioFinale) {
@@ -63,7 +63,7 @@ public class MapDBController {
         Scenario scenario = new Scenario(id, nome, description, 
                                         idOpzioni != null ? idOpzioni : new ArrayList<>(),
                                         oggettoRaccoglibile,
-                                        idEntryScenari != null ? idEntryScenari : new ArrayList<>(),
+                                        idScenarioPrecedente,
                                         idExitScenari != null ? idExitScenari : new ArrayList<>(),
                                         scenarioIniziale, 
                                         scenarioFinale);
@@ -155,6 +155,50 @@ public class MapDBController {
             return "Tutti gli utenti sono stati rimossi con successo!";
         } catch (Exception e) {
             return "Errore durante la rimozione degli utenti: " + e.getMessage();
+        }
+    }
+
+    // Endpoint per eliminare tutte le storie
+    @DeleteMapping("/deleteAllStories")
+    public String deleteAllStories() {
+        try {
+            mapDBService.deleteAllStories();
+            return "Tutte le storie sono state rimosse con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione delle storie: " + e.getMessage();
+        }
+    }
+
+    // Endpoint per eliminare tutti gli scenari
+    @DeleteMapping("/deleteAllScenari")
+    public String deleteAllScenari() {
+        try {
+            mapDBService.deleteAllScenari();
+            return "Tutti gli scenari sono stati rimossi con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione degli scenari: " + e.getMessage();
+        }
+    }
+
+    // Endpoint per eliminare tutte le opzioni
+    @DeleteMapping("/deleteAllOptions")
+    public String deleteAllOptions() {
+        try {
+            mapDBService.deleteAllOptions();
+            return "Tutte le opzioni sono state rimosse con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione delle opzioni: " + e.getMessage();
+        }
+    }
+
+    // Endpoint per eliminare tutto il database
+    @DeleteMapping("/deleteDatabase")
+    public String deleteDatabase() {
+        try {
+            mapDBService.deleteDatabase();
+            return "Il database è stato cancellato";
+        } catch (Exception e) {
+            return "Errore durante la cancellazione del database: " + e.getMessage();
         }
     }
 }

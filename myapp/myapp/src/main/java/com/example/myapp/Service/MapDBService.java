@@ -259,6 +259,31 @@ public class MapDBService {
         return new ArrayList<>(scenarioMap.values()); // Restituisce gli scenari come lista
     }
 
+    public void deleteAllStories() {
+        storyMap.clear();
+        db.commit(); 
+    }
+
+    public void deleteAllScenari() {
+        scenarioMap.clear();
+        db.commit(); 
+    }
+
+    public void deleteAllOptions() {
+        optionMap.clear();
+        db.commit(); 
+    }
+
+    public void deleteDatabase() {
+        storyMap.clear();
+        userMap.clear();
+        scenarioMap.clear();
+        inventoryMap.clear();
+        optionMap.clear();
+        matchMap.clear();
+        db.commit(); 
+    }
+
     @PreDestroy
     public void cleanup(){
         db.close();

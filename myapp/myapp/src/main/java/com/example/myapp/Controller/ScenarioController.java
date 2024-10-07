@@ -36,7 +36,7 @@ public class ScenarioController {
         @RequestParam(required = false) List<Integer> idOpzioni, // parametro opzionale
         @RequestParam(defaultValue = "no") String rilasciaOggetto,
         @RequestParam String oggettoRilasciato,
-        @RequestParam(defaultValue = "") List<Integer> idEntryScenari
+        @RequestParam(required = false) Integer idScenarioPrecedente
     ) {
         int newId = mapDBService.getAllScenari().keySet().stream()
             .mapToInt(Integer::intValue)
@@ -53,6 +53,11 @@ public class ScenarioController {
             idOpzioni = Collections.emptyList();
         }
 
+        // Se idScenarioPrecedente è 0, impostalo a null
+        if (idScenarioPrecedente != null && idScenarioPrecedente == 0) {
+            idScenarioPrecedente = null;
+        }
+
         List<Integer> idExitScenari = Arrays.asList(1, 2, 3); // Questa logica potrebbe cambiare in base alla tua implementazione
 
         // Creare un nuovo scenario temporaneo per calcolare le proprietà
@@ -62,13 +67,12 @@ public class ScenarioController {
             descrizioneScenario,
             idOpzioni,
             oggettoRilasciato,
-            idEntryScenari.isEmpty() ? Collections.emptyList() : idEntryScenari,
+            idScenarioPrecedente,
             idExitScenari,
             false, 
             false
         );
 
-        // Determinare i valori di scenarioIniziale e scenarioFinale
         boolean scenarioIniziale = nuovoScenarioTemp.isScenarioIniziale();
         boolean scenarioFinale = nuovoScenarioTemp.isScenarioFinale();
 
@@ -79,7 +83,7 @@ public class ScenarioController {
             descrizioneScenario,
             idOpzioni,
             oggettoRilasciato,
-            idEntryScenari.isEmpty() ? Collections.emptyList() : idEntryScenari,
+            idScenarioPrecedente,
             idExitScenari,
             scenarioIniziale,
             scenarioFinale

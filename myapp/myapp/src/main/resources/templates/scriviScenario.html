@@ -53,9 +53,9 @@
                 </div>
                 <!-- Aggiungi il nuovo menu a tendina per gli scenari precedenti -->
                 <div>
-                    <label for="scenari-precedenti">Seleziona gli scenari precedenti:</label>
-                    <select id="scenari-precedenti" name="idEntryScenari" multiple>
-                        <option value="" disabled selected>Scegli gli scenari precedenti</option>
+                    <label for="scenario-precedente">Seleziona lo scenario precedente:</label>
+                    <select id="scenario-precedente" name="idScenarioPrecedente">
+                        <option value="" disabled selected>Scegli lo scenario precedente</option>
                         <th:block th:each="scenario : ${scenari}">
                             <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
                         </th:block>
@@ -107,8 +107,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Scenario salvato con successo');
-                    form.reset(); // Opzionale: per resettare il form dopo il salvataggio
-                } else {
+                    window.location.href = 'scriviStoria';                } else {
                     alert('Errore nel salvataggio dello scenario');
                 }
             })

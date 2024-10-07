@@ -21,16 +21,25 @@ public class Application {
 
 	// PER RIMUOVERE UN UTENTE: 
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteUser?username=andre2"
-
 	// PER RIMUOVERE TUTTI GLI UTENTI:
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllUsers"
 
 	// PER RIMUOVERE UN'OPZIONE
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteOption?id=124"
+	// PER RIMUOVERE TUTTE LE OPZIONI:
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllOptions"
 
 	// PER RIMUOVERE UNO SCENARIO
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteScenario?id=124"
+	// PER RIMUOVERE TUTTI GLI SCENARI:
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllScenari"
 
 	// PER RIMUOVERE UNA STORIA
 	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteStoria?id=124"
+	// PER RIMUOVERE TUTTE LE STORIE:
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllStories"
+
+	// PER CANCELLARE TUTTO IL DATABASE
+	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteDatabase"
+
 }
