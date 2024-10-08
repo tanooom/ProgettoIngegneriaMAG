@@ -37,8 +37,9 @@
                     <button type="button" id="add-scenario-button" onclick="window.location.href='scriviScenario'">Aggiungi Scenario</button>
                 </div>
                 <div>
-                    <label for="scenari-successivi">Seleziona gli scenari successivi:</label>
-                    <select id="scenari-successivi" name="idScenari" multiple>
+                    <label for="scenari-successivi">Seleziona tutti gli scenari successivi della storia:</label>
+                    <select id="scenari-successivi" name="idScenari" multiple 
+                    th:size="${scenari.size() > 10 ? 10 : scenari.size() + 1}">
                         <option value="" disabled selected>Scegli gli scenari successivi</option>
                         <th:block th:each="scenario : ${scenari}">
                             <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>

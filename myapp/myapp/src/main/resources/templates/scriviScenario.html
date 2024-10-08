@@ -30,7 +30,8 @@
                 </div>
                 <div>
                     <label for="opzioni">Seleziona una o più opzioni:</label>
-                    <select id="opzioni" name="idOpzioni" multiple required>
+                    <select id="opzioni" name="idOpzioni" multiple required 
+                            th:size="${opzioni.size() > 10 ? 10 : opzioni.size() + 1}"> <!-- Imposta size in base al numero di opzioni -->
                         <option value="" disabled selected>Scegli una o più opzioni</option>
                         <th:block th:each="opzione : ${opzioni}">
                             <option th:value="${opzione.id}" th:text="${opzione.descrizione}"></option>
@@ -61,8 +62,6 @@
                         </th:block>
                     </select>
                 </div>
-                <!-- qual è l'opzione che collega lo scenario attuale al precedente-->
-                 <!--menu a tendina delle opzioni dello scenario precedente-->
                 <button type="submit" id="save-scenario-button">Salva Scenario</button>
             </form>
         </div>

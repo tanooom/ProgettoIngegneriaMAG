@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Collections;
 
 import com.example.myapp.Model.Scenario;
@@ -37,6 +38,7 @@ public class ScenarioController {
         @RequestParam(defaultValue = "no") String rilasciaOggetto,
         @RequestParam String oggettoRilasciato,
         @RequestParam(required = false) Integer idScenarioPrecedente
+        //@RequestParam(required = false) List<Integer> idExitScenari
     ) {
         int newId = mapDBService.getAllScenari().keySet().stream()
             .mapToInt(Integer::intValue)
@@ -58,7 +60,33 @@ public class ScenarioController {
             idScenarioPrecedente = null;
         }
 
-        List<Integer> idExitScenari = Arrays.asList(1, 2, 3); // Questa logica potrebbe cambiare in base alla tua implementazione
+        List<Integer> idExitScenari = Collections.emptyList();
+
+        // Se idScenarioPrecedente non è null, aggiorna l'idExitScenari dello scenario precedente
+        if (idScenarioPrecedente != null) {
+            Scenario scenarioPrecedente = mapDBService.getScenarioById(idScenarioPrecedente);
+            if (scenarioPrecedente != null) {
+                // Recupera l'attuale lista di idExitScenari
+                List<Integer> idExitScenariPrecedenti = scenarioPrecedente.getIdExitScenari();
+                
+                // Se la lista è null, inizializzala come vuota, oppure crea una lista modificabile
+                if (idExitScenariPrecedenti == null) {
+                    idExitScenariPrecedenti = new ArrayList<>();
+                } else {
+                    // Crea una nuova lista modificabile se l'attuale non lo è
+                    idExitScenariPrecedenti = new ArrayList<>(idExitScenariPrecedenti);
+                }
+
+                // Aggiungi l'id del nuovo scenario a idExitScenari dello scenario precedente
+                idExitScenariPrecedenti.add(newId);
+
+                // Aggiorna lo scenario precedente con la nuova lista di idExitScenari
+                scenarioPrecedente.setIdExitScenari(idExitScenariPrecedenti);
+
+                // Salva le modifiche allo scenario precedente
+                mapDBService.saveScenario(scenarioPrecedente);
+            }
+        }
 
         // Creare un nuovo scenario temporaneo per calcolare le proprietà
         Scenario nuovoScenarioTemp = new Scenario(
@@ -68,12 +96,12 @@ public class ScenarioController {
             idOpzioni,
             oggettoRilasciato,
             idScenarioPrecedente,
-            idExitScenari,
+            idExitScenari,            
             false, 
             false
         );
 
-        boolean scenarioIniziale = nuovoScenarioTemp.isScenarioIniziale();
+        boolean scenarioIniziale = (idScenarioPrecedente == null);
         boolean scenarioFinale = nuovoScenarioTemp.isScenarioFinale();
 
         // Ora creare il nuovo scenario definitivo

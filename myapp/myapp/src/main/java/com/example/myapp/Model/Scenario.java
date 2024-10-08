@@ -13,7 +13,7 @@ public class Scenario implements Serializable{
     private final List<Integer> idOpzioni;
     private final String oggettoRaccoglibile;
     private final Integer idScenarioPrecedente; // Scenario precedente
-    private final List<Integer> idExitScenari; // Scenario successivo
+    private List<Integer> idExitScenari; // Scenario successivo
     private final boolean scenarioIniziale; // Se true è lo scenario iniziale
     private final boolean scenarioFinale; // Se true è uno scenario finale
 
@@ -26,7 +26,7 @@ public class Scenario implements Serializable{
     this.idOpzioni = idOpzioni != null ? idOpzioni : new ArrayList<>();
     this.oggettoRaccoglibile = oggettoRaccoglibile;
     this.idScenarioPrecedente = idScenarioPrecedente;
-    this.idExitScenari = idExitScenari != null ? idExitScenari : new ArrayList<>();
+    this.idExitScenari = idExitScenari;
     this.scenarioIniziale = scenarioIniziale;
     this.scenarioFinale = scenarioFinale;
     }
@@ -84,6 +84,10 @@ public class Scenario implements Serializable{
         return idExitScenari;
     }
 
+    public void setIdExitScenari(List<Integer> idExitScenari) {
+        this.idExitScenari = idExitScenari;
+    }
+
     // Metodo per controllare se lo scenario è iniziale
     public boolean isScenarioIniziale() {
         return this.scenarioIniziale;
@@ -107,6 +111,6 @@ public class Scenario implements Serializable{
                 ", ExitScenari=" + idExitScenari +
                 ", scenarioIniziale=" + scenarioIniziale +
                 ", scenarioFinale=" + scenarioFinale +
-             '}';
+            '}';
     }
 }
