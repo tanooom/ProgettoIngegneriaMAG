@@ -30,9 +30,9 @@
         </select>
         <select id="filterStato">
             <option value="">Filtra per stato</option>
-            <option value="Non iniziato">Non iniziato</option>
+            <option value="Non iniziata">Non iniziata</option>
             <option value="In corso">In corso</option>
-            <option value="Concluso">Concluso</option>
+            <option value="Conclusa">Conclusa</option>
         </select>
         <button class="search-button" onclick="filterStorie()">
             <img src="/css/images/search-icon.png" alt="Cerca">
@@ -125,10 +125,11 @@
                         })
                     .then(text => {
                         descrizioneScenarioIniziale = text;
-                        console.log(descrizioneScenarioIniziale); 
+                        console.log(descrizioneScenarioIniziale);
                     })
                     .then(scenario => {
                         console.log("Descrizione scenario iniziale: " + descrizioneScenarioIniziale)
+                        console.log("Scenario corrente id: " + storia.idScenarioIniziale)
                         // Crea il contenuto della storia
                         storiaDiv.innerHTML = `
                             <div class="storia-header">
@@ -137,7 +138,7 @@
                                     <p><strong>Scenario iniziale:</strong> ${descrizioneScenarioIniziale}</p>
                                 </div>
                                 <div class="button-container">
-                                    <button onclick="giocaStoria('${storia.id}')">Gioca</button>
+                                    <button onclick="giocaStoria('${storia.id}', '${storia.idScenarioIniziale}')">Gioca</button>
                                     ${storia.giocata ? `
                                         <button onclick="riprendiStoria('${storia.id}')">Riprendi partita</button>
                                         <button onclick="eliminaPartita('${storia.id}')">Elimina partita</button>
@@ -157,7 +158,7 @@
                         <h2>${storia.titolo}</h2>
                         <p>${storia.descrizione}</p>
                         <p><strong>Primo Scenario:</strong> Nessun scenario iniziale trovato</p>
-                        <button onclick="giocaStoria('${storia.id}')">Gioca</button>
+                        <button onclick="giocaStoria('${storia.id}', '${storia.idScenarioIniziale}')">Gioca</button>
                         ${storia.giocata ? `
                             <button onclick="riprendiStoria('${storia.id}')">Riprendi Storia</button>
                             <button onclick="eliminaPartita('${storia.id}')">Elimina Partita</button>
@@ -220,12 +221,36 @@
                 });
         }
 
-        function giocaStoria(storiaId) {
-            window.location.href = `/giocaStoria?storiaId=${storiaId}`;
+        function giocaStoria(storiaId, idScenarioIniziale) {
+            console.log("ID SCENARIO INIZIALE: " + idScenarioIniziale);
+            window.location.href = `/giocaStoria?storiaId=${storiaId}&scenarioCorrenteId=${idScenarioIniziale}`;
         }
+        
+        /*function giocaStoria(storiaId) {
+            fetch(`/api/creaPartita/${storiaId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nella creazione della partita');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Reindirizza alla pagina giocaStoria con l'ID della nuova partita
+                window.location.href = `/giocaStoria?storiaId=${data.id}&scenarioCorrenteId=${data.idScenarioCorrente}`;
+            })
+            .catch(error => {
+                console.error('Errore durante la creazione della partita:', error);
+                alert('Si è verificato un errore. Per favore riprova.');
+            });
+        }*/
 
-        function riprendiStoria(storiaId) {
-            window.location.href = `/giocaStoria?storiaId=${storiaId}&riprendi=true`;
+        function riprendiStoria(storiaId, scenarioCorrenteId) {
+            window.location.href = `/giocaStoria?storiaId=${storiaId}&riprendi=true&scenarioCorrenteId=${storia.scenarioCorrenteId}`;
         }
 
         function eliminaPartita(storiaId) {

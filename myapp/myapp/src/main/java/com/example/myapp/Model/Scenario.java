@@ -112,5 +112,5 @@ public class Scenario implements Serializable{
                 ", scenarioIniziale=" + scenarioIniziale +
                 ", scenarioFinale=" + scenarioFinale +
             '}';
-    }
+    };
 }

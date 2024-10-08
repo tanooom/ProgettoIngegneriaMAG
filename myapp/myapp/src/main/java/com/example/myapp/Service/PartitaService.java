@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.myapp.Controller.InventarioController;
+import com.example.myapp.Controller.MapDBController;
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
+import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
 
@@ -15,12 +17,16 @@ public class PartitaService {
 
     private final List<Partita> partiteAttive;
     private final StoriaService storiaService;
+    private final MapDBController mapDBController;
+    private final InventarioController inventarioController;
     
 
     // Costruttore
-    public PartitaService(StoriaService storiaService, List<Partita> partiteAttive) {
+    public PartitaService(StoriaService storiaService, List<Partita> partiteAttive, MapDBController mapDBController, InventarioController inventarioController) {
         this.storiaService = storiaService;
         this.partiteAttive = partiteAttive;
+        this.mapDBController = mapDBController;
+        this.inventarioController = inventarioController;
     }
 
     public List<Storia> getStorieDisponibili() {
@@ -49,44 +55,40 @@ public class PartitaService {
         return partiteAttive.get(storiaId);
     }
 
-    public void faiScelta(int storiaId, int opzioneId, Utente user, InventarioController inventarioController) {
+    public void faiScelta(int storiaId, int scenarioId, int opzioneId, Utente user, InventarioController inventarioController) {
         Partita partita = partiteAttive.get(storiaId);
         if (partita != null) {
             Opzione opzione = storiaService.getOpzioneById(storiaId, partita.getIdScenarioCorrente(), opzioneId);
             if (opzione == null) {
                 throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
-            }            
+            }
+            //Aggiorna lo scenario corrente
             partita.faiScelta(opzione, inventarioController);
+
         } else {
             throw new RuntimeException("Partita non trovata per l'ID: " + storiaId);
         }
     }
 
-    public void salvaPartita(int storiaId, Utente user) {
+    public void salvaPartita(int storiaId, int scenarioCorreteId, Utente user) {
         Partita partita = partiteAttive.get(storiaId);
         if (partita != null) {
-            // Logica per salvare la partita sul database o sistema di salvataggio
-            // Ad esempio, aggiorna lo stato della partita e salva l'inventario
+            //TODO: Logica per salvare la partita sul database o sistema di salvataggio
+            // Aggiorna lo stato della partita e richiamo salvaInventario
         }
     }
 
-    public boolean isUltimoScenario(int opzioneId) {
-        // Puoi implementare questa logica come desideri.
-        // Potrebbe essere necessario passare l'ID dello scenario successivo o altro.
-        return false; // Placeholder, dovresti implementare la logica corretta
+    public boolean isUltimoScenario(int scenarioId) {
+        Scenario scenario = mapDBController.getScenarioById(scenarioId);
+        return scenario.isScenarioFinale();
     }
-    
-    /*private Partita inizializzaNuovaPartita(int storiaId, String username, int lunghezza, String stato) {
-        // TODO: modificare il caricamento della storia
-        String titoloStoria = "Nome della Storia";
-        int scenarioId = 1;
-        String scenarioDescrizione = "Descrizione dello Scenario";
 
-        // Inizializza una nuova partita
-        Scenario scenario = new Scenario(scenarioId, scenarioDescrizione);
-        Storia storia = new Storia(storiaId, titoloStoria, scenario, username, lunghezza, stato); // Recupera la storia dal database
-        Partita nuovaPartita = new Partita(storia, username); // Passa anche username
-        partiteAttivi.put(storiaId, nuovaPartita);
+    // Metodo per inizializzare una nuova partita
+    public Partita inizializzaNuovaPartita(int storiaId, String username) {
+        Storia storia = storiaService.getStoriaById(storiaId); // Supponendo che tu abbia un metodo per ottenere la storia
+        int inventarioId = inventarioController.creaInventario(); // Crea un nuovo inventario
+        Partita nuovaPartita = new Partita(storiaId, storia, username, inventarioId);
+        partiteAttive.add(nuovaPartita); // Aggiungi la nuova partita alla lista delle partite attive
         return nuovaPartita;
-    }*/
+    }
 }

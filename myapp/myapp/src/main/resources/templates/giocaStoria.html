@@ -14,7 +14,7 @@
                 <img src="/css/images/save-icon.png" alt="Salva">
                 <span class="save-text">Salva ed esci</span>
             </button>
-            <h1 id="titoloStoria"></h1>
+            <h1 id="titoloStoria" th:text="${titolo}"></h1>
         </div>
     </header>
 
@@ -34,10 +34,15 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const storiaId = params.get('storiaId');
+        const scenarioCorrenteId = params.get('scenarioCorrenteId');
         const riprendi = params.get('riprendi') === 'true';
 
+        console.log("SCENARIO CORRENTE ID: " + scenarioCorrenteId);
+        console.log("STORIA ID: " + storiaId);
+
+        // Funzione per caricare lo scenario e visualizzare le opzioni
         function caricaScenario() {
-            const url = `/api/gioca/${storiaId}/start`;
+            const url = `/api/gioca/${storiaId}/${scenarioCorrenteId}/start`;
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -75,6 +80,7 @@
                         // Se la partita è conclusa, mostra "The End"
                         if (data.partitaConclusa) {
                             opzioniDiv.innerHTML = '<p>The End</p>';
+                            document.querySelectorAll('button').forEach(button => button.disabled = true); // Disabilita pulsanti
                         }
                     }
                 })
@@ -94,7 +100,7 @@
                     alert('Risposta errata!');
                 }
             } else if (opzione.tipo === 'OGGETTO') {
-                const urlInventario = `/api/gioca/${storiaId}/controllaOggetto/${opzione.oggettoRichiesto}`;
+                const urlInventario = `/api/gioca/${storiaId}/${scenarioCorrenteId}/controllaOggetto/${opzione.oggettoRichiesto}`;
                 fetch(urlInventario)
                     .then(response => response.json())
                     .then(data => {
@@ -110,13 +116,20 @@
         }
 
         function eseguiScelta(opzioneId) {
-            fetch(`/api/gioca/${storiaId}/scelta/${opzioneId}`, {
+            fetch(`/api/gioca/${storiaId}/${scenarioCorrenteId}/scelta/${opzioneId}`, {
                 method: 'POST'
-            }).then(() => caricaScenario());
+            }).then(response => {
+                if (response.ok) {
+                    caricaScenario();  // Ricarica lo scenario aggiornato
+                } else {
+                    alert('Errore nel processo della scelta');
+                }
+            });
         }
 
         function salvaEdEsci() {
-            fetch(`/api/gioca/${storiaId}/salva`, {
+            console.log("scenario corrente su salva: " + scenarioCorrenteId);
+            fetch(`/api/gioca/${storiaId}/${scenarioCorrenteId}/salva`, {
                 method: 'POST'
             }).then(() => window.location.href = 'visualizzaStoria');
         }
@@ -127,6 +140,5 @@
     <footer>
         <p>&copy; 2024 MyApp</p>
     </footer>
-
 </body>
 </html>

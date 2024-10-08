@@ -49,6 +49,11 @@ header h1 {
     padding: 20px;
 }
 
+#storieContainer {
+    margin-bottom: 80px; /* Regola l'altezza in base al footer */
+}
+
+
 /* Pulsanti */
 body button {
     background-color: #007bff;
@@ -190,23 +195,23 @@ body button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #007bff;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
+    background-color: #007bff; 
+    border: none;    
+    cursor: pointer;     
+    padding: 10px;   
+    border-radius: 4px; 
     gap: 5px;
     color: white;
     font-weight: bold;
 }
 
 .back-button img {
-    width: 24px;
-    height: 24px;
+    width: 24px;  
+    height: 24px; 
 }
 
 .back-button:hover {
-    background-color: #025cbd;
+    background-color: #025cbd; 
 }
 
 /* Footer */
