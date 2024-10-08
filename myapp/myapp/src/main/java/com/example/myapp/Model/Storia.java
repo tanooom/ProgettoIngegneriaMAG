@@ -12,6 +12,7 @@ public class Storia implements Serializable{
     private final String username; // Username dello scrittore
     private final int lunghezza; // Numero di scenari
     private final String stato; // Stato della storia
+    //TODO: la storia non ha uno stato, è la partita che ha uno stato
     private int idScenarioIniziale;
     private final List<Integer> idScenari; // Lista ID scenari
 
@@ -81,7 +82,6 @@ public class Storia implements Serializable{
     }
 
     public int getOpzioneId(int opzioneId) {
-        // TODO: controllare se l'opzione è valida
         return opzioneId;
     }    
 

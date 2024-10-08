@@ -3,12 +3,13 @@ package com.example.myapp.Model;
 import com.example.myapp.Controller.InventarioController;
 
 public class Partita {
-    private final int id;
-    private final Storia storia;
-    private final int idScenarioCorrente;
-    private final int inventarioId;
-    private final String username; // Aggiunta per tenere traccia dell'utente
-    private boolean inCorso; // Stato della partita (in corso o terminata)
+    private final int id; //autoincrement
+    private final Storia storia; //me lo prende da storiaId
+    private final int idScenarioCorrente; //uguale 
+    private final int inventarioId; //me lo crea dentro api/.../start
+    private final String username; // prende l'username dell'utente che sta giocando
+    private boolean inCorso; // Stato della partita (Non inziata, In corso o Terminata)
+    //TODO: togliere lo stato da storia, modificare inCorso, chiamarlo "stato", deve essere String
 
     // Costruttore
     public Partita(int id, Storia storia, String username, int inventarioId) {

@@ -123,10 +123,10 @@ footer {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 0;
-    position: relative; 
+    padding: 5px 0;
+    position: fixed;
     width: 100%;
-    margin-top: auto; /* Footer posizionato in fondo, ma non fisso */
+    bottom: 0;
 }
 
 /* Adattamento per schermi piccoli */

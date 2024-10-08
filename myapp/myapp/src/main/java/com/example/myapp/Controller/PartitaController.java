@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,20 +53,28 @@ public class PartitaController {
         return partitaService.getStorieDisponibili();
     }
 
-    @GetMapping("/api/gioca/{storiaId}/start")
-    public Map<String, Object> giocaStoria(@PathVariable int storiaId) {
+    @GetMapping("/gioca/{storiaId}/{scenarioCorrenteId}/start")
+    public Map<String, Object> giocaStoria(@PathVariable int storiaId, @PathVariable Integer scenarioCorrenteId) {
+        //TODO: qui dentro devo salvare una nuova partita
+        System.out.println("QUI!!!");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
         Partita partita = partitaService.caricaPartita(storiaId, user);
         if (partita == null) {
-            throw new RuntimeException("Partita non trovata per l'utente: " + username);
+            // Se non trovi la partita, inizializza una nuova partita
+            partita = partitaService.inizializzaNuovaPartita(storiaId, username);
         }
         
-        Scenario scenarioCorrente = mapDBController.getScenarioById(partita.getIdScenarioCorrente());
+        if (scenarioCorrenteId == null) {
+            scenarioCorrenteId = partita.getIdScenarioCorrente();
+        }
+
+        System.out.println("ID SCENARIO CORRENTE: " + scenarioCorrenteId);
+        Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioCorrenteId);
         if (scenarioCorrente == null) {
-            throw new RuntimeException("Scenario non trovato per ID: " + partita.getIdScenarioCorrente());
+            throw new RuntimeException("Scenario non trovato per ID: " + scenarioCorrenteId);
         }
         
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
@@ -74,11 +85,15 @@ public class PartitaController {
         response.put("inventario", inventario.getOggetti());
         response.put("partitaConclusa", !partita.isInCorso());
 
+        System.out.println("titolo: " + partita.getStoria().getTitolo());
+        System.out.println("scenario corrente: " + scenarioCorrente);
+        System.out.println("inventario: " + inventario.getOggetti());
+        System.out.println("partitaConclusa: " + !partita.isInCorso());
         return response;
     }
 
-    @PostMapping("/gioca/{storiaId}/scelta/{opzioneId}")
-    public void faiScelta(@PathVariable int storiaId, @PathVariable int opzioneId) {
+    @PostMapping("/gioca/{storiaId}/{scenarioCorrenteId}/scelta/{opzioneId}")
+    public void faiScelta(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
@@ -88,17 +103,17 @@ public class PartitaController {
         if (isUltimoScenario) {
             partitaService.terminaPartita(storiaId);
         } else {
-            partitaService.faiScelta(storiaId, opzioneId, user, inventarioController);
+            partitaService.faiScelta(storiaId, scenarioCorrenteId, opzioneId, user, inventarioController);
         }
     }
 
-    @PostMapping("/gioca/{storiaId}/salva")
-    public void salvaPartita(@PathVariable int storiaId) {
+    @PostMapping("/gioca/{storiaId}/{scenarioCorrenteId}/salva")
+    public void salvaPartita(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
-        partitaService.salvaPartita(storiaId, user);
+        partitaService.salvaPartita(storiaId, scenarioCorrenteId, user);
     }
 
 
@@ -108,6 +123,7 @@ public class PartitaController {
         String username = auth.getName();
         Utente user = userService.getUser(username);
         Partita partita = partitaService.caricaPartita(storiaId, user);
+        
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
         response.put("scenarioCorrente", partita.getIdScenarioCorrente());
@@ -134,5 +150,11 @@ public class PartitaController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("possiedeOggetto", possiedeOggetto);
         return response;
+    }
+
+    @PostMapping("/creaPartita/{storiaId}")
+    public ResponseEntity<Partita> creaPartita(@RequestBody Partita partita) {
+        Partita nuovaPartita = partitaService.inizializzaNuovaPartita(partita.getStoria().getId(), partita.getUsername());
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuovaPartita);
     }
 }
