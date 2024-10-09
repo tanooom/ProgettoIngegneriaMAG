@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aggiungi Scenario</title>
-    <link rel="stylesheet" href="/css/scriviStoria.css">
+    <link rel="stylesheet" href="/css/scriviScenario.css">
 </head>
-<body class="scriviStoria">
+<body class="scriviScenario">
     <header>
         <div class="header-content">
             <button class="back-button" onclick="confermaTornaIndietro()">
@@ -29,7 +29,7 @@
                     <textarea id="descrizione-scenario" name="descrizioneScenario" required></textarea>
                 </div>
                 <div>
-                    <label for="opzioni">Seleziona una o più opzioni:</label>
+                    <label for="opzioni">Seleziona una o più opzioni che porteranno allo scenario successivo:</label>
                     <select id="opzioni" name="idOpzioni" multiple required 
                             th:size="${opzioni.size() > 10 ? 10 : opzioni.size() + 1}"> <!-- Imposta size in base al numero di opzioni -->
                         <option value="" disabled selected>Scegli una o più opzioni</option>
@@ -37,6 +37,9 @@
                             <option th:value="${opzione.id}" th:text="${opzione.descrizione}"></option>
                         </th:block>
                     </select>
+                    <p class="select-instruction">
+                        Per selezionare più di un'opzione, tenere premuto il tasto <strong>Ctrl</strong> e fare clic sulle opzioni desiderate.
+                    </p>
                 </div>
                 <div>
                     <button type="button" onclick="window.location.href='scriviOpzione'">Aggiungi Opzione</button>

@@ -314,18 +314,12 @@ footer{
     padding: 5px 0;
     position: relative; 
     width: 100%;
-    margin-top: 111px; 
+    margin-top: 54px; 
 }
 
 input[type="text"],
 textarea {
     font-family: Arial, sans-serif;
-}
-
-.scenario-instruction {
-    font-size: 0.9em; /* Testo più piccolo */
-    color: grey; /* Colore grigio per il messaggio */
-    margin-top: 5px; /* Aggiunge un po' di spazio sopra il messaggio */
 }
 
 /* Adattamento per schermi piccoli */

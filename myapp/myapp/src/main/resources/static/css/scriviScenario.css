@@ -314,7 +314,7 @@ footer{
     padding: 5px 0;
     position: relative; 
     width: 100%;
-    margin-top: 111px; 
+    margin-top: 20px; 
 }
 
 input[type="text"],
@@ -322,9 +322,9 @@ textarea {
     font-family: Arial, sans-serif;
 }
 
-.scenario-instruction {
-    font-size: 0.9em; /* Testo più piccolo */
-    color: grey; /* Colore grigio per il messaggio */
+.select-instruction {
+    font-size: 0.9em; /* Dimensione del testo leggermente ridotta */
+    color: grey; /* Colore del testo */
     margin-top: 5px; /* Aggiunge un po' di spazio sopra il messaggio */
 }
 

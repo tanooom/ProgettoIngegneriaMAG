@@ -1,8 +1,10 @@
 package com.example.myapp.Controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Service.MapDBService;
 import com.example.myapp.Service.StoriaService;
@@ -40,8 +43,6 @@ public class StoriaController {
     @PostMapping("/aggiungiStoria")
     public String aggiungiStoria(
         @RequestParam String titoloStoria,
-        //@RequestParam String descrizioneStoria
-        @RequestParam List<Integer> idScenari,
         @RequestParam int idScenarioIniziale
     ) {
         // Ottieni l'utente autenticato
@@ -54,7 +55,11 @@ public class StoriaController {
             .max()
             .orElse(0) + 1;
 
-        int lunghezza = idScenari.size() + 1;
+        // Calcola tutti gli scenari collegati partendo dallo scenario iniziale
+        List<Integer> idScenari = calcolaScenariCollegati(idScenarioIniziale);
+
+        // Calcola la lunghezza della storia
+        int lunghezza = idScenari.size();
 
         // Crea un nuovo oggetto Storia
         Storia nuovaStoria = new Storia(
@@ -63,13 +68,42 @@ public class StoriaController {
             username, 
             lunghezza,
             idScenarioIniziale,
-            idScenari.isEmpty() ? Collections.emptyList() : idScenari
+            idScenari
         );
 
         // Salva la storia nel database
         mapDBService.saveStory(nuovaStoria);
 
         return "redirect:/scriviStoria";
+    }
+
+    /**
+     * Metodo per calcolare tutti gli scenari collegati a partire da uno scenario iniziale.
+     * Questo metodo attraversa in modo ricorsivo o iterativo la rete degli scenari fino
+     * a raggiungere gli scenari finali.
+     */
+    private List<Integer> calcolaScenariCollegati(int idScenarioIniziale) {
+        List<Integer> scenariCollegati = new ArrayList<>();
+        Queue<Integer> codaScenari = new LinkedList<>();
+        codaScenari.add(idScenarioIniziale);
+
+        while (!codaScenari.isEmpty()) {
+            int idCorrente = codaScenari.poll();
+            scenariCollegati.add(idCorrente);
+
+            // Recupera lo scenario corrente dal database
+            Scenario scenarioCorrente = mapDBService.getScenarioById(idCorrente);
+            if (scenarioCorrente != null && scenarioCorrente.getIdExitScenari() != null) {
+                // Aggiungi gli scenari collegati a quello corrente nella coda
+                for (Integer idExit : scenarioCorrente.getIdExitScenari()) {
+                    if (!scenariCollegati.contains(idExit)) {
+                        codaScenari.add(idExit);
+                    }
+                }
+            }
+        }
+
+        return scenariCollegati;
     }
 
     @GetMapping("/api/storie")

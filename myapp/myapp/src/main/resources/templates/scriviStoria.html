@@ -32,19 +32,12 @@
                             <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
                         </th:block>
                     </select>
+                    <p class="scenario-instruction">
+                        È sufficiente selezionare lo scenario iniziale, la storia verrà caricata in automatico dal sistema.
+                    </p>
                 </div>
                 <div>
                     <button type="button" id="add-scenario-button" onclick="window.location.href='scriviScenario'">Aggiungi Scenario</button>
-                </div>
-                <div>
-                    <label for="scenari-successivi">Seleziona tutti gli scenari successivi della storia:</label>
-                    <select id="scenari-successivi" name="idScenari" multiple 
-                    th:size="${scenari.size() > 10 ? 10 : scenari.size() + 1}">
-                        <option value="" disabled selected>Scegli gli scenari successivi</option>
-                        <th:block th:each="scenario : ${scenari}">
-                            <option th:value="${scenario.id}" th:text="${scenario.nome}"></option>
-                        </th:block>
-                    </select>
                 </div>
                 <div>
                     <button id="save-button">Salva storia</button>
