@@ -23,9 +23,60 @@
       "lunghezza" : 8,
       "idScenarioIniziale" : 1,
       "idScenari" : [ 5, 3, 2, 6, 7, 1, 4 ]
+    },
+    "4" : {
+      "id" : 4,
+      "titolo" : "Storia di prova",
+      "username" : "Smartis",
+      "lunghezza" : 7,
+      "idScenarioIniziale" : 1,
+      "idScenari" : [ 1, 2, 3, 4, 5, 6, 7 ]
+    },
+    "5" : {
+      "id" : 5,
+      "titolo" : "Storia 1",
+      "username" : "Smartis",
+      "lunghezza" : 7,
+      "idScenarioIniziale" : 1,
+      "idScenari" : [ 1, 2, 3, 4, 5, 6, 7 ]
+    },
+    "6" : {
+      "id" : 6,
+      "titolo" : "Storia 1",
+      "username" : "Smartis",
+      "lunghezza" : 7,
+      "idScenarioIniziale" : 1,
+      "idScenari" : [ 1, 2, 3, 4, 5, 6, 7 ]
+    },
+    "7" : {
+      "id" : 7,
+      "titolo" : "Storia 1",
+      "username" : "Smartis",
+      "lunghezza" : 7,
+      "idScenarioIniziale" : 1,
+      "idScenari" : [ 1, 2, 3, 4, 5, 6, 7 ]
     }
   },
-  "matchMap" : { },
+  "matchMap" : {
+    "1" : {
+      "id" : 1,
+      "storia" : {
+        "id" : 6,
+        "titolo" : "Storia 1",
+        "username" : "Smartis",
+        "lunghezza" : 7,
+        "idScenarioIniziale" : 1,
+        "idScenari" : [ 1, 2, 3, 4, 5, 6, 7 ]
+      },
+      "idScenarioCorrente" : 1,
+      "inventarioId" : 1,
+      "username" : "Smartis",
+      "stato" : "In corso",
+      "nonIniziata" : false,
+      "terminata" : false,
+      "inCorso" : true
+    }
+  },
   "scenarioMap" : {
     "1" : {
       "id" : 1,
@@ -163,6 +214,7 @@
     }
   },
   "userMap" : {
+    "Tano" : "$2a$10$U6H/K0kXut8MiYiaMlvsV.crXqBIWBzpwmrHlgtMwtn5/w2a3FsOi;Gaetano;Muscarello;tano.muscarello@gmail.com",
     "Andre" : "$2a$10$9lSz3D.ZWBCxShSHSNkyaeY2ad8z4zBKBqj9ht65zWeOimUrRZ46G;Andrea;Trotta;andre.trotta@gmail.com",
     "Smartis" : "$2a$10$dzJJ2vOWdiiqHialOvUNPuF2zvfChRHbtpTZGNGGAPio6/3UJXY2.;Martina;Samorè;marti.samore@gmail.com"
   }

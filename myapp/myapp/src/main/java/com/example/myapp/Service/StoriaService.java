@@ -64,7 +64,7 @@ public class StoriaService {
             .orElseThrow(() -> new RuntimeException("Storia non trovata per l'ID: " + storiaId));
     }
     
-    public Opzione getOpzioneById(int storiaId, int scenarioId, int opzioneId) {
+    public Opzione getOpzioneById(int scenarioId, int opzioneId) {
         Scenario scenario = mapDBService.getScenarioById(scenarioId);
         // Controlla se lo scenario esiste
         if (scenario == null) {

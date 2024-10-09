@@ -1,8 +1,10 @@
 package com.example.myapp.Model;
 
+import java.io.Serializable;
+
 import com.example.myapp.Controller.InventarioController;
 
-public class Partita {
+public class Partita implements Serializable {
     private final int id; //autoincrement
     private final Storia storia; //me lo prende da storiaId
     private final int idScenarioCorrente; //uguale 
@@ -23,6 +25,7 @@ public class Partita {
     // Metodo per fare una scelta
     public boolean faiScelta(Opzione opzione, InventarioController inventarioController) {
         // Usa l'ID per recuperare l'inventario
+        System.out.println("E QUI?");
         Inventario inventario = inventarioController.getInventarioById(this.inventarioId);
         
         if (opzione.isRichiedeOggetto() && !inventario.contieneOggetto(opzione.getOggettoRichiesto())) {

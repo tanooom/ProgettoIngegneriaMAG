@@ -59,31 +59,37 @@ public class PartitaController {
         return partitaService.getStorieDisponibili();
     }
 
+    // Implementa la funzione caricaScenario() di giocaStoria
     @GetMapping("/gioca/{storiaId}/{scenarioCorrenteId}/start")
     public Map<String, Object> giocaStoria(@PathVariable int storiaId, @PathVariable Integer scenarioCorrenteId) {
-        //TODO: qui dentro devo salvare una nuova partita
+        //TODO: qui dentro devo salvare una nuova partita (DOVREI AVERLO GIA' FATTO)
+        //TODO: qui dentro devo salvare l'inventario (DOVREI AVERLO GIA' FATTO)
         System.out.println("QUI!!!");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
-        Partita partita = partitaService.caricaPartita(storiaId, user);
-        if (partita == null) {
+        Partita partita = partitaService.caricaPartita(storiaId, user); //Creo l'oggetto partita
+        System.out.println("Partita: " + partita);
+        if (partita == null) { //Se è nullo (non esiste) ne creo una nuova
             // Se non trovi la partita, inizializza una nuova partita
+            // Dentro inizializzaNuovaPartita creo anche l'inventario
             partita = partitaService.inizializzaNuovaPartita(storiaId, username);
+            System.out.println("Partita 2: " + partita.getId());
         }
         
         if (scenarioCorrenteId == null) {
             scenarioCorrenteId = partita.getIdScenarioCorrente();
         }
-
         System.out.println("ID SCENARIO CORRENTE: " + scenarioCorrenteId);
+       
         Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioCorrenteId);
         if (scenarioCorrente == null) {
             throw new RuntimeException("Scenario non trovato per ID: " + scenarioCorrenteId);
         }
         
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+        System.out.println("INVENTARIO DELLA PARTITA: " + inventario);
 
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
@@ -98,12 +104,11 @@ public class PartitaController {
         return response;
     }
 
-    @GetMapping("/gioca/{storiaId}/{scenarioCorrenteId}/{opzioneId}")
-    public ResponseEntity<Opzione> getOpzioneById(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
-        System.out.println("QUI CI STA ARRIVANDO?");
-        System.out.println("STORIA: " + storiaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
+    // Implementa la funzione faiScelta() di giocaStoria
+    @GetMapping("/gioca/{partitaId}/{scenarioCorrenteId}/{opzioneId}")
+    public ResponseEntity<Opzione> getOpzioneById(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
         try {
-            Opzione opzione = storiaService.getOpzioneById(storiaId, scenarioCorrenteId, opzioneId);
+            Opzione opzione = storiaService.getOpzioneById(scenarioCorrenteId, opzioneId);
             
             if (opzione != null) {
                 System.out.println("Risposta ok");
@@ -118,32 +123,46 @@ public class PartitaController {
         }
     }
 
-    @PostMapping("/gioca/{storiaId}/{scenarioCorrenteId}/scelta/{opzioneId}")
-    public void faiScelta(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Utente user = userService.getUser(username);
-
-        boolean isUltimoScenario = partitaService.isUltimoScenario(opzioneId);
-        
-        if (isUltimoScenario) {
-            partitaService.terminaPartita(storiaId);
-        } else {
-            partitaService.faiScelta(storiaId, scenarioCorrenteId, opzioneId, user, inventarioController);
+    // Implementa la funzione eseguiScelta() di giocaStoria
+    @PostMapping("/gioca/{partitaId}/{scenarioCorrenteId}/scelta/{opzioneId}")
+    public ResponseEntity<String> faiScelta(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
+        System.out.println("QUI CI STA ARRIVANDO?");
+        System.out.println("PARTITA: " + partitaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            Utente user = userService.getUser(username);
+    
+            boolean isUltimoScenario = partitaService.isUltimoScenario(opzioneId);
+            System.out.println("Ultimo scenario? " + isUltimoScenario);
+    
+            if (isUltimoScenario) { //Se è l'ultimo scenario la termina
+                partitaService.terminaPartita(partitaId);
+            } else { //Dovrebbe aggiornare lo scenario corrente passando a quello dell'opzione
+                partitaService.faiScelta(partitaId, scenarioCorrenteId, opzioneId, user, inventarioController);
+            }
+    
+            return ResponseEntity.ok("Scelta eseguita con successo");
+        } catch (Exception e) {
+            // Logga l'errore e restituisci una risposta adeguata
+            System.out.println("Errore nel processo della scelta: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante il processo della scelta: " + e.getMessage());
         }
-    }
+    }    
 
-    @PostMapping("/gioca/{storiaId}/{scenarioCorrenteId}/salva")
-    public void salvaPartita(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId) {
+    //Implementa la funzione salva ed esci -> si salva lo scenario in cui si è arrivati
+    @PostMapping("/gioca/{partitaId}/{scenarioCorrenteId}/salva")
+    public void salvaPartita(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
-        partitaService.salvaPartita(storiaId, scenarioCorrenteId, user);
+        partitaService.salvaPartita(partitaId, scenarioCorrenteId, user);
     }
 
 
-    @GetMapping("/gioca/{storiaId}/scenario")
+    //TODO: Serve questo metodo?
+    @GetMapping("/gioca/{partitaId}/scenario")
     public Map<String, Object> caricaScenario(@PathVariable int storiaId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -157,14 +176,15 @@ public class PartitaController {
         return response;
     }
 
-    @GetMapping("/gioca/{storiaId}/controllaOggetto/{oggetto}")
-    public Map<String, Boolean> controllaOggetto(@PathVariable int storiaId, @PathVariable String oggetto) {
+    //Controlla che l'oggetto richiesto sia nell'inventario
+    @GetMapping("/gioca/{partitaId}/controllaOggetto/{oggetto}")
+    public Map<String, Boolean> controllaOggetto(@PathVariable int partitaId, @PathVariable String oggetto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
     
         // Carica la partita dell'utente
-        Partita partita = partitaService.caricaPartita(storiaId, user);
+        Partita partita = partitaService.caricaPartita(partitaId, user);
     
         // Ottieni l'inventario associato alla partita
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
@@ -178,6 +198,7 @@ public class PartitaController {
         return response;
     }
 
+    //TODO: mi serve?
     @PostMapping("/creaPartita/{storiaId}")
     public ResponseEntity<Partita> creaPartita(@RequestBody Partita partita) {
         Partita nuovaPartita = partitaService.inizializzaNuovaPartita(partita.getStoria().getId(), partita.getUsername());

@@ -26,6 +26,7 @@ public class Inventario {
 
     // Aggiunge un oggetto all'inventario
     public void aggiungiOggetto(String oggetto) {
+        //TODO: controllare, da salvare sul db
         if (!oggetti.contains(oggetto)) {
             oggetti.add(oggetto);
             System.out.println("Oggetto '" + oggetto + "' aggiunto all'inventario.");
@@ -34,8 +35,9 @@ public class Inventario {
         }
     }
 
-    // Rimuove un oggetto dall'inventario
+    // Rimuove un oggetto dall'inventario -> DA IMPLEMENTARE???
     public boolean rimuoviOggetto(String oggetto) {
+        //TODO: controllare, da salvare sul db
         if (oggetti.contains(oggetto)) {
             oggetti.remove(oggetto);
             System.out.println("Oggetto '" + oggetto + "' rimosso dall'inventario.");

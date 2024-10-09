@@ -24,9 +24,10 @@ public class InventarioController {
         return inventari.get(id); // Ritorna l'inventario associato all'ID
     }
 
-    public int creaInventario() {
-        Inventario nuovoInventario = new Inventario(nextId++, 0); // Imposta idPartita a 0 inizialmente
+    public Inventario creaInventario(int partitaId) {
+        Inventario nuovoInventario = new Inventario(nextId++, partitaId);
         aggiungiInventario(nuovoInventario);
-        return nuovoInventario.getId();
+        //aggiungere la chiamata a MapDBService
+        return nuovoInventario;
     }
 }
