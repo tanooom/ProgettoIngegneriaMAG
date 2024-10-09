@@ -6,7 +6,6 @@ public class Opzione implements Serializable{
     //private static final long serialVersionUID = 1L; // Cambia il valore se necessario
 
     private final int id;
-    
     private final String descrizione;
     //private final int idScenarioSuccessivo;
     private final boolean richiedeOggetto;

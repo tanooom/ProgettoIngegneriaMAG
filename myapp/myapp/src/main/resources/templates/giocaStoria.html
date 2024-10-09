@@ -51,22 +51,20 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Assicurati che i dati siano definiti
-                    if (data) {
+                    console.log("Dati ricevuti:", data);
+                    if (data && data.scenarioCorrente && data.scenarioCorrente.opzioni) {
                         // Visualizza titolo storia e scenario corrente
                         document.getElementById('titoloStoria').innerText = data.titolo;
-                        document.getElementById('titoloScenario').innerText = data.scenarioCorrente.titolo;
+                        document.getElementById('titoloScenario').innerText = data.scenarioCorrente.nome;
                         document.getElementById('descrizioneScenario').innerText = data.scenarioCorrente.descrizione;
+                        //document.getElementById('opzioni').innerText = data.scenarioCorrente.opzioni;
 
-                        // Gestione delle opzioni
-                        const opzioniDiv = document.getElementById('opzioni');
-                        opzioniDiv.innerHTML = '';
-                        data.scenarioCorrente.opzioni.forEach(opzione => {
-                            const button = document.createElement('button');
-                            button.innerText = opzione.descrizione;
-                            button.onclick = () => faiScelta(opzione);
-                            opzioniDiv.appendChild(button);
-                        });
+                        console.log("Titolo storia: " + data.titolo);
+                        console.log("Nome scenario: " + data.scenarioCorrente.nome);
+                        console.log("Descrizione scenario: " + data.scenarioCorrente.descrizione);
+                        console.log("Opzioni:", data.scenarioCorrente.opzioni);
+
+                        getOpzioni(data.scenarioCorrente.opzioni);
 
                         // Gestione dell'inventario
                         const inventarioDiv = document.getElementById('inventario');
@@ -82,11 +80,50 @@
                             opzioniDiv.innerHTML = '<p>The End</p>';
                             document.querySelectorAll('button').forEach(button => button.disabled = true); // Disabilita pulsanti
                         }
+                    } else { //da togliere
+                        console.log("Nessuna opzione disponibile");
                     }
                 })
                 .catch(error => {
                     console.error('Si è verificato un errore:', error);
                     alert('Si è verificato un errore: ' + error.message);
+                });
+        }
+
+        function getOpzioni(opzioniIds) {
+            const opzioniDiv = document.getElementById('opzioni');
+            //opzioniDiv.innerHTML = ''; // Svuota le opzioni esistenti
+            console.log("Opzioni div: " + opzioniDiv.innerHTML);
+
+            if (opzioniIds.length === 0) {
+                opzioniDiv.innerHTML = '<p>Nessuna opzione disponibile.</p>';
+                return; // Esce dalla funzione se non ci sono opzioni
+            } 
+            const opzioniPromises = opzioniIds.map(opzioneId => {
+                console.log("STORIA: " + storiaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
+                return fetch(`/api/gioca/${storiaId}/${scenarioCorrenteId}/${opzioneId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Errore nel recupero dell\'opzione con ID: ' + opzioneId);
+                        }
+                        return response.json();
+                    });
+            });
+
+            Promise.all(opzioniPromises)
+                .then(opzioni => {
+                    opzioni.forEach(opzione => {
+                        const button = document.createElement('button');
+                        console.log("Opzione: " + opzione);
+                        button.innerText = opzione.descrizione;
+                        console.log("Descrizione opzione: " + opzione.descrizione);
+                        button.onclick = () => faiScelta(opzione);
+                        opzioniDiv.appendChild(button);
+                    });
+                })
+                .catch(error => {
+                    console.error('Si è verificato un errore nel recupero delle opzioni:', error);
+                    opzioniDiv.innerHTML = '<p>Si è verificato un errore nel recupero delle opzioni.</p>'; // Messaggio di errore
                 });
         }
 

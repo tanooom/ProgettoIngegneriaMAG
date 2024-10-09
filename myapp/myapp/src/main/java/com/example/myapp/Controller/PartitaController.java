@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.myapp.Model.Inventario;
+import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
 import com.example.myapp.Service.PartitaService;
+import com.example.myapp.Service.StoriaService;
 import com.example.myapp.Service.UserService;
 
 @RestController
@@ -30,6 +32,9 @@ public class PartitaController {
 
     @Autowired
     private final PartitaService partitaService;
+    
+    @Autowired
+    private final StoriaService storiaService;
 
     @Autowired
     private final UserService userService;
@@ -41,8 +46,9 @@ public class PartitaController {
     private final InventarioController inventarioController;
 
     // Costruttore
-    public PartitaController(PartitaService partitaService, UserService userService, MapDBController mapDBController, InventarioController inventarioController) {
+    public PartitaController(PartitaService partitaService, StoriaService storiaService, UserService userService, MapDBController mapDBController, InventarioController inventarioController) {
         this.partitaService = partitaService;
+        this.storiaService = storiaService;
         this.userService = userService;
         this.mapDBController = mapDBController;
         this.inventarioController = inventarioController;
@@ -78,19 +84,38 @@ public class PartitaController {
         }
         
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
-        
-        //TODO: SISTEMARE QUESTI DUE COMMENTI CON UNA FUNZIONE
+
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
         response.put("scenarioCorrente", scenarioCorrente);
         response.put("inventario", inventario.getOggetti());
-        //response.put("partitaConclusa", !partita.isInCorso());
+        response.put("partitaConclusa", !partita.isInCorso());
 
         System.out.println("titolo: " + partita.getStoria().getTitolo());
         System.out.println("scenario corrente: " + scenarioCorrente);
         System.out.println("inventario: " + inventario.getOggetti());
-        //System.out.println("partitaConclusa: " + !partita.isInCorso());
+        System.out.println("partitaConclusa: " + !partita.isInCorso());
         return response;
+    }
+
+    @GetMapping("/gioca/{storiaId}/{scenarioCorrenteId}/{opzioneId}")
+    public ResponseEntity<Opzione> getOpzioneById(@PathVariable int storiaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
+        System.out.println("QUI CI STA ARRIVANDO?");
+        System.out.println("STORIA: " + storiaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
+        try {
+            Opzione opzione = storiaService.getOpzioneById(storiaId, scenarioCorrenteId, opzioneId);
+            
+            if (opzione != null) {
+                System.out.println("Risposta ok");
+                return ResponseEntity.ok(opzione);
+            } else {
+                System.out.println("Opzione non trovata");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            System.out.println("Errore durante il recupero dell'opzione: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("/gioca/{storiaId}/{scenarioCorrenteId}/scelta/{opzioneId}")

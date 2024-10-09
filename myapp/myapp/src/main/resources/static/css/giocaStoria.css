@@ -26,12 +26,16 @@ header h1 {
     margin: 0;
     font-size: 2em;
     color: white;
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+    word-wrap: break-word;
 }
 
 .header-content {
     display: flex;
-    align-items: center;
-    justify-content: space-between; 
+    position: relative;
+    justify-content: center; 
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -83,7 +87,7 @@ header h1 {
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px; /* Aumentato per migliore visibilità */
+    /*font-size: 16px; /* Aumentato per migliore visibilità */
     margin: 4px 0;
     cursor: pointer;
     border-radius: 4px;
@@ -98,15 +102,18 @@ header h1 {
 /* Pulsante di salvataggio */
 .save-button {
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: #007bff; 
-    border: none;
-    cursor: pointer;
-    padding: 10px 20px;   
-    border-radius: 4px;
-    gap: 10px;
+    border: none;    
+    cursor: pointer;     
+    padding: 10px;   
+    border-radius: 4px; 
+    gap: 5px;
     color: white;
     font-weight: bold;
+    position: absolute;
+    left: 20px;
 }
 
 .save-button img {
@@ -130,20 +137,40 @@ footer {
 }
 
 /* Adattamento per schermi piccoli */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .header-content {
-        flex-direction: column;
+        flex-direction: row;
         text-align: center;
+        align-items: center;
     }
 
     .container {
-        width: 100%;
-        padding: 20px;
+        padding: 0 10px;
+        flex-direction: column;
+        align-items: stretch;
+        box-sizing: border-box;
+        margin-top: 20px;
+        margin-bottom: 80px;
     }
 
     .button, .back-button {
-        font-size: 16px; /* Ridotto leggermente */
+        font-size: 16px;
         padding: 12px 24px;
+    }
+
+    .inventario-box, .scenario-box {
+        width: 100%; 
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .inventario-box {
+        order: 1; /* Assicura che l'inventario sia sopra */
+    }
+
+    .scenario-box {
+        order: 2; /* Lo scenario va sotto */
     }
 }
 

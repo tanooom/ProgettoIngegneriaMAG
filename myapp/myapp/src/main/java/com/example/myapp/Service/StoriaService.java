@@ -66,13 +66,24 @@ public class StoriaService {
     
     public Opzione getOpzioneById(int storiaId, int scenarioId, int opzioneId) {
         Scenario scenario = mapDBService.getScenarioById(scenarioId);
-        return scenario.getOpzioni().stream()
-            .filter(opzioneIdFromList -> opzioneIdFromList == opzioneId) // Cambiato per confrontare con Integer
-            .map(opzioneIdFromList -> {
-                return new Opzione(opzioneIdFromList, "DescrizioneOpzione", false, null, false, null, null); // Sostituisci con il tuo metodo di recupero
-            })
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Opzione non trovata per l'ID: " + opzioneId));
+        // Controlla se lo scenario esiste
+        if (scenario == null) {
+            throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioId);
+        }
+
+        // Verifica se l'ID dell'opzione è presente nella lista delle opzioni dello scenario
+        if (!scenario.getOpzioni().contains(opzioneId)) {
+            throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId + " nello scenario ID: " + scenarioId);
+        }
+
+            // Dovresti avere un metodo che restituisce un'opzione completa
+        Opzione opzioneCompleta = mapDBService.getOptionById(opzioneId);
+        
+        if (opzioneCompleta == null) {
+            throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
+        }
+
+        return opzioneCompleta;
     }
 
     // Ottiene una lista di tutte le storie

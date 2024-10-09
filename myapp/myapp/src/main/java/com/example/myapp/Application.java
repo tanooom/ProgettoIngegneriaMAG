@@ -14,32 +14,33 @@ public class Application {
 	
 	//TODO: alla fine sistema tutti i @media dei css
 	//TODO: alla fine togli tutti i console log e i system.out.println() di debug
-	//TODO: controlla i metodi che non sono mai stati utilizzati ed eliminali
+	//TODO: alla fine controlla i metodi/funzioni che non sono mai stati utilizzati ed eliminali
 	//TODO: sistema i commenti
 
 	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
 
-	// PER RIMUOVERE UN UTENTE: 
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteUser?username=andre2"
-	// PER RIMUOVERE TUTTI GLI UTENTI:
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllUsers"
+	/* 
+	PER RIMUOVERE UN UTENTE: 
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteUser?username=andre2"
+	PER RIMUOVERE TUTTI GLI UTENTI:
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllUsers"
 
-	// PER RIMUOVERE UN'OPZIONE
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteOption?id=124"
-	// PER RIMUOVERE TUTTE LE OPZIONI:
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllOptions"
+	PER RIMUOVERE UN'OPZIONE
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteOption?id=124"
+	PER RIMUOVERE TUTTE LE OPZIONI:
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllOptions"
 
-	// PER RIMUOVERE UNO SCENARIO
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteScenario?id=124"
-	// PER RIMUOVERE TUTTI GLI SCENARI:
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllScenari"
+	PER RIMUOVERE UNO SCENARIO
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteScenario?id=124"
+	PER RIMUOVERE TUTTI GLI SCENARI:
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllScenari"
 
-	// PER RIMUOVERE UNA STORIA
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteStoria?id=124"
-	// PER RIMUOVERE TUTTE LE STORIE:
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllStories"
+	PER RIMUOVERE UNA STORIA
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteStoria?id=124"
+	PER RIMUOVERE TUTTE LE STORIE:
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllStories"
 
-	// PER CANCELLARE TUTTO IL DATABASE
-	//Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteDatabase"
-
+	PER CANCELLARE TUTTO IL DATABASE
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteDatabase"
+	*/
 }

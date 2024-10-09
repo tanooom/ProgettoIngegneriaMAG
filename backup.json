@@ -4,144 +4,112 @@
       "id" : 1,
       "titolo" : "La grande avventura!",
       "username" : "Smartis",
-      "lunghezza" : 4,
-      "stato" : "Non iniziata",
-      "idScenarioIniziale" : 2,
-      "idScenari" : [ 5, 3, 4 ]
+      "lunghezza" : 8,
+      "idScenarioIniziale" : 1,
+      "idScenari" : [ 5, 3, 2, 6, 7, 1, 4 ]
     },
     "2" : {
       "id" : 2,
       "titolo" : "Prima storia",
       "username" : "Smartis",
-      "lunghezza" : 4,
-      "stato" : "Non iniziata",
+      "lunghezza" : 8,
       "idScenarioIniziale" : 1,
-      "idScenari" : [ 5, 3, 4 ]
+      "idScenari" : [ 5, 3, 2, 6, 7, 1, 4 ]
     },
     "3" : {
       "id" : 3,
       "titolo" : "Seconda storia",
       "username" : "Smartis",
-      "lunghezza" : 3,
-      "stato" : "Non iniziata",
-      "idScenarioIniziale" : 2,
-      "idScenari" : [ 3, 4 ]
-    },
-    "4" : {
-      "id" : 4,
-      "titolo" : "Storia di prova",
-      "username" : "Smartis",
-      "lunghezza" : 3,
-      "stato" : "Non iniziata",
-      "idScenarioIniziale" : 2,
-      "idScenari" : [ 3, 4 ]
-    },
-    "5" : {
-      "id" : 5,
-      "titolo" : "Provaaaa",
-      "username" : "Smartis",
-      "lunghezza" : 3,
-      "stato" : "Non iniziata",
+      "lunghezza" : 8,
       "idScenarioIniziale" : 1,
-      "idScenari" : [ 3, 2 ]
+      "idScenari" : [ 5, 3, 2, 6, 7, 1, 4 ]
     }
   },
   "matchMap" : { },
   "scenarioMap" : {
     "1" : {
       "id" : 1,
-      "nome" : "Scenario iniziale",
-      "descrizione" : "C'era una volta",
-      "oggettoRaccoglibile" : null,
-      "idScenarioPrecedente" : null,
-      "idExitScenari" : [ 1, 2, 3 ],
-      "scenarioIniziale" : false,
-      "scenarioFinale" : false,
-      "opzioni" : [ ]
-    },
-    "2" : {
-      "id" : 2,
       "nome" : "Scenario A",
-      "descrizione" : "C'era una volta",
-      "oggettoRaccoglibile" : "Chiave",
+      "descrizione" : "C'era una volta...",
+      "oggettoRaccoglibile" : "Mappa",
       "idScenarioPrecedente" : null,
-      "idExitScenari" : [ 1, 2, 3 ],
-      "scenarioIniziale" : false,
+      "idExitScenari" : [ 2, 3 ],
+      "scenarioIniziale" : true,
       "scenarioFinale" : false,
       "opzioni" : [ 2, 1 ]
     },
-    "3" : {
-      "id" : 3,
+    "2" : {
+      "id" : 2,
       "nome" : "Scenario B",
       "descrizione" : "Gira a destra",
-      "oggettoRaccoglibile" : "Mappa",
-      "idScenarioPrecedente" : 2,
-      "idExitScenari" : [ 1, 2, 3 ],
+      "oggettoRaccoglibile" : "Chiave",
+      "idScenarioPrecedente" : 1,
+      "idExitScenari" : [ 4, 5 ],
       "scenarioIniziale" : false,
       "scenarioFinale" : false,
-      "opzioni" : [ 3 ]
+      "opzioni" : [ 3, 4 ]
     },
-    "4" : {
-      "id" : 4,
+    "3" : {
+      "id" : 3,
       "nome" : "Scenario C",
       "descrizione" : "Gira a sinistra",
       "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 1,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true,
+      "opzioni" : [ ]
+    },
+    "4" : {
+      "id" : 4,
+      "nome" : "Scenario D",
+      "descrizione" : "Volta a destra",
+      "oggettoRaccoglibile" : null,
       "idScenarioPrecedente" : 2,
-      "idExitScenari" : [ 1, 2, 3 ],
+      "idExitScenari" : [ 6, 7 ],
       "scenarioIniziale" : false,
       "scenarioFinale" : false,
-      "opzioni" : [ ]
+      "opzioni" : [ 5, 6 ]
     },
     "5" : {
       "id" : 5,
-      "nome" : "Scenario D",
-      "descrizione" : "Prosegui dritto...",
+      "nome" : "Scenario E",
+      "descrizione" : "Volta a sinistra",
       "oggettoRaccoglibile" : null,
-      "idScenarioPrecedente" : 3,
-      "idExitScenari" : [ 1, 2, 3 ],
+      "idScenarioPrecedente" : 2,
+      "idExitScenari" : [ ],
       "scenarioIniziale" : false,
-      "scenarioFinale" : false,
+      "scenarioFinale" : true,
       "opzioni" : [ ]
     },
     "6" : {
       "id" : 6,
-      "nome" : "Scenario di partenza",
-      "descrizione" : "Desc",
+      "nome" : "Scenario F",
+      "descrizione" : "Salta a destra",
       "oggettoRaccoglibile" : null,
-      "idScenarioPrecedente" : null,
-      "idExitScenari" : [ 7, 8 ],
-      "scenarioIniziale" : true,
-      "scenarioFinale" : false,
-      "opzioni" : [ 1, 4 ]
+      "idScenarioPrecedente" : 4,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true,
+      "opzioni" : [ ]
     },
     "7" : {
       "id" : 7,
-      "nome" : "Scenario Figlio 1",
-      "descrizione" : "desc figlio 1",
+      "nome" : "Scenario G",
+      "descrizione" : "Salta a sinistra",
       "oggettoRaccoglibile" : null,
-      "idScenarioPrecedente" : 6,
+      "idScenarioPrecedente" : 4,
       "idExitScenari" : [ ],
       "scenarioIniziale" : false,
       "scenarioFinale" : true,
-      "opzioni" : [ 2 ]
-    },
-    "8" : {
-      "id" : 8,
-      "nome" : "Scenario figlio 2",
-      "descrizione" : "desc figlio 2",
-      "oggettoRaccoglibile" : null,
-      "idScenarioPrecedente" : 6,
-      "idExitScenari" : [ ],
-      "scenarioIniziale" : false,
-      "scenarioFinale" : true,
-      "opzioni" : [ 3 ]
+      "opzioni" : [ ]
     }
   },
   "inventoryMap" : { },
   "optionMap" : {
     "1" : {
       "id" : 1,
-      "descrizione" : "Opzione A",
+      "descrizione" : "Opzione 1",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
       "richiedeIndovinello" : false,
@@ -150,7 +118,7 @@
     },
     "2" : {
       "id" : 2,
-      "descrizione" : "Opzione B",
+      "descrizione" : "Opzione 2",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
       "richiedeIndovinello" : true,
@@ -159,24 +127,43 @@
     },
     "3" : {
       "id" : 3,
-      "descrizione" : "Opzione C",
+      "descrizione" : "Opzione 3",
       "richiedeOggetto" : true,
-      "oggettoRichiesto" : "Chiave",
+      "oggettoRichiesto" : "Mappa",
       "richiedeIndovinello" : false,
       "indovinello" : null,
       "rispostaCorrettaIndovinello" : null
     },
     "4" : {
       "id" : 4,
-      "descrizione" : "Opzione 1",
+      "descrizione" : "Opzione 4",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "5" : {
+      "id" : 5,
+      "descrizione" : "Opzione 5",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : true,
+      "indovinello" : "Tutto bene?",
+      "rispostaCorrettaIndovinello" : "Si"
+    },
+    "6" : {
+      "id" : 6,
+      "descrizione" : "Opzione 6",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Chiave",
       "richiedeIndovinello" : false,
       "indovinello" : null,
       "rispostaCorrettaIndovinello" : null
     }
   },
   "userMap" : {
-    "Smartis" : "$2a$10$TUDLXhy2n4qV8s/bDXG6quFuqN/FePcr12lzBc7xDCrr4hrUezZ4i;Martina;Samorè;marti.samore@gmail.com"
+    "Andre" : "$2a$10$9lSz3D.ZWBCxShSHSNkyaeY2ad8z4zBKBqj9ht65zWeOimUrRZ46G;Andrea;Trotta;andre.trotta@gmail.com",
+    "Smartis" : "$2a$10$dzJJ2vOWdiiqHialOvUNPuF2zvfChRHbtpTZGNGGAPio6/3UJXY2.;Martina;Samorè;marti.samore@gmail.com"
   }
 }

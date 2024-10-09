@@ -87,7 +87,7 @@ public class PartitaService {
     public Partita inizializzaNuovaPartita(int storiaId, String username) {
         Storia storia = storiaService.getStoriaById(storiaId); // Supponendo che tu abbia un metodo per ottenere la storia
         int inventarioId = inventarioController.creaInventario(); // Crea un nuovo inventario
-        Partita nuovaPartita = new Partita(storiaId, storia, username, inventarioId);
+        Partita nuovaPartita = new Partita(storiaId, storia, username, inventarioId, "In corso");
         partiteAttive.add(nuovaPartita); // Aggiungi la nuova partita alla lista delle partite attive
         return nuovaPartita;
     }

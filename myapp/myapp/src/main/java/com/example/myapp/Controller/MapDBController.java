@@ -102,8 +102,9 @@ public class MapDBController {
     public String putMatch( @RequestParam int id, 
                             @RequestParam Storia storia,  
                             @RequestParam String username, 
-                            @RequestParam int inventarioId) {
-        Partita partita = new Partita(id, storia, username, inventarioId);
+                            @RequestParam int inventarioId,
+                            @RequestParam String stato) {
+        Partita partita = new Partita(id, storia, username, inventarioId, stato);
         mapDBService.saveMatch(partita);
         return "Partita aggiunta con successo!";
     }
