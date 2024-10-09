@@ -42,7 +42,7 @@ public class StoriaService {
             .filter(storia -> (searchTerm == null || storia.getTitolo().toLowerCase().contains(searchTerm.toLowerCase())))
             .filter(storia -> (username == null || username.isEmpty() || storia.getUsername().equalsIgnoreCase(username)))
             .filter(storia -> (lunghezza == null || matchesLunghezza(storia, lunghezza)))
-            .filter(storia -> (stato == null || stato.isEmpty() || storia.getStato().equalsIgnoreCase(stato)))
+            //.filter(storia -> (stato == null || stato.isEmpty() || storia.getStato().equalsIgnoreCase(stato)))
             .collect(Collectors.toList());
     }
 

@@ -55,16 +55,13 @@ public class StoriaController {
             .orElse(0) + 1;
 
         int lunghezza = idScenari.size() + 1;
-        String stato = "Non iniziata";
 
         // Crea un nuovo oggetto Storia
         Storia nuovaStoria = new Storia(
             newId, 
             titoloStoria,
             username, 
-            //descrizioneStoria,
             lunghezza,
-            stato,
             idScenarioIniziale,
             idScenari.isEmpty() ? Collections.emptyList() : idScenari
         );
@@ -88,8 +85,8 @@ public class StoriaController {
     @GetMapping("/api/storieFiltrate")
     public ResponseEntity<List<Storia>> getStorieFiltrate(  @RequestParam(required = false) String searchTerm,
                                                             @RequestParam(required = false) String username,
-                                                            @RequestParam(required = false) String lunghezza, 
-                                                            @RequestParam(required = false) String stato) {
+                                                            @RequestParam(required = false) String lunghezza) { 
+                                                            //@RequestParam(required = false) String stato) {
     
         List<Storia> storie = storiaService.getAllStorie();
         List<Storia> storieResult = new ArrayList<>();
@@ -101,7 +98,7 @@ public class StoriaController {
         // Normalizzazione dei parametri di input
         if (searchTerm != null) searchTerm = searchTerm.trim().toLowerCase();
         if (username != null) username = username.trim().toLowerCase();
-        if (stato != null) stato = stato.trim().toLowerCase();
+        //if (stato != null) stato = stato.trim().toLowerCase();
     
         // Verifica delle storie in base ai filtri
         for (Storia storia : storie) {
@@ -134,10 +131,10 @@ public class StoriaController {
                 }
             }
     
-            // Filtro per stato
+            /*// Filtro per stato
             if (stato != null && !storia.getStato().trim().toLowerCase().equals(stato)) {
                 matches = false;
-            }
+            }*/
     
             // Se la storia soddisfa tutti i filtri, viene aggiunta alla lista dei risultati
             if (matches) {

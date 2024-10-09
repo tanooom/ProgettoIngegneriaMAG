@@ -79,16 +79,17 @@ public class PartitaController {
         
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
         
+        //TODO: SISTEMARE QUESTI DUE COMMENTI CON UNA FUNZIONE
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
         response.put("scenarioCorrente", scenarioCorrente);
         response.put("inventario", inventario.getOggetti());
-        response.put("partitaConclusa", !partita.isInCorso());
+        //response.put("partitaConclusa", !partita.isInCorso());
 
         System.out.println("titolo: " + partita.getStoria().getTitolo());
         System.out.println("scenario corrente: " + scenarioCorrente);
         System.out.println("inventario: " + inventario.getOggetti());
-        System.out.println("partitaConclusa: " + !partita.isInCorso());
+        //System.out.println("partitaConclusa: " + !partita.isInCorso());
         return response;
     }
 

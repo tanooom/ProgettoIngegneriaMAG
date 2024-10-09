@@ -11,18 +11,15 @@ public class Storia implements Serializable{
     private final String titolo;
     private final String username; // Username dello scrittore
     private final int lunghezza; // Numero di scenari
-    private final String stato; // Stato della storia
-    //TODO: la storia non ha uno stato, è la partita che ha uno stato
     private int idScenarioIniziale;
     private final List<Integer> idScenari; // Lista ID scenari
 
     public Storia(int id, String titolo, String username, int lunghezza, 
-    String stato, int idScenarioIniziale, List<Integer> idScenari) {
+    int idScenarioIniziale, List<Integer> idScenari) {
         this.id = id;
         this.titolo = titolo;
         this.username = username;
         this.lunghezza = lunghezza;
-        this.stato = stato;
         this.idScenarioIniziale = idScenarioIniziale;
         this.idScenari = idScenari != null ? idScenari : new ArrayList<>();
     }
@@ -49,10 +46,6 @@ public class Storia implements Serializable{
 
     public int getLunghezza() { 
         return lunghezza; 
-    }
-
-    public String getStato() { 
-        return stato; 
     }
 
     public String getTitolo(){
@@ -92,7 +85,6 @@ public class Storia implements Serializable{
                 ", titolo='" + titolo + '\'' +
                 ", username='" + username + '\'' +
                 ", lunghezza=" + lunghezza +
-                ", stato='" + stato + '\'' +
                 ", idScenari=" + idScenari.toString() +
                 '}';
     }

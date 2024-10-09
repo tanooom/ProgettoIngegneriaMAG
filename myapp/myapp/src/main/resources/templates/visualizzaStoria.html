@@ -28,12 +28,12 @@
             <option value="5-10">5-10 scenari</option>
             <option value="10+">10+ scenari</option>
         </select>
-        <select id="filterStato">
+        <!--<select id="filterStato">
             <option value="">Filtra per stato</option>
             <option value="Non iniziata">Non iniziata</option>
             <option value="In corso">In corso</option>
             <option value="Conclusa">Conclusa</option>
-        </select>
+        </select>-->
         <button class="search-button" onclick="filterStorie()">
             <img src="/css/images/search-icon.png" alt="Cerca">
         </button>
@@ -174,12 +174,12 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const username = document.getElementById('filterUsername').value;
             const lunghezza = document.getElementById('filterLunghezza').value;
-            const stato = document.getElementById('filterStato').value;
+            //const stato = document.getElementById('filterStato').value;
 
             console.log("search term: " +searchTerm);
             console.log("username: " +username);
             console.log("lunghezza: " + lunghezza);
-            console.log("stato: " + stato);
+            //console.log("stato: " + stato);
 
             // Costruisci la query string con i filtri
             let query =`/api/storieFiltrate?`;
@@ -194,7 +194,7 @@
                 query += `lunghezza=range10+&`;  // Questo invia un parametro per il range 10+
             }
 
-            if (stato) query += `stato=${encodeURIComponent(stato)}&`;
+            //if (stato) query += `stato=${encodeURIComponent(stato)}&`;
             
             console.log("query: " + query);
 

@@ -8,7 +8,7 @@ public class Partita {
     private final int idScenarioCorrente; //uguale 
     private final int inventarioId; //me lo crea dentro api/.../start
     private final String username; // prende l'username dell'utente che sta giocando
-    private boolean inCorso; // Stato della partita (Non inziata, In corso o Terminata)
+    private String stato; // Stato della partita (Non inziata, In corso o Terminata)
     //TODO: togliere lo stato da storia, modificare inCorso, chiamarlo "stato", deve essere String
 
     // Costruttore
@@ -18,7 +18,7 @@ public class Partita {
         this.idScenarioCorrente = storia.getIdScenarioIniziale();
         this.inventarioId = inventarioId; // Inizializza un inventario vuoto
         this.username = username;
-        this.inCorso = true; // La partita inizia in corso
+        this.stato = stato;
     }
 
     // Metodo per fare una scelta
@@ -61,11 +61,11 @@ public class Partita {
         return id;
     }
 
-    public boolean isInCorso() {
-        return inCorso; // Getter per ottenere lo stato della partita
+    public String getStato() {
+        return stato;
     }
 
     public void terminaPartita() {
-        this.inCorso = false; // Metodo per terminare la partita
+        this.stato = "Terminata"; // Metodo per terminare la partita
     }
 }
