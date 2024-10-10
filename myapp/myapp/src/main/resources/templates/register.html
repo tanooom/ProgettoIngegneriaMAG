@@ -13,7 +13,6 @@
     <div class="container">
 
         <form action="/user/register" method="post">
-            <!-- Mostra il messaggio di errore se presente -->
         <div th:if="${errorMessage}" class="error-message">
             <p th:text="${errorMessage}"></p>
         </div>

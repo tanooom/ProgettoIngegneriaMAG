@@ -21,13 +21,12 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
-
         if (user != null) {
-            model.addAttribute("user", user);  // Passa l'utente alla vista
+            model.addAttribute("user", user);
             model.addAttribute("nome", user.getNome());
             model.addAttribute("cognome", user.getCognome());
         }
-        return "home"; // Restituisce home.html
+        return "home";
     }
 
     @GetMapping("/profilo")
@@ -36,9 +35,9 @@ public class HomeController {
         String username = auth.getName();
         Utente user = userService.getUser(username);
         if (user != null) {
-            model.addAttribute("user", user);  // Passa l'utente alla vista
+            model.addAttribute("user", user); 
         }
-        return "profilo"; // Restituisce profilo.html
+        return "profilo";
     }
 
     @GetMapping("/login")
@@ -48,15 +47,14 @@ public class HomeController {
 
     @GetMapping("/logout")
     public String logout() {
-        SecurityContextHolder.clearContext(); // Pulisce il contesto di sicurezza
-        return "redirect:/login?logout"; // Reindirizza al login
+        SecurityContextHolder.clearContext();
+        return "redirect:/login?logout";
     }
 
     @GetMapping("/visualizzaStoria")
     public String visualizzaStoria() {
         return "visualizzaStoria";
     }
-
 
     @GetMapping("/giocaStoria")
     public String giocaStoria() {

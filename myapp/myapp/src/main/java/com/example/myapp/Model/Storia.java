@@ -9,10 +9,10 @@ public class Storia implements Serializable{
 
     private int id;
     private final String titolo;
-    private final String username; // Username dello scrittore
-    private final int lunghezza; // Numero di scenari
+    private final String username; 
+    private final int lunghezza;
     private int idScenarioIniziale;
-    private final List<Integer> idScenari; // Lista ID scenari
+    private final List<Integer> idScenari;
 
     public Storia(int id, String titolo, String username, int lunghezza, 
     int idScenarioIniziale, List<Integer> idScenari) {
@@ -52,7 +52,6 @@ public class Storia implements Serializable{
         return titolo;
     }
 
-     // Imposta l'ID dello scenario iniziale
      public void setIdScenarioIniziale(int idScenario) {
         if (idScenari.contains(idScenario)) {
             this.idScenarioIniziale = idScenario;
@@ -61,14 +60,13 @@ public class Storia implements Serializable{
         }
     }
 
-    // Restituisce l'ID dello scenario iniziale
     public int getIdScenarioIniziale() {
         return this.idScenarioIniziale;
     }
 
     public int getScenarioId(int scenarioId) {
         if (idScenari.contains(scenarioId)) {
-            return scenarioId; // Restituisce semplicemente l'ID
+            return scenarioId;
         } else {
             throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioId);
         }

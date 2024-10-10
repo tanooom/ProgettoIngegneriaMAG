@@ -51,8 +51,8 @@
     <script>
         function confermaEliminaAccount() {
             if (confirm("Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile!")) {
-                const username = document.querySelector('input[name="username"]').value; // Assicurati che l'elemento esista
-                fetch('/deleteUser?username=' + encodeURIComponent(username), { // Usa il percorso corretto
+                const username = document.querySelector('input[name="username"]').value; 
+                fetch('/deleteUser?username=' + encodeURIComponent(username), { 
                     method: 'DELETE'
                 })
                 .then(response => {
@@ -63,8 +63,8 @@
                     }
                 })
                 .then(message => {
-                    alert(message); // Mostra il messaggio di successo
-                    window.location.href = '/login'; // Reindirizza alla pagina di login
+                    alert(message); 
+                    window.location.href = '/login';
                 })
                 .catch(error => {
                     console.error("Errore durante l'eliminazione dell'account:", error);

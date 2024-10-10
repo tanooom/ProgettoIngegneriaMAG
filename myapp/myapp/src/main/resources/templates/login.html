@@ -13,7 +13,6 @@
     <div class="container">
 
         <form action="/login" method="post">
-            <!-- Mostra il messaggio di errore se presente -->
         <div th:if="${param.error}" class="error-message">
             <p>Username o password non corretti</p>
         </div>

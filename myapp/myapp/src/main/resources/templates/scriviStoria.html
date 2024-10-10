@@ -59,8 +59,7 @@
         }
 
         function salvaStoria(event) {
-            event.preventDefault(); // Impedisce il ricaricamento della pagina
-
+            event.preventDefault(); 
             const form = document.getElementById('storia-form');
             const formData = new FormData(form);
 
@@ -71,7 +70,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Storia salvata con successo');
-                    form.reset(); // Resetta il form dopo il salvataggio
+                    form.reset();
                 } else {
                     alert('Errore durante il salvataggio della storia');
                 }

@@ -36,19 +36,6 @@ header h1 {
     padding: 0 20px; 
 }
 
-/* Contenuto principale */
-.container {
-    width: 80%;
-    max-width: 1200px;
-    margin: auto;
-    display: flex;             
-    justify-content: center;   
-    align-items: center;     
-    flex-direction: row;  
-    gap: 10px;      
-    padding: 20px; 
-}
-
 /* Moduli */
 form {
     background: #fff;
@@ -68,14 +55,7 @@ form input[type="text"] {
     box-sizing: border-box; 
 }
 
-/* Pagine */
-.scenario-group { 
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 15px;
-}
-
-/* Stile per i form nella pagina "Scrivi Storia" */
+/* Form */
 body main {
     padding: 20px; 
 }
@@ -120,7 +100,7 @@ body button:hover {
     background-color: #025cbd; 
 }
 
-/* Stile per il contenitore del form all'interno di .scriviStoria */
+/* Contenitore del form */
 .form-container {
     background: #fff; 
     border-radius: 8px; 
@@ -131,7 +111,6 @@ body button:hover {
     margin-bottom: 5px;
 }
 
-/* Migliora l'aspetto dei campi del form all'interno di .scriviStoria */
 .form-container input[type="text"],
 .form-container input[type="password"],
 .form-container input[type="email"],
@@ -143,31 +122,12 @@ body button:hover {
     border-radius: 4px;
 }
 
-/* Pulsante di aggiunta scenario all'interno di .scriviStoria */
-#add-scenario-button {
-    background: #007bff;
-    color: #fff; 
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#add-scenario-button:hover {
-    background: #025cbd;
-}
-
 .option-group{
     display: flex;
 }
 
 .option-group label{
     font-weight: normal;
-}
-
-/* Stile per il contenitore degli scenari */
-#scenario-container {
-    margin-top: 20px;
 }
 
 .scenario-group {
@@ -184,35 +144,10 @@ body button:hover {
 }
 
 #save-button{
-    /*margin-left: 0px;*/
     margin-top: -10px;
 }
 
-/* Stile per il pulsante di Salvataggio Storia*/
-#save-storia-button {
-    display: block;
-    margin: 20px auto;
-    background-color: #007bff; 
-    color: white;
-    border: none;
-    padding: 10px 20px; 
-    border-radius: 4px; 
-    cursor: pointer;
-    font-size: 18px; 
-}
-
-/* Stile per il pulsante di Salvataggio Opzione*/
-#save-opzione-button {
-    background-color: #007bff; 
-    color: white;
-    border: none;
-    padding: 10px 20px; 
-    border-radius: 4px; 
-    cursor: pointer;
-    font-size: 16px; 
-}
-
-/* Stile per il pulsante di Salvataggio Scenario*/
+/* Pulsante di Salvataggio*/
 #save-scenario-button {
     background-color: #007bff; 
     color: white;
@@ -222,65 +157,6 @@ body button:hover {
     cursor: pointer;
     font-size: 16px; 
 }
-
-/* Stile per il pulsante di Eliminazione */
-.delete-button {
-    background-color: #ff0000; 
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-}
-
-.delete-button:hover {
-    background-color: #cc0000; 
-}
-
-/* Stile per il pulsante di Modifica */
-.edit-button {
-    background-color: #007bff; 
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-}
-
-.edit-button:hover {
-    background-color: #025cbd; 
-}
-
-/* Stile per scenario ridotto */
-.small-container {
-    position: relative;
-    padding: 10px; 
-    background-color: #f9f9f9;  
-    border: 1px solid #ddd;  
-    border-radius: 8px; 
-    line-height: 1.4;
-}
-
-/* Testo con minore interlinea */
-.small-container p {
-    margin: 5px 0; 
-    line-height: 1.2; 
-}
-
-.button-container {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* spazio tra i pulsanti */
-}
-
 
 /* Pulsante di ritorno */
 .back-button {
@@ -323,25 +199,7 @@ textarea {
 }
 
 .select-instruction {
-    font-size: 0.9em; /* Dimensione del testo leggermente ridotta */
-    color: grey; /* Colore del testo */
-    margin-top: 5px; /* Aggiunge un po' di spazio sopra il messaggio */
-}
-
-/* Adattamento per schermi piccoli */
-@media (max-width: 600px) {
-    .search-box {
-        flex-direction: column;   
-        gap: 5px;  
-    }
-    .button-container {
-        position: relative;
-        top: auto;
-        right: auto;
-        transform: none;  /* Rimuove il posizionamento assoluto */
-        margin-top: 10px;  /* Aggiunge uno spazio sopra i pulsanti */
-        flex-direction: row;  /* Disposizione orizzontale */
-        justify-content: center;  /* Centra i pulsanti */
-        gap: 5px;  /* Spazio ridotto tra i pulsanti */
-    }
+    font-size: 0.9em; 
+    color: grey; 
+    margin-top: 5px; 
 }

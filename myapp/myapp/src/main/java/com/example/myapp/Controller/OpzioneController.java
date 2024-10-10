@@ -19,28 +19,9 @@ public class OpzioneController {
     @Autowired
     private MapDBService mapDBService;
 
-    /*@GetMapping("/scriviStoria")
-    public String scriviStoria() {
-        return "scriviStoria";
-    }*/
-
     @GetMapping("/scriviOpzione")
     public String scriviOpzione() {
         return "scriviOpzione"; 
-    }
-
-    @PostMapping("/putOption")
-    public String putOption(@RequestParam int id, 
-                            @RequestParam String description, 
-                            //@RequestParam int scenarioSuccessivo,
-                            @RequestParam boolean richiedeOggetto, 
-                            @RequestParam String oggettoRichiesto, 
-                            @RequestParam boolean richiedeIndovinello, 
-                            @RequestParam String indovinello,
-                            @RequestParam String rispostaCorrettaIndovinello) {
-        Opzione opzione = new Opzione(id, description, richiedeOggetto, oggettoRichiesto, richiedeIndovinello, indovinello, rispostaCorrettaIndovinello);
-        mapDBService.saveOption(opzione);
-        return "Opzione aggiunta con successo!";
     }
 
     @GetMapping("/getOption")
@@ -69,36 +50,30 @@ public class OpzioneController {
         @RequestParam String richiedeOggetto,
         @RequestParam(required = false) String oggettoRichiesto) {
 
-        // Converte i valori delle stringhe in boolean
         boolean richiedeIndovinelloBool = "si".equalsIgnoreCase(richiedeIndovinello);
         boolean richiedeOggettoBool = "si".equalsIgnoreCase(richiedeOggetto);
 
-        // Recupera l'ultimo ID usato per le opzioni e lo incrementa
         int newId = mapDBService.getAllOptions().keySet().stream()
         .mapToInt(Integer::intValue)
         .max()
         .orElse(0) + 1;
 
-        // Crea una nuova opzione con i dati dal form
         Opzione nuovaOpzione = new Opzione(
-            newId,  // ID dell'opzione
-            descrizioneOpzione, // Descrizione dell'opzione dal form
-            richiedeOggettoBool, // richiede oggetto
-            oggettoRichiesto != null && !oggettoRichiesto.isEmpty() ? oggettoRichiesto : null, // oggetto richiesto
-            richiedeIndovinelloBool, // richiede indovinello
-            indovinello != null && !indovinello.isEmpty() ? indovinello : null, // indovinello (se applicabile)
-            rispostaIndovinello != null && !rispostaIndovinello.isEmpty() ? rispostaIndovinello : null // risposta corretta indovinello (se applicabile)
+            newId, 
+            descrizioneOpzione,
+            richiedeOggettoBool, 
+            oggettoRichiesto != null && !oggettoRichiesto.isEmpty() ? oggettoRichiesto : null,
+            richiedeIndovinelloBool,
+            indovinello != null && !indovinello.isEmpty() ? indovinello : null, 
+            rispostaIndovinello != null && !rispostaIndovinello.isEmpty() ? rispostaIndovinello : null 
         );
-
         mapDBService.saveOption(nuovaOpzione);
-
         return "redirect:/scriviScenario";
     }
 
     @GetMapping("/scriviScenario")
     public String mostraScenarioForm(Model model){
-
-        model.addAttribute("opzioni", mapDBService.getListAllOptions()); //Passa le opzioni alla lista come modello
+        model.addAttribute("opzioni", mapDBService.getListAllOptions());
         model.addAttribute("scenari", mapDBService.getListAllScenari());
         return "scriviScenario";
     }

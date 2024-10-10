@@ -74,7 +74,7 @@ form {
 
 .profile-field input,
 .profile-field button {
-    width: 100%; /* Imposta la larghezza al 100% del contenitore */
+    width: 100%;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -84,8 +84,8 @@ form {
 /* Contenitore per i pulsanti */
 .button-container {
     display: flex;
-    flex-direction: column; /* Cambia la direzione dei pulsanti per adattarsi */
-    gap: 10px; /* Spazio tra i pulsanti */
+    flex-direction: column;
+    gap: 10px; 
     margin-top: 20px;
     width: 100%; 
 }
@@ -98,7 +98,7 @@ form {
     font-size: 16px;
     cursor: pointer;
     text-align: center;
-    width: 100%; /* Imposta la larghezza al 100% del contenitore */
+    width: 100%; 
 }
 
 #logout-button:hover {
@@ -107,12 +107,12 @@ form {
 
 /* Link per eliminazione account */
 #delete-account-link {
-    display: inline-block; /* Mostra il link come un blocco inline per applicare padding */
+    display: inline-block; 
     color: red;
-    padding: 10px; /* Aggiungi padding per allineare il testo come i pulsanti */
+    padding: 10px; 
     text-align: left;
-    text-decoration: underline; /* Rimuove la sottolineatura */
-    width: 100%; /* Imposta la larghezza al 100% del contenitore */
+    text-decoration: underline;
+    width: 100%;
 }
 
 #delete-account-link:hover {

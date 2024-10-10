@@ -38,7 +38,6 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
             );
-
         return http.build();
     }
 
@@ -46,15 +45,4 @@ public class SecurityConfig {
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new SimpleUrlAuthenticationFailureHandler("/login?error=true");
     }
-
-    /*@Bean
-    public AuthenticationManager authManager(HttpSecurity http, UserService userService) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = 
-            http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
-            .userDetailsService(userService) // Usa userService qui
-            .passwordEncoder(passwordEncoder());
-        
-        return authenticationManagerBuilder.build(); // Restituisci direttamente l'oggetto AuthenticationManager
-    }*/
 }

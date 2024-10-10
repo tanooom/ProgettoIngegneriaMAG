@@ -17,7 +17,7 @@ import jakarta.persistence.Id;
 public class Utente implements UserDetails {
 
     @Id
-    private Long id; // Aggiunta della chiave primaria
+    private Long id; 
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -29,7 +29,6 @@ public class Utente implements UserDetails {
     private String cognome;
     private String mail;
 
-    // Costruttori, getter e setter
     public Utente() {}
 
     public Utente(String username, String password, String nome, String cognome, String mail) {
@@ -88,27 +87,6 @@ public class Utente implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Restituisce un'autorità predefinita
-        return Collections.emptyList(); // Modifica qui se hai ruoli specifici
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true; // Modifica se hai logica per l'espirazione dell'account
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true; // Modifica se hai logica per il blocco dell'account
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true; // Modifica se hai logica per l'espirazione delle credenziali
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true; // Modifica se hai logica per la disabilitazione dell'account
+        return Collections.emptyList();
     }
 }

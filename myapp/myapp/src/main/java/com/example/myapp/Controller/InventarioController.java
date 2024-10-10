@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 
-import com.example.myapp.Model.Inventario;  // Aggiungi questa importazione
+import com.example.myapp.Model.Inventario;
 
 @Controller
 public class InventarioController {
     private final Map<Integer, Inventario> inventari;
-    private int nextId = 1; // Per generare un nuovo ID unico
+    private int nextId = 1;
 
     public InventarioController() {
         this.inventari = new HashMap<>();
@@ -21,7 +21,7 @@ public class InventarioController {
     }
 
     public Inventario getInventarioById(int id) {
-        return inventari.get(id); // Ritorna l'inventario associato all'ID
+        return inventari.get(id);
     }
 
     public Inventario creaInventario(int partitaId) {

@@ -52,12 +52,12 @@ header h1 {
     flex-direction: row; 
     gap: 20px;
     padding: 40px 20px;
-    flex-grow: 1; /* Per centrare verticalmente quando la pagina è più alta */
+    flex-grow: 1; 
 }
 
 /* Box Inventario */
 .inventario-box {
-    flex: 1; /* Permette all'inventario di occupare spazio */
+    flex: 1; 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -66,12 +66,12 @@ header h1 {
 }
 
 .inventario-box h2 {
-    margin-top: 0; /* Rimuovi margine superiore per allineare meglio */
+    margin-top: 0;
 }
 
 /* Box Scenario */
 .scenario-box {
-    flex: 3; /* Permette allo scenario di occupare più spazio */
+    flex: 3;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -87,7 +87,6 @@ header h1 {
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    /*font-size: 16px; /* Aumentato per migliore visibilità */
     margin: 4px 0;
     cursor: pointer;
     border-radius: 4px;
@@ -166,17 +165,17 @@ footer {
     }
 
     .inventario-box {
-        order: 1; /* Assicura che l'inventario sia sopra */
+        order: 1;
     }
 
     .scenario-box {
-        order: 2; /* Lo scenario va sotto */
+        order: 2; 
     }
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.5em; /* Testo dell'header ridotto su schermi molto piccoli */
+        font-size: 1.5em;
     }
 
     .button, .back-button {

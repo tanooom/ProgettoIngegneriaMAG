@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         this.db = db; 
     }
 
-    // Metodo per ottenere tutte le informazioni dell'utente da MapDB
+    // Metodo per ottenere tutte le informazioni dell'utente
     public Utente getUser(String username) {
         String userData = userMap.get(username);
         if (userData != null) {
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
-    // Metodo per registrare un utente in MapDB
+    // Metodo per registrare un utente
     public Utente register(Utente user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
@@ -72,11 +72,9 @@ public class UserService implements UserDetailsService {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("L'username non può essere nullo o vuoto.");
         }
-
-        // Rimuove l'utente dalla mappa
         if (userMap.containsKey(username)) {
             userMap.remove(username);
-            db.commit(); // Commit dei cambiamenti al database
+            db.commit();
         } else {
             throw new IllegalArgumentException("L'utente con username " + username + " non esiste.");
         }

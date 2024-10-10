@@ -2,8 +2,8 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4; /* Colore di sfondo neutro */
-    color: #333; /* Colore del testo scuro */
+    background-color: #f4f4f4; 
+    color: #333;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -11,9 +11,9 @@ body {
 
 /* Intestazione */
 header {
-    background: #333; /* Colore di sfondo dell'intestazione scuro */
-    color: #fff; /* Colore del testo chiaro */
-    padding: 10px 20px; /* Spazio interno */
+    background: #333; 
+    color: #fff; 
+    padding: 10px 20px;
     text-align: center;
     position: relative;
     width: 100%;
@@ -23,17 +23,17 @@ header {
 header h1 {
     margin: 0;
     font-size: 1.5em;
-    flex-grow: 1; /* Permette al titolo di occupare lo spazio rimanente */
-    text-align: center; /* Centra il titolo */
-    color: white;  /* Assicurati che il colore del titolo sia bianco */
+    flex-grow: 1;
+    text-align: center; 
+    color: white; 
 }
 
 /* Contenuto dell'header */
 .header-content {
     display: flex;
-    align-items: center;  /* Allinea verticalmente la freccia e il titolo */
-    justify-content: space-between; /* Centra orizzontalmente il contenuto */
-    padding: 0 20px; /* Spazio interno ai lati */
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 0 20px; 
 }
 
 /* Contenuto principale */
@@ -41,11 +41,11 @@ header h1 {
     width: 80%;
     max-width: 1200px;
     margin: auto;
-    display: flex;              /* Abilita Flexbox */
-    justify-content: center;    /* Centra orizzontalmente gli elementi */
-    align-items: center;        /* Centra verticalmente gli elementi */
-    flex-direction: column;        /* Dispone gli elementi in colonna */
-    gap: 10px;                  /* Spazio tra i pulsanti */
+    display: flex;              
+    justify-content: center;    
+    align-items: center;        
+    flex-direction: column;        
+    gap: 10px;                
     padding: 20px; 
 }
 

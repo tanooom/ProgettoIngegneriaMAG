@@ -32,7 +32,6 @@ public class UserController {
         return mapDBService.getUser(key);
     }
 
-    // Mostra il modulo di registrazione
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new Utente());
@@ -52,6 +51,7 @@ public class UserController {
             @RequestParam String cognome,
             @RequestParam String mail,
             Model model) {
+                
         // Controlla se l'username esiste già nel database
         if (userService.getUser(username) != null) {
             model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");

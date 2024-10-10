@@ -79,13 +79,11 @@
             }         
         }          
 
-        // Mostra alert dopo il submit
         const form = document.getElementById('opzione-form');
         form.addEventListener('submit', function(event) {
-            event.preventDefault();  // Previene l'invio immediato del modulo
+            event.preventDefault();
             const formData = new FormData(form);
             
-            // Invio del modulo tramite fetch
             fetch(form.action, {
                 method: 'POST',
                 body: formData

@@ -20,7 +20,6 @@ import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -30,13 +29,12 @@ public class MapDBService {
     @Autowired
     private DB db;
 
-    // Mappe per i vari elementi
-    private HTreeMap<Integer, Storia> storyMap;        // Mappa per le storie
-    private HTreeMap<String, String> userMap;          // Mappa per gli utenti
-    private HTreeMap<Integer, Scenario> scenarioMap;   // Mappa per gli scenari
-    private HTreeMap<String, String> inventoryMap;     // Mappa per l'inventario
-    private HTreeMap<Integer, Opzione> optionMap;      // Mappa per le opzioni
-    private HTreeMap<Integer, Partita> matchMap;       // Mappa per le partite
+    private HTreeMap<Integer, Storia> storyMap;      
+    private HTreeMap<String, String> userMap;         
+    private HTreeMap<Integer, Scenario> scenarioMap;   
+    private HTreeMap<String, String> inventoryMap;    
+    private HTreeMap<Integer, Opzione> optionMap;     
+    private HTreeMap<Integer, Partita> matchMap;    
 
     @PostConstruct
     @SuppressWarnings("unchecked")
@@ -84,7 +82,7 @@ public class MapDBService {
             throw new IllegalArgumentException("La storia deve avere un ID valido.");
         }
         storyMap.put(storia.getId(), storia);
-        db.commit(); // Commit dei cambiamenti al database
+        db.commit(); 
     }
 
     // Metodo per ottenere una storia per ID
@@ -100,7 +98,7 @@ public class MapDBService {
     public void removeStoria(int id) {
         if (storyMap.containsKey(id)) {
             storyMap.remove(id);
-            db.commit(); // Salva le modifiche nel database
+            db.commit(); 
         } else {
             throw new IllegalArgumentException("Storia con ID " + id + " non trovata.");
         }
@@ -108,7 +106,7 @@ public class MapDBService {
 
     // Metodo per ottenere tutte le storie
     public Collection<Storia> getAllStories() {
-        return storyMap.values(); // Ritorna tutte le storie come una collection
+        return storyMap.values();
     }
 
     // Metodo per salvare uno scenario
@@ -175,10 +173,8 @@ public class MapDBService {
     public void exportToJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Abilita la formattazione "bello" (pretty printing)
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        
-        // Crea una mappa per tutti i dati
+
         Map<String, Object> allData = new HashMap<>();
         allData.put("storyMap", new HashMap<>(storyMap));
         allData.put("userMap", new HashMap<>(userMap));
@@ -187,47 +183,20 @@ public class MapDBService {
         allData.put("optionMap", new HashMap<>(optionMap));
         allData.put("matchMap", new HashMap<>(matchMap));
 
-        // Scrivi i dati nel file JSON
         objectMapper.writeValue(new File(filePath), allData);
-    }
-
-    // Metodo per importare i dati da un file JSON
-    public void importFromJson(String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        // Leggi i dati dal file JSON come una mappa generale
-        Map<String, Object> allData = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Object>>() {});
-
-        // Usa TypeReference per deserializzare ogni singola mappa con il tipo corretto
-        Map<Integer, Storia> importedStories = objectMapper.convertValue(allData.get("storyMap"), new TypeReference<Map<Integer, Storia>>() {});
-        Map<String, String> importedUsers = objectMapper.convertValue(allData.get("userMap"), new TypeReference<Map<String, String>>() {});
-        Map<Integer, Scenario> importedScenarios = objectMapper.convertValue(allData.get("scenarioMap"), new TypeReference<Map<Integer, Scenario>>() {});
-        Map<String, String> importedInventory = objectMapper.convertValue(allData.get("inventoryMap"), new TypeReference<Map<String, String>>() {});
-        Map<Integer, Opzione> importedOptions = objectMapper.convertValue(allData.get("optionMap"), new TypeReference<Map<Integer, Opzione>>() {});
-        Map<Integer, Partita> importedMatches = objectMapper.convertValue(allData.get("matchMap"), new TypeReference<Map<Integer, Partita>>() {});
-
-        // Ripopola le mappe con i dati importati
-        storyMap.putAll(importedStories);
-        userMap.putAll(importedUsers);
-        scenarioMap.putAll(importedScenarios);
-        inventoryMap.putAll(importedInventory);
-        optionMap.putAll(importedOptions);
-        matchMap.putAll(importedMatches);
-        
-        db.commit(); // Committa i dati al database
     }
 
     // Metodo per eliminare tutti gli utenti
     public void deleteAllUsers() {
-        userMap.clear();  // Rimuove tutte le voci dalla mappa degli utenti
-        db.commit();      // Commit delle modifiche per renderle persistenti
+        userMap.clear(); 
+        db.commit();     
     }
 
     // Metodo per rimuovere un'opzione
     public void removeOption(int id) {
         if (optionMap.containsKey(id)) {
             optionMap.remove(id);
-            db.commit(); // Salva le modifiche nel database
+            db.commit();
         } else {
             throw new IllegalArgumentException("Opzione con ID " + id + " non trovata.");
         }
@@ -237,7 +206,7 @@ public class MapDBService {
     public void removeScenario(int id) {
         if (scenarioMap.containsKey(id)) {
             scenarioMap.remove(id);
-            db.commit(); // Salva le modifiche nel database
+            db.commit();
         } else {
             throw new IllegalArgumentException("Scenario con ID " + id + " non trovato.");
         }
@@ -248,7 +217,7 @@ public class MapDBService {
     }
 
     public List<Opzione> getListAllOptions() { 
-        return new ArrayList<>(optionMap.values()); // Restituisce le opzioni come lista
+        return new ArrayList<>(optionMap.values()); 
     }
 
     public Map<Integer, Scenario> getAllScenari() {
@@ -256,7 +225,7 @@ public class MapDBService {
     }
 
     public List<Scenario> getListAllScenari() { 
-        return new ArrayList<>(scenarioMap.values()); // Restituisce gli scenari come lista
+        return new ArrayList<>(scenarioMap.values());
     }
 
     public void deleteAllStories() {

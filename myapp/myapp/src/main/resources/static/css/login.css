@@ -100,7 +100,7 @@ footer {
     color:red;
 }
 
-/* Responsive per schermi piccoli */
+/* Adattamento per schermi piccoli */
 @media (max-width: 600px) {
     .container {
         width: 90%;

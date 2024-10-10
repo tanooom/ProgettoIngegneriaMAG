@@ -16,9 +16,9 @@ public class MapDBConfig {
     @Bean
     public DB mapDB() {
         // Configurazione del database MapDB su file
-        db = DBMaker.fileDB("generaldb.db")  // Nome del database
-                .checksumHeaderBypass()      // Bypass del controllo dell'intestazione
-                .transactionEnable()         // Abilita le transazioni
+        db = DBMaker.fileDB("generaldb.db")
+                .checksumHeaderBypass()     
+                .transactionEnable()
                 .make();
         return db;
     }
@@ -61,7 +61,7 @@ public class MapDBConfig {
 
     @Bean
     public HTreeMap<String, String> optionMap(DB db) {
-        // Creazione della mappa HTreeMap per le Opzioni (azioni possibili in uno scenario)
+        // Creazione della mappa HTreeMap per le Opzioni 
         return db.hashMap("optionMap")
                 .keySerializer(org.mapdb.Serializer.STRING)
                 .valueSerializer(org.mapdb.Serializer.STRING)
@@ -70,7 +70,7 @@ public class MapDBConfig {
 
     @Bean
     public HTreeMap<String, String> matchMap(DB db) {
-        // Creazione della mappa HTreeMap per le Partite (unione tra storia e utenti)
+        // Creazione della mappa HTreeMap per le Partite 
         return db.hashMap("matchMap")
                 .keySerializer(org.mapdb.Serializer.STRING)
                 .valueSerializer(org.mapdb.Serializer.STRING)

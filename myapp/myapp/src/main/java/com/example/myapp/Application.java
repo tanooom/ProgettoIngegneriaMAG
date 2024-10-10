@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"com.example.myapp"}) // Specifica il package
+@EntityScan(basePackages = {"com.example.myapp"}) 
 public class Application {
 
 	public static void main(String[] args) {
@@ -17,9 +17,10 @@ public class Application {
 	//TODO: alla fine controlla i metodi/funzioni che non sono mai stati utilizzati ed eliminali
 	//TODO: sistema i commenti
 
-	// COMANDO: curl "http://localhost:8080/export?filePath=backup.json"
-
-	/* 
+	/*
+	PER AGGIORGNARE IL JSON DEL DATABASE: 
+		curl "http://localhost:8080/export?filePath=backup.json"
+ 
 	PER RIMUOVERE UN UTENTE: 
 		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteUser?username=andre2"
 	PER RIMUOVERE TUTTI GLI UTENTI:

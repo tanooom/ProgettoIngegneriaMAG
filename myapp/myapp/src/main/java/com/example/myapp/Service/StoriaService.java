@@ -19,20 +19,18 @@ public class StoriaService {
     private final List<Storia> tutteLeStorie = new ArrayList<>();
 
     @Autowired
-    private MapDBService mapDBService; // Assicurati di iniettare il servizio MapDB
+    private MapDBService mapDBService; 
 
     @PostConstruct
     public void init() {
-        // Recupera tutte le storie da MapDB e popola tutteLeStorie
         tutteLeStorie.addAll(mapDBService.getAllStories());
     }
 
     public Storia creaStoria(Storia storia) {
-        // Logica per assegnare un ID unico alla storia e salvarla nel database (es. MapDB)
+
         storia.setId(tutteLeStorie.size() + 1);
         tutteLeStorie.add(storia);
         
-        // Eventuale logica per salvare su MapDB usando MapDBService
         mapDBService.saveStory(storia); 
         return storia;
     }
@@ -42,7 +40,6 @@ public class StoriaService {
             .filter(storia -> (searchTerm == null || storia.getTitolo().toLowerCase().contains(searchTerm.toLowerCase())))
             .filter(storia -> (username == null || username.isEmpty() || storia.getUsername().equalsIgnoreCase(username)))
             .filter(storia -> (lunghezza == null || matchesLunghezza(storia, lunghezza)))
-            //.filter(storia -> (stato == null || stato.isEmpty() || storia.getStato().equalsIgnoreCase(stato)))
             .collect(Collectors.toList());
     }
 
@@ -59,37 +56,31 @@ public class StoriaService {
     // Recupera storie dal database
     public Storia getStoriaById(int storiaId) {
         return tutteLeStorie.stream()
-            .filter(storia -> storia.getId() == storiaId) // Assicurati di avere un metodo getId()
+            .filter(storia -> storia.getId() == storiaId)
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Storia non trovata per l'ID: " + storiaId));
     }
     
     public Opzione getOpzioneById(int scenarioId, int opzioneId) {
         Scenario scenario = mapDBService.getScenarioById(scenarioId);
-        // Controlla se lo scenario esiste
+
         if (scenario == null) {
             throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioId);
         }
-
-        // Verifica se l'ID dell'opzione è presente nella lista delle opzioni dello scenario
         if (!scenario.getOpzioni().contains(opzioneId)) {
             throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId + " nello scenario ID: " + scenarioId);
         }
-
-            // Dovresti avere un metodo che restituisce un'opzione completa
         Opzione opzioneCompleta = mapDBService.getOptionById(opzioneId);
-        
         if (opzioneCompleta == null) {
             throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
         }
-
         return opzioneCompleta;
     }
 
     // Ottiene una lista di tutte le storie
     public List<Storia> getAllStorie() {
         System.out.println("TUTTE LE STORIE: " + tutteLeStorie.size());
-        return new ArrayList<>(tutteLeStorie); // Ritorna la lista completa di storie
+        return new ArrayList<>(tutteLeStorie); 
     }
 
     public List<String> getAllUsernames() {

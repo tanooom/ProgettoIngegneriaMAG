@@ -15,17 +15,12 @@ header {
     color: #fff; 
     padding: 10px 20px; 
     text-align: center;
-    /*position: relative;*/
     width: 100%;
-    /*margin-left: -20px;*/
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5em;
-    /*flex-grow: 1; 
-    text-align: center;
-    color: white;  */
 }
 
 /* Contenuto principale */
@@ -38,7 +33,6 @@ header h1 {
     align-items: center;
     flex-direction: row;
     gap: 10px;
-    /*padding: 20px;*/
 }
 
 /* Box per i pulsanti */
@@ -60,7 +54,7 @@ header h1 {
 }
 
 .box img {
-    width: 100px; /* Dimensione immagine */
+    width: 100px;
     height: 100px;
     margin-bottom: 10px;
 }
