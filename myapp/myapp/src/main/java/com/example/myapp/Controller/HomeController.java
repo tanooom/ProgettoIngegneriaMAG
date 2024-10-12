@@ -60,4 +60,9 @@ public class HomeController {
     public String giocaStoria() {
         return "giocaStoria";
     }
+
+    /*@GetMapping("/leMieStorie")
+    public String leMieStorie() {
+        return "leMieStorie";
+    }*/
 }

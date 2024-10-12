@@ -253,8 +253,49 @@ public class MapDBService {
         db.commit(); 
     }
 
+    // Metodo per rimuovere una storia in base al titolo
+    public void removeStoriaByTitle(String title) {
+        Storia storiaDaRimuovere = null;
+        for (Storia storia : storyMap.values()) {
+            if (storia.getTitolo().equals(title)) { 
+                storiaDaRimuovere = storia;
+                break;
+            }
+        }
+        if (storiaDaRimuovere != null) {
+            storyMap.remove(storiaDaRimuovere.getId());
+            db.commit();
+        } else {
+            throw new IllegalArgumentException("Storia con titolo '" + title + "' non trovata.");
+        }
+    }
+
     @PreDestroy
     public void cleanup(){
         db.close();
+    }
+
+    public List<Scenario> getScenariByTitle(String title) {
+        Storia storia = null;
+        for (Storia s : storyMap.values()) {
+            if (s.getTitolo().equals(title)) { 
+                storia = s;
+                break;
+            }
+        }
+        if (storia != null) {
+            List<Scenario> scenari = new ArrayList<>();
+            for (Integer scenarioId : storia.getIdScenari()) { 
+                Scenario scenario = scenarioMap.get(scenarioId); 
+                if (scenario != null) {
+                    scenari.add(scenario);
+                } else {
+                    throw new IllegalArgumentException("Scenario con ID '" + scenarioId + "' non trovato.");
+                }
+            }
+            return scenari;
+        } else {
+            throw new IllegalArgumentException("Storia con titolo '" + title + "' non trovata.");
+        }
     }
 }

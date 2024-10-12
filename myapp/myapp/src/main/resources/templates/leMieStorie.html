@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le mie storie</title>
+    <link rel="stylesheet" href="/css/leMieStorie.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="leMieStorie">
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="window.location.href='/home'">
+                <img src="/css/images/arrow.png" alt="Indietro">
+                <span class="back-text">Torna Indietro</span>
+            </button>
+            <h1>Le mie storie</h1>
+        </div>
+    </header>    
+
+    <main>
+        <div class="form-container">
+            <div th:if="${#lists.isEmpty(storie)}" class="no-storie-message">
+                Non hai ancora scritto alcuna storia.
+            </div>
+
+            <div th:each="storia : ${storie}" class="storia-container">
+                <h2 class="storia-title" th:text="${storia.titolo}"></h2>
+                <div class="storia-details">Numero di scenari: <span th:text="${storia.lunghezza}"></span></div>
+
+                <button class="visualizza-scenari" 
+                    th:onclick="visualizzaScenari('[[${storia.titolo}]]')">Visualizza Scenari</button>
+
+                <button class="elimina-storia"
+                    th:onclick="eliminaStoria('[[${storia.titolo}]]')">Elimina Storia</button>
+
+                <div class="scenari-details"  th:id="'scenari-' + ${storia.titolo}" style="display:none;">
+                    <!-- Dettagli degli scenari verranno caricati qui -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
+    <script>
+        function visualizzaScenari(titoloStoria) {
+            titoloStoria = titoloStoria.replace(/"/g, ''); 
+            const scenariDetailsDiv = document.getElementById(`scenari-${titoloStoria}`);
+            if (!scenariDetailsDiv) {
+                console.error(`Impossibile trovare la div per il titolo: scenari-${titoloStoria}`);
+                return;
+            }
+            // Controlla se la div è già visibile
+            if (scenariDetailsDiv.style.display === 'block') {
+                // Nasconde la div
+                scenariDetailsDiv.style.display = 'none';
+                return;
+            }
+            // Se la div non è visibile, effettua la chiamata AJAX per mostrare gli scenari
+            $.ajax({
+                url: `/getScenariByTitle?title=${encodeURIComponent(titoloStoria)}`,
+                method: 'GET',
+                success: function(scenari) {
+                    scenariDetailsDiv.innerHTML = '';
+
+                    if (scenari.length === 0) {
+                        scenariDetailsDiv.innerHTML = '<p>Nessuno scenario trovato per questa storia.</p>';
+                        scenariDetailsDiv.style.display = 'block';
+                        return;
+                    }
+                    // Costruisci il contenuto da visualizzare
+                    scenari.forEach(scenario => {
+                        scenariDetailsDiv.innerHTML += `
+                            <div class="scenario">
+                                <h3>${scenario.nome}</h3>
+                                <p><strong>Descrizione:</strong> ${scenario.descrizione}</p>
+                                <p><strong>Oggetto raccoglibile:</strong> ${scenario.oggettoRaccoglibile || 'Nessun oggetto'}</p>
+                                <!--<p><strong>ID Opzioni:</strong> ${(scenario.idOpzioni && scenario.idOpzioni.length > 0) ? scenario.idOpzioni.join(', ') : 'Nessuna opzione'}</p>-->
+                                <!--<p><strong>ID Scenario Precedente:</strong> ${scenario.idScenarioPrecedente || 'Nessuno'}</p>-->
+                                <p><strong>Scenario Iniziale:</strong> ${scenario.scenarioIniziale ? 'Sì' : 'No'}</p>
+                                <p><strong>Scenario Finale:</strong> ${scenario.scenarioFinale ? 'Sì' : 'No'}</p>
+                            </div>
+                            <hr>
+                        `;
+                    });
+                    // Mostra la div con i dettagli degli scenari
+                    scenariDetailsDiv.style.display = 'block';
+                },
+                error: function() {
+                    alert('Si è verificato un errore nel recupero degli scenari.');
+                }
+            });
+        }
+
+    
+        function eliminaStoria(titoloStoria) {
+            console.log(titoloStoria); // Verifica che il titolo venga passato correttamente
+            titoloStoria = titoloStoria.replace(/"/g, ''); 
+    
+            if (confirm("Sei sicuro di voler eliminare la storia " + titoloStoria + "?")) {
+                $.ajax({
+                    url: `/deleteStoriaByTitle?title=${encodeURIComponent(titoloStoria)}`,
+                    method: 'DELETE', 
+                    success: function() {
+                        alert(`La storia "${titoloStoria}" è stata eliminata con successo.`);
+                        location.reload(); 
+                    },
+                    error: function() {
+                        alert('Si è verificato un errore nell\'eliminazione della storia.');
+                    }
+                });
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>

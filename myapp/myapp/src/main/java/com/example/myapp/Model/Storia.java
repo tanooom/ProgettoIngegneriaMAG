@@ -86,4 +86,9 @@ public class Storia implements Serializable{
                 ", idScenari=" + idScenari.toString() +
                 '}';
     }
+
+    public List<Integer> getScenari() {
+        return new ArrayList<>(idScenari);
+    }
+    
 }

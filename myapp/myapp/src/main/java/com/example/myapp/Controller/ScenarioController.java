@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -95,7 +96,7 @@ public class ScenarioController {
         );
         mapDBService.saveScenario(nuovoScenario);
         return "redirect:/scriviStoria";
-}
+    }
 
     @DeleteMapping("/deleteScenario")
     public ResponseEntity<String> deleteScenario(@RequestParam int id) {
@@ -108,4 +109,14 @@ public class ScenarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore interno del server: " + e.getMessage());
         }
     }
+
+    @GetMapping("/getScenariByTitle")
+    public ResponseEntity<List<Scenario>> getScenariByTitle(@RequestParam String title) {
+        List<Scenario> scenari = mapDBService.getScenariByTitle(title);
+        if (scenari == null || scenari.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(scenari); 
+    }
+
 }

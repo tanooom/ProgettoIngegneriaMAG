@@ -99,4 +99,11 @@ public class StoriaService {
         System.out.println("SCENARIO INIZIALE: " + scenarioIniziale.getDescrizione());
         return scenarioIniziale.getDescrizione();
     }
+
+    public List<Storia> getStorieByUsername(String username) {
+        return mapDBService.getAllStorie().values().stream()
+            .filter(storia -> storia.getUsername().equals(username))
+            .collect(Collectors.toList());
+    }
+    
 }

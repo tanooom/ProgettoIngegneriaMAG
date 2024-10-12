@@ -208,4 +208,34 @@ public class StoriaController {
         model.addAttribute("scenari", mapDBService.getListAllScenari());
         return "scriviStoria";
     }
+
+    @GetMapping("/leMieStorie")
+    public String leMieStorie(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+            // Recupera tutte le storie dell'utente loggato
+        List<Storia> storie = storiaService.getStorieByUsername(username);
+
+        // Aggiungi la lista di storie al modello
+        model.addAttribute("storie", storie);
+
+        // Aggiungi un flag per controllare se ci sono storie
+        model.addAttribute("hasStories", !storie.isEmpty());
+
+        return "leMieStorie";
+    }
+
+    @DeleteMapping("/deleteStoriaByTitle")
+    public ResponseEntity<String> deleteStoria(@RequestParam String title) {
+        // Logica per trovare e rimuovere la storia in base al titolo
+        // Assicurati di implementare la logica per cercare la storia nel tuo servizio
+        try {
+            mapDBService.removeStoriaByTitle(title);
+            return ResponseEntity.ok("Storia eliminata con successo.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build(); // 404 se la storia non è trovata
+        }
+    }
+
 }

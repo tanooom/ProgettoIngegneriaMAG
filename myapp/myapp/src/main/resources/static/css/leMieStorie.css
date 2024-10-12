@@ -1,0 +1,167 @@
+/* Generale */
+body.leMieStorie {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Intestazione */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    margin-right: 180px; /* Modifica se necessario per l'allineamento */
+}
+
+/* Contenuto principale */
+main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Contenitore delle storie */
+.form-container {
+    width: 80%;
+    max-width: 1200px;
+    background-color: #fff; /* Sfondo bianco per il contenitore */
+    border-radius: 8px; /* Angoli arrotondati */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    padding: 20px;
+    margin-bottom: 80px; /* Spazio sotto il contenitore */
+    display: flex; /* Per disporre gli elementi verticalmente */
+    flex-direction: column; /* Direzione verticale */
+}
+
+/* Storia come elemento della lista */
+.storia-container {
+    background-color: #f9f9f9; /* Sfondo chiaro per ogni storia */
+    border: 1px solid #ddd; /* Bordo grigio chiaro */
+    border-radius: 5px; /* Angoli arrotondati */
+    padding: 15px; /* Spaziatura interna */
+    margin-bottom: 15px; /* Spazio tra le storie */
+}
+
+/* Titolo della storia */
+.storia-title {
+    font-size: 1.5em; /* Dimensione del titolo */
+    margin: 0 0 10px; /* Margine inferiore */
+}
+
+/* Dettagli della storia */
+.storia-details {
+    margin: 5px 0; /* Margini per i dettagli */
+}
+
+/* Pulsanti */
+.back-button, .visualizza-scenari {
+    background-color: #007bff; /* Colore blu per i pulsanti */
+    color: white; /* Colore del testo */
+    border: none; /* Rimuove il bordo */
+    padding: 10px 20px; /* Padding del bottone */
+    border-radius: 4px; /* Angoli arrotondati */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+    margin-right: 10px; /* Spazio tra i pulsanti */
+}
+
+.back-button:hover, .visualizza-scenari:hover {
+    background-color: #025cbd; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Pulsante di eliminazione */
+.elimina-storia {
+    background-color: red; /* Colore rosso per il pulsante di eliminazione */
+    color: white; /* Colore del testo */
+    border: none; /* Rimuove il bordo */
+    padding: 10px 20px; /* Padding del bottone */
+    border-radius: 4px; /* Angoli arrotondati */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+    margin-right: 10px; /* Spazio tra i pulsanti */
+}
+
+.elimina-storia:hover {
+    background-color: darkred; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Messaggio quando non si trovano storie */
+.no-storie-message {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    background-color: #c4c4c4b4;
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Pulsante di ritorno */
+.back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; 
+    border: none;    
+    cursor: pointer;     
+    padding: 10px;   
+    border-radius: 4px; 
+    gap: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.back-button img {
+    width: 24px;  
+    height: 24px; 
+}
+
+.back-button:hover {
+    background-color: #025cbd; 
+}
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 850px) {
+    .form-container {
+        width: 90%; /* Adatta la larghezza per schermi più piccoli */
+    }
+
+    header h1 {
+        margin-right: 0; /* Rimuovi margine per allineare correttamente */
+    }
+}
