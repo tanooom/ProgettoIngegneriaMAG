@@ -43,8 +43,5 @@ public class Application {
 
 	PER CANCELLARE TUTTO IL DATABASE
 		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteDatabase"
-
-		//COMANDO DI PROVA
-		Invoke-RestMethod -Method Get -Uri "http://localhost:8080/getScenariByTitle?title=Storia3"
 	*/
 }

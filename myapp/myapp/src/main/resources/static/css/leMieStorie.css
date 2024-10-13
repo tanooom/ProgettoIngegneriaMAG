@@ -1,11 +1,12 @@
 /* Generale */
-body.leMieStorie {
+body{
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 /* Intestazione */
@@ -32,7 +33,7 @@ header h1 {
     flex-grow: 1;
     text-align: center;
     color: white;
-    margin-right: 180px; /* Modifica se necessario per l'allineamento */
+    margin-right: 180px; 
 }
 
 /* Contenuto principale */
@@ -46,66 +47,63 @@ main {
 .form-container {
     width: 80%;
     max-width: 1200px;
-    background-color: #fff; /* Sfondo bianco per il contenitore */
-    border-radius: 8px; /* Angoli arrotondati */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    background-color: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
     padding: 20px;
-    margin-bottom: 80px; /* Spazio sotto il contenitore */
-    display: flex; /* Per disporre gli elementi verticalmente */
-    flex-direction: column; /* Direzione verticale */
+    margin-bottom: 80px; 
+    display: flex; 
+    flex-direction: column;
 }
 
-/* Storia come elemento della lista */
+/* Storia */
 .storia-container {
-    background-color: #f9f9f9; /* Sfondo chiaro per ogni storia */
-    border: 1px solid #ddd; /* Bordo grigio chiaro */
-    border-radius: 5px; /* Angoli arrotondati */
-    padding: 15px; /* Spaziatura interna */
-    margin-bottom: 15px; /* Spazio tra le storie */
+    background-color: #f9f9f9; 
+    border: 1px solid #ddd;
+    border-radius: 5px; 
+    padding: 15px; 
+    margin-bottom: 15px; 
 }
 
-/* Titolo della storia */
 .storia-title {
-    font-size: 1.5em; /* Dimensione del titolo */
-    margin: 0 0 10px; /* Margine inferiore */
+    font-size: 1.5em; 
+    margin: 0 0 10px; 
 }
 
-/* Dettagli della storia */
 .storia-details {
-    margin: 5px 0; /* Margini per i dettagli */
+    margin: 5px 0; 
 }
 
 /* Pulsanti */
 .back-button, .visualizza-scenari {
-    background-color: #007bff; /* Colore blu per i pulsanti */
-    color: white; /* Colore del testo */
-    border: none; /* Rimuove il bordo */
-    padding: 10px 20px; /* Padding del bottone */
-    border-radius: 4px; /* Angoli arrotondati */
-    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-    margin-right: 10px; /* Spazio tra i pulsanti */
+    background-color: #007bff;
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-right: 10px; 
 }
 
 .back-button:hover, .visualizza-scenari:hover {
-    background-color: #025cbd; /* Colore più scuro al passaggio del mouse */
+    background-color: #025cbd; 
 }
 
 /* Pulsante di eliminazione */
 .elimina-storia {
-    background-color: red; /* Colore rosso per il pulsante di eliminazione */
-    color: white; /* Colore del testo */
-    border: none; /* Rimuove il bordo */
-    padding: 10px 20px; /* Padding del bottone */
-    border-radius: 4px; /* Angoli arrotondati */
-    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
-    margin-right: 10px; /* Spazio tra i pulsanti */
+    background-color: red; 
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px; 
+    cursor: pointer;
+    margin-right: 10px; 
 }
 
 .elimina-storia:hover {
-    background-color: darkred; /* Colore più scuro al passaggio del mouse */
+    background-color: darkred; 
 }
 
-/* Messaggio quando non si trovano storie */
 .no-storie-message {
     text-align: center;
     font-size: 18px;
@@ -155,13 +153,26 @@ footer {
     background-color: #025cbd; 
 }
 
+.scenario h3 {
+    margin-bottom: 5px; 
+}
+
+.scenario p {
+    margin: 2px 0; 
+}
+
+.scenario {
+    padding-bottom: 10px; 
+}
+
+
 /* Adattamento per schermi piccoli */
 @media (max-width: 850px) {
     .form-container {
-        width: 90%; /* Adatta la larghezza per schermi più piccoli */
+        width: 90%; 
     }
 
     header h1 {
-        margin-right: 0; /* Rimuovi margine per allineare correttamente */
+        margin-right: 0; 
     }
 }

@@ -35,7 +35,6 @@
                     th:onclick="eliminaStoria('[[${storia.titolo}]]')">Elimina Storia</button>
 
                 <div class="scenari-details"  th:id="'scenari-' + ${storia.titolo}" style="display:none;">
-                    <!-- Dettagli degli scenari verranno caricati qui -->
                 </div>
             </div>
         </div>
@@ -48,18 +47,18 @@
     <script>
         function visualizzaScenari(titoloStoria) {
             titoloStoria = titoloStoria.replace(/"/g, ''); 
+
             const scenariDetailsDiv = document.getElementById(`scenari-${titoloStoria}`);
             if (!scenariDetailsDiv) {
                 console.error(`Impossibile trovare la div per il titolo: scenari-${titoloStoria}`);
                 return;
             }
-            // Controlla se la div è già visibile
+
             if (scenariDetailsDiv.style.display === 'block') {
-                // Nasconde la div
                 scenariDetailsDiv.style.display = 'none';
                 return;
             }
-            // Se la div non è visibile, effettua la chiamata AJAX per mostrare gli scenari
+
             $.ajax({
                 url: `/getScenariByTitle?title=${encodeURIComponent(titoloStoria)}`,
                 method: 'GET',
@@ -71,22 +70,30 @@
                         scenariDetailsDiv.style.display = 'block';
                         return;
                     }
-                    // Costruisci il contenuto da visualizzare
-                    scenari.forEach(scenario => {
+
+                    scenari.forEach((scenario, index) => {
                         scenariDetailsDiv.innerHTML += `
                             <div class="scenario">
                                 <h3>${scenario.nome}</h3>
-                                <p><strong>Descrizione:</strong> ${scenario.descrizione}</p>
+                                <p><strong>Descrizione:</strong> <span id="descrizione-${scenario.id}">${scenario.descrizione}</span></p>
+                                <button onclick="modificaDescrizione(${scenario.id})">Modifica descrizione</button>
+                                <div id="modifica-descrizione-${scenario.id}" style="display:none;">
+                                    <input type="text" id="nuova-descrizione-${scenario.id}" value="${scenario.descrizione}">
+                                    <button onclick="salvaDescrizione(${scenario.id}, '${titoloStoria}')">Salva</button>
+                                </div>
                                 <p><strong>Oggetto raccoglibile:</strong> ${scenario.oggettoRaccoglibile || 'Nessun oggetto'}</p>
                                 <!--<p><strong>ID Opzioni:</strong> ${(scenario.idOpzioni && scenario.idOpzioni.length > 0) ? scenario.idOpzioni.join(', ') : 'Nessuna opzione'}</p>-->
                                 <!--<p><strong>ID Scenario Precedente:</strong> ${scenario.idScenarioPrecedente || 'Nessuno'}</p>-->
                                 <p><strong>Scenario Iniziale:</strong> ${scenario.scenarioIniziale ? 'Sì' : 'No'}</p>
                                 <p><strong>Scenario Finale:</strong> ${scenario.scenarioFinale ? 'Sì' : 'No'}</p>
                             </div>
-                            <hr>
                         `;
+
+                        if (index < scenari.length - 1) {
+                            scenariDetailsDiv.innerHTML += `<hr>`;
+                        }
                     });
-                    // Mostra la div con i dettagli degli scenari
+
                     scenariDetailsDiv.style.display = 'block';
                 },
                 error: function() {
@@ -95,9 +102,32 @@
             });
         }
 
-    
+        function modificaDescrizione(scenarioId) {
+            const modificaDiv = document.getElementById(`modifica-descrizione-${scenarioId}`);
+            modificaDiv.style.display = 'block';
+        }
+
+        function salvaDescrizione(scenarioId) {
+            let nuovaDescrizione = document.getElementById(`nuova-descrizione-${scenarioId}`).value;
+            nuovaDescrizione = encodeURIComponent(nuovaDescrizione);
+
+            $.ajax({
+                url: `/updateScenarioDescription?id=${scenarioId}&nuovaDescrizione=${nuovaDescrizione}`,
+                method: 'POST',
+                success: function() {
+                    document.getElementById(`descrizione-${scenarioId}`).textContent = decodeURIComponent(nuovaDescrizione);
+                    document.getElementById(`modifica-descrizione-${scenarioId}`).style.display = 'none';
+
+                    alert('Descrizione aggiornata con successo!');
+                },
+                error: function() {
+                    alert('Si è verificato un errore durante l\'aggiornamento della descrizione.');
+                }
+            });
+        }
+
         function eliminaStoria(titoloStoria) {
-            console.log(titoloStoria); // Verifica che il titolo venga passato correttamente
+            console.log(titoloStoria);
             titoloStoria = titoloStoria.replace(/"/g, ''); 
     
             if (confirm("Sei sicuro di voler eliminare la storia " + titoloStoria + "?")) {
@@ -115,7 +145,5 @@
             }
         }
     </script>
-    
-    
 </body>
 </html>

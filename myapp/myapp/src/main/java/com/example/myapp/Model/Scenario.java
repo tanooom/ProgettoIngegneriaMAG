@@ -9,7 +9,7 @@ public class Scenario implements Serializable{
 
     private final int id;
     private final String nome;
-    private final String descrizione;
+    private String descrizione;
     private final List<Integer> idOpzioni;
     private final String oggettoRaccoglibile;
     private final Integer idScenarioPrecedente;
@@ -50,6 +50,10 @@ public class Scenario implements Serializable{
 
     public String getDescrizione() {
         return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
     }
 
     public List<Integer> getOpzioni() {

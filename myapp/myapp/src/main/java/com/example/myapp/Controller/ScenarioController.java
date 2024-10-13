@@ -119,4 +119,15 @@ public class ScenarioController {
         return ResponseEntity.ok(scenari); 
     }
 
+    @PostMapping("/updateScenarioDescription")
+    public ResponseEntity<Void> updateScenarioDescription(@RequestParam int id, @RequestParam String nuovaDescrizione ) {
+        Scenario scenario = mapDBService.getScenarioById(id);
+        if (scenario != null) {
+            scenario.setDescrizione(nuovaDescrizione); 
+            mapDBService.saveScenario(scenario); 
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
