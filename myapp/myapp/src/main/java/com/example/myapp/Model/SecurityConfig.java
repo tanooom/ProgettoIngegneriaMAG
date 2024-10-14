@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/").permitAll()
                 .requestMatchers( "/updateScenarioDescription", "/getScenariByTitle","/deleteStoriaByTitle", "/export", "/deleteUser", 
                 "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions",
-                "/deleteDatabase").permitAll()
+                "/deleteAllPartite", "/deleteDatabase").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login

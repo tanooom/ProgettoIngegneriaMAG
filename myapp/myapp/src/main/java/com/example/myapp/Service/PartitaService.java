@@ -91,7 +91,7 @@ public class PartitaService {
     }
 
     // Metodo per CREARE una nuova partita
-    public Partita inizializzaNuovaPartita(int storiaId, String username) {
+    public Partita creaNuovaPartita(int storiaId, String username) {
         Storia storia = storiaService.getStoriaById(storiaId); // Supponendo che tu abbia un metodo per ottenere la storia
         Inventario inventario = inventarioController.creaInventario(partiteAttive.size()+1); // Crea un nuovo inventario
         int inventarioId = inventario.getId();

@@ -86,4 +86,16 @@ public class Partita implements Serializable {
     public boolean isTerminata() {
         return "Terminata".equals(this.stato);
     }    
+
+    @Override
+    public String toString() {
+        return "Partita{" +
+                "ID=" + id +
+                ", Storia='" + storia.getTitolo() + '\'' +
+                ", ID Scenario Corrente=" + idScenarioCorrente +
+                ", Inventario ID=" + inventarioId +
+                ", Username='" + username + '\'' +
+                ", Stato='" + stato + '\'' +
+                '}';
+    }
 }

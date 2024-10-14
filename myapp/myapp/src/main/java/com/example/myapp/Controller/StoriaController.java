@@ -90,8 +90,7 @@ public class StoriaController {
 
     @GetMapping("/api/storie")
     public ResponseEntity<List<Storia>> getStorie() {
-        List<Storia> storie = storiaService.getAllStorie(); // Cambia 'Storie' in 'Storia'
-        System.out.println("GET ALL STORIE: " + storie);
+        List<Storia> storie = storiaService.getAllStorie();
         if (storie == null || storie.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(storie);
         }
@@ -170,9 +169,7 @@ public class StoriaController {
 
     @GetMapping("/api/usernames")
     public ResponseEntity<List<String>> getUsernames() {
-        System.out.println("111");
         List<String> usernames = storiaService.getAllUsernames();
-        System.out.println("GET ALL USERNAME: " + usernames);
         
         if (usernames == null || usernames.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(usernames);
@@ -184,7 +181,6 @@ public class StoriaController {
     public ResponseEntity<String> getDescrizioneScenarioIniziale(@PathVariable int storiaId) {
         try {
             String descrizione = storiaService.getDescrizioneScenarioIniziale(storiaId);
-            System.out.println("DESCRIZIONE: " + descrizione);
             return ResponseEntity.ok(descrizione);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

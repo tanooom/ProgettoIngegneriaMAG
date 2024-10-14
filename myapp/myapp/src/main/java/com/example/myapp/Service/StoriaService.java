@@ -79,7 +79,6 @@ public class StoriaService {
 
     // Ottiene una lista di tutte le storie
     public List<Storia> getAllStorie() {
-        System.out.println("TUTTE LE STORIE: " + tutteLeStorie.size());
         return new ArrayList<>(tutteLeStorie); 
     }
 
@@ -92,11 +91,8 @@ public class StoriaService {
 
     public String getDescrizioneScenarioIniziale(int storiaId) {
         Storia storia = getStoriaById(storiaId);
-        System.out.println("STORIA: " + storia);
         int idScenarioIniziale = storia.getIdScenarioIniziale();
-        System.out.println("ID SCENARIO INIZIALE: " + idScenarioIniziale);
         Scenario scenarioIniziale = mapDBService.getScenarioById(idScenarioIniziale);
-        System.out.println("SCENARIO INIZIALE: " + scenarioIniziale.getDescrizione());
         return scenarioIniziale.getDescrizione();
     }
 

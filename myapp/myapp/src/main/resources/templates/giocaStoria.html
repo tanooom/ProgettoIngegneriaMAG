@@ -34,18 +34,19 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const storiaId = params.get('storiaId');
+        const partitaId = params.get('partitaId');
         const scenarioCorrenteId = params.get('scenarioCorrenteId');
         const riprendi = params.get('riprendi') === 'true';
-        //const partitaId = params.get('partitaId');
+
 
         console.log("SCENARIO CORRENTE ID: " + scenarioCorrenteId);
         console.log("STORIA ID: " + storiaId);
-        //console.log("PARTITA ID: " + partitaId);
+        console.log("PARTITA ID: " + partitaId);
 
         // Funzione per caricare lo scenario e visualizzare le opzioni
         function caricaScenario() {
             console.log("QUIII?????")
-            const url = `/api/gioca/${storiaId}/${scenarioCorrenteId}/start`;
+            const url = `/api/gioca/${storiaId}/${partitaId}/${scenarioCorrenteId}/start`;
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -70,14 +71,17 @@
 
                         console.log("1");
 
-                        //TODO: releseObject() bisogna controllare se lo scenario rilascia degli oggetti e aggiungerli all'inventario
+                        // Aggiungi qui la logica per gli oggetti rilasciati
+                        if (data.oggettiRilasciati && data.oggettiRilasciati.length > 0) {
+                            releaseObjects(data.oggettiRilasciati);
+                        }
 
                         // Se la partita è conclusa, mostra "The End"
                         if (data.partitaConclusa) {
                             opzioniDiv.innerHTML = '<p>The End</p>';
                             document.querySelectorAll('button').forEach(button => button.disabled = true); // Disabilita pulsanti
                         }
-                    } else { //da togliere
+                    } else { //da togliere?
                         console.log("Nessuna opzione disponibile");
                     }
                 })
@@ -132,6 +136,21 @@
             });
         }
 
+        // Funzione per aggiungere gli oggetti rilasciati all'inventario
+        function releaseObjects(oggettiRilasciati) {
+            const inventarioDiv = document.getElementById('inventario');
+            if (!inventarioDiv.innerHTML.includes('Inventario vuoto')) {
+                inventarioDiv.innerHTML = ''; // Pulisce il messaggio di inventario vuoto
+            }
+
+            oggetti.forEach(oggetto => {
+                const item = document.createElement('p');
+                item.innerText = oggetto;
+                inventarioDiv.appendChild(item);
+                alert(`Hai trovato un nuovo oggetto: ${oggetto}`);
+            });
+        }
+
         function faiScelta(opzione) {
             // Controlla il tipo di opzione
             if (opzione.richiedeIndovinello) {
@@ -148,6 +167,9 @@
                 }
             } else if (opzione.richiedeOggetto) {
                 const oggettoRichiesto = opzione.oggettoRichiesto;
+                console.log("Partita: " + partitaId);
+                console.log("Scenario corrente: " + scenarioCorrenteId);
+                console.log("Oggetto richiesto: " + oggettoRichiesto);
                 const urlInventario = `/api/gioca/${partitaId}/${scenarioCorrenteId}/controllaOggetto/${oggettoRichiesto}`;
                 alert('Per continuare devi possedere l\'oggetto: ' + oggettoRichiesto);
                 fetch(urlInventario)

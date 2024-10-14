@@ -75,4 +75,26 @@ public class Inventario {
         oggetti.clear();
         System.out.println("L'inventario è stato svuotato.");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inventario ID: ").append(id)
+          .append(", ID Partita: ").append(idPartita)
+          .append(", Oggetti: [");
+
+        if (oggetti.isEmpty()) {
+            sb.append("Nessun oggetto presente");
+        } else {
+            for (int i = 0; i < oggetti.size(); i++) {
+                sb.append(oggetti.get(i));
+                if (i < oggetti.size() - 1) {
+                    sb.append(", "); // Aggiunge una virgola tra gli oggetti
+                }
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 }

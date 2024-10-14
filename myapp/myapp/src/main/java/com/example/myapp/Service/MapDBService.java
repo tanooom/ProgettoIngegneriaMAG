@@ -2,11 +2,11 @@ package com.example.myapp.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -240,6 +240,11 @@ public class MapDBService {
 
     public void deleteAllOptions() {
         optionMap.clear();
+        db.commit(); 
+    }
+
+    public void deleteAllPartite() {
+        matchMap.clear();
         db.commit(); 
     }
 

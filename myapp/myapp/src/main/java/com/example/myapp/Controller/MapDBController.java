@@ -121,6 +121,17 @@ public class MapDBController {
         }
     }
 
+    // Endpoint per eliminare tutte le partite
+    @DeleteMapping("/deleteAllPartite")
+    public String deleteAllPartite() {
+        try {
+            mapDBService.deleteAllPartite();
+            return "Tutte le partite sono state rimosse con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione delle partite: " + e.getMessage();
+        }
+    }
+
     // Endpoint per eliminare tutto il database
     @DeleteMapping("/deleteDatabase")
     public String deleteDatabase() {

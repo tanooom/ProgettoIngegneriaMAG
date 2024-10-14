@@ -28,12 +28,6 @@
             <option value="5-10">5-10 scenari</option>
             <option value="10+">10+ scenari</option>
         </select>
-        <!--<select id="filterStato">
-            <option value="">Filtra per stato</option>
-            <option value="Non iniziata">Non iniziata</option>
-            <option value="In corso">In corso</option>
-            <option value="Conclusa">Conclusa</option>
-        </select>-->
         <button class="search-button" onclick="filterStorie()">
             <img src="/css/images/search-icon.png" alt="Cerca">
         </button>
@@ -54,7 +48,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log("Storie recuperate:", data);  // Aggiungi questo log per vedere cosa viene recuperato
                 storie = data;
                 displayStorie(storie);
             })
@@ -71,7 +64,6 @@
             return response.json();
         })
         .then(data => {
-            console.log("Usernames recuperati:", data); // Log della risposta
             if (Array.isArray(data)) {
                 usernames = data;
                 populateUsernameFilter(usernames);
@@ -115,7 +107,6 @@
 
                 // Aggiungi la logica per ottenere la descrizione dello scenario iniziale
                 if (storia.idScenarioIniziale) {
-                    console.log(`Fetching description for story ID: ${storia.id} with initial scenario ID: ${storia.idScenarioIniziale}`);
                     fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione') // Assicurati di avere l'endpoint corretto
                     .then(response => {
                             if (!response.ok) {
@@ -125,11 +116,8 @@
                         })
                     .then(text => {
                         descrizioneScenarioIniziale = text;
-                        console.log(descrizioneScenarioIniziale);
                     })
                     .then(scenario => {
-                        console.log("Descrizione scenario iniziale: " + descrizioneScenarioIniziale)
-                        console.log("Scenario corrente id: " + storia.idScenarioIniziale)
                         // Crea il contenuto della storia
                         storiaDiv.innerHTML = `
                             <div class="storia-header">
@@ -174,12 +162,6 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const username = document.getElementById('filterUsername').value;
             const lunghezza = document.getElementById('filterLunghezza').value;
-            //const stato = document.getElementById('filterStato').value;
-
-            console.log("search term: " +searchTerm);
-            console.log("username: " +username);
-            console.log("lunghezza: " + lunghezza);
-            //console.log("stato: " + stato);
 
             // Costruisci la query string con i filtri
             let query =`/api/storieFiltrate?`;
@@ -194,10 +176,6 @@
                 query += `lunghezza=range10+&`;  // Questo invia un parametro per il range 10+
             }
 
-            //if (stato) query += `stato=${encodeURIComponent(stato)}&`;
-            
-            console.log("query: " + query);
-
             // Fetch delle storie con i filtri applicati
             fetch(query)
                 .then(response => {
@@ -207,7 +185,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Storie filtrate:", data); // Aggiungi questo log
                     if (Array.isArray(data)) {
                         displayStorie(data);
                     } else {
@@ -220,42 +197,38 @@
                     displayStorie([]); // Mostra un messaggio che non ci sono storie
                 });
         }
-
+       
         function giocaStoria(storiaId, idScenarioIniziale) {
-            console.log("ID SCENARIO INIZIALE: " + idScenarioIniziale);
-            window.location.href = `/giocaStoria?storiaId=${storiaId}&scenarioCorrenteId=${idScenarioIniziale}`;
-        }
-        
-        /*function giocaStoria(storiaId) {
+            // Chiamata al backend per creare una nuova partita
             fetch(`/api/creaPartita/${storiaId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Errore nella creazione della partita');
+                    throw new Error('Errore durante la creazione della partita');
                 }
-                return response.json();
+                return response.json();  // Otteniamo la risposta con la partita creata
             })
             .then(data => {
-                // Reindirizza alla pagina giocaStoria con l'ID della nuova partita
-                window.location.href = `/giocaStoria?storiaId=${data.id}&scenarioCorrenteId=${data.idScenarioCorrente}`;
+                const partitaId = data.id;  // Prendi l'ID della nuova partita
+                window.location.href = `/giocaStoria?storiaId=${storiaId}&partitaId=${partitaId}&scenarioCorrenteId=${idScenarioIniziale}`;
             })
             .catch(error => {
                 console.error('Errore durante la creazione della partita:', error);
-                alert('Si è verificato un errore. Per favore riprova.');
             });
-        }*/
+        }
+
 
         function riprendiStoria(storiaId, scenarioCorrenteId) {
-            window.location.href = `/giocaStoria?storiaId=${storiaId}&riprendi=true&scenarioCorrenteId=${storia.scenarioCorrenteId}`;
+            window.location.href = `/giocaStoria?storiaId=${storiaId}&partitaId=${partitaId}&riprendi=true&scenarioCorrenteId=${storia.scenarioCorrenteId}`;
         }
 
         function eliminaPartita(storiaId) {
             if (confirm("Sei sicuro di voler eliminare la partita?")) {
-                fetch('/api/eliminaPartita/${storiaId}', {
+                fetch('/api/eliminaPartita/${partitaId}', {
                     method: 'DELETE'
                 }).then(() => {
                     alert('Partita eliminata con successo');
