@@ -1,6 +1,7 @@
 package com.example.myapp.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -104,4 +105,14 @@ public class PartitaService {
         partiteAttive.add(nuovaPartita); // Aggiungi la nuova partita alla lista delle partite attive
         return nuovaPartita;
     }
+
+    public List<Partita> getPartiteByUsername(String username) {
+        return mapDBService.getListAllPartite()
+                           .stream()
+                           .filter(partita -> partita.getUsername().equalsIgnoreCase(username)) // Ignora il case
+                           .collect(Collectors.toList());
+    }
+    
+    
+    
 }

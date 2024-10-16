@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le mie partite</title>
+    <link rel="stylesheet" href="/css/leMiePartite.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="leMiePartite">
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="window.location.href='/home'">
+                <img src="/css/images/arrow.png" alt="Indietro">
+                <span class="back-text">Torna Indietro</span>
+            </button>
+            <h1>Le mie partite</h1>
+        </div>
+    </header>    
+
+    <main>
+        <div class="form-container">
+            <div th:if="${#lists.isEmpty(partite)}" class="no-partite-message">
+                Non hai ancora iniziato alcuna partita.
+            </div>
+            <div th:each="partita : ${partite}" class="partita-container">
+                <h2 class="partita-title" th:text="'Partita ' + ${partita.id}"></h2>
+                <div class="partita-details">
+                    <p><strong>Stato:</strong> <span th:text="${partita.stato}"></span></p>
+                    <p><strong>Storia:</strong> <span th:text="${partita.storia.titolo}"></span></p>
+                    <p><strong>Scenario Corrente:</strong> <span th:text="${partita.idScenarioCorrente}"></span></p>
+                </div>
+                
+                <div class="button-container">
+                    <div th:if="${partita.stato != 'Terminata'}">
+                        <button class="riprendi-partita" 
+                            th:onclick="riprendiPartita('[[${partita.id}]]', '[[${partita.storia.id}]]', '[[${partita.idScenarioCorrente}]]')">Riprendi partita</button>
+                    </div>
+                    <button class="elimina-partita" 
+                        th:onclick="eliminaPartita('[[${partita.id}]]')">Elimina Partita</button>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MyApp</p>
+    </footer>
+
+    <script>
+        function riprendiPartita(partitaId, storiaId, scenarioCorrenteId) {
+            window.location.href = `/giocaStoria?storiaId=${encodeURIComponent(storiaId)}&partitaId=${encodeURIComponent(partitaId)}&scenarioCorrenteId=${encodeURIComponent(scenarioCorrenteId)}`;
+        }
+
+        function eliminaPartita(partitaId) {
+            if (confirm("Sei sicuro di voler eliminare questa partita?")) {
+                $.ajax({
+                    url: `/deletePartita?id=${encodeURIComponent(partitaId)}`,
+                    method: 'DELETE',
+                    success: function() {
+                        alert('La partita è stata eliminata con successo.');
+                        location.reload();
+                    },
+                    error: function() {
+                        alert('Si è verificato un errore nell\'eliminazione della partita.');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

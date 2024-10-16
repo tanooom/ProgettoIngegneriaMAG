@@ -94,6 +94,10 @@ public class MapDBService {
         return storyMap; 
     }
 
+    public Map<Integer, Partita> getAllPartite() {
+        return matchMap; 
+    }
+
     // Metodo per rimuovere una storia
     public void removeStoria(int id) {
         if (storyMap.containsKey(id)) {
@@ -212,6 +216,15 @@ public class MapDBService {
         }
     }
 
+    public void removeMatch(int id) {
+        if (matchMap.containsKey(id)) {
+            matchMap.remove(id);
+            db.commit();
+        } else {
+            throw new IllegalArgumentException("Partita con ID " + id + " non trovata.");
+        }
+    }
+
     public Map<Integer, Opzione> getAllOptions() {
         return optionMap;
     }
@@ -226,6 +239,10 @@ public class MapDBService {
 
     public List<Scenario> getListAllScenari() { 
         return new ArrayList<>(scenarioMap.values());
+    }
+
+    public List<Partita> getListAllPartite() { 
+        return new ArrayList<>(matchMap.values()); 
     }
 
     public void deleteAllStories() {

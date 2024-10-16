@@ -1,0 +1,185 @@
+/* Generale */
+body{
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Intestazione */
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-left: -20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    margin-right: 180px; 
+}
+
+/* Contenuto principale */
+main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Contenitore delle partite */
+.form-container {
+    width: 80%;
+    max-width: 1200px;
+    background-color: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    margin-bottom: 80px; 
+    display: flex; 
+    flex-direction: column;
+}
+
+/* Partita */
+.partita-container {
+    background-color: #f9f9f9; 
+    border: 1px solid #ddd;
+    border-radius: 5px; 
+    padding: 15px; 
+    margin-bottom: 15px; 
+}
+
+.partita-title {
+    font-size: 1.5em; 
+    margin: 0 0 10px; 
+}
+
+.partita-details p {
+    margin: 2px 0; /* Riduci il margine superiore e inferiore */
+    padding: 0;    /* Rimuovi eventuale padding */
+}
+
+.button-container {
+    display: flex; /* Usa il Flexbox per allineare gli elementi */
+    gap: 10px; /* Spazio tra i bottoni */
+    margin-top: 10px;
+}
+
+/* Pulsanti */
+.back-button, .riprendi-partita {
+    background-color: #007bff;
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-right: 10px;
+}
+
+.back-button:hover, .riprendi-partita:hover {
+    background-color: #025cbd; 
+}
+
+/* Pulsante di eliminazione */
+.elimina-partita {
+    background-color: red; 
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px; 
+    cursor: pointer;
+    margin-right: 10px; 
+}
+
+.elimina-partita:hover {
+    background-color: darkred; 
+}
+
+.no-partite-message {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    background-color: #c4c4c4b4;
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Pulsante di ritorno */
+.back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; 
+    border: none;    
+    cursor: pointer;     
+    padding: 10px;   
+    border-radius: 4px; 
+    gap: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.back-button img {
+    width: 24px;  
+    height: 24px; 
+}
+
+.back-button:hover {
+    background-color: #025cbd; 
+}
+
+.scenario h3 {
+    margin-bottom: 5px; 
+}
+
+.scenario p {
+    margin: 2px 0; 
+}
+
+.scenario {
+    padding-bottom: 10px; 
+}
+
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 850px) {
+    .form-container {
+        width: 90%; 
+    }
+
+    header h1 {
+        margin-right: 0; 
+    }
+}

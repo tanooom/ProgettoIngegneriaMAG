@@ -25,7 +25,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/").permitAll()
-                .requestMatchers( "/updateScenarioDescription", "/getScenariByTitle","/deleteStoriaByTitle", "/export", "/deleteUser", 
+                .requestMatchers( "/deletePartita", "/getAllPartite","/getPartiteByUsername", "/updateScenarioDescription", "/getScenariByTitle","/deleteStoriaByTitle", "/export", "/deleteUser", 
                 "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions",
                 "/deleteAllPartite", "/deleteDatabase").permitAll()
                 .anyRequest().authenticated()
