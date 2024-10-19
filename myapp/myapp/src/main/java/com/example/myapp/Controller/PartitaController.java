@@ -68,6 +68,8 @@ public class PartitaController {
         // Carica la partita esistente o ne crea una nuova
         Partita partita = partitaService.caricaPartita(storiaId, user); //Creo l'oggetto partita
         System.out.println("Partita: " + partita);
+        
+        //TODO: non dovrebbe servire!
         if (partita == null) {
             partita = partitaService.creaNuovaPartita(storiaId, username);
             System.out.println("Partita 2: " + partita.getId());
@@ -134,20 +136,19 @@ public class PartitaController {
     // Implementa la funzione eseguiScelta() di giocaStoria
     @PostMapping("/gioca/{partitaId}/{scenarioCorrenteId}/scelta/{opzioneId}")
     public ResponseEntity<String> faiScelta(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable int opzioneId) {
-        System.out.println("QUI CI STA ARRIVANDO?");
-        System.out.println("PARTITA: " + partitaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
             Utente user = userService.getUser(username);
     
-            boolean isUltimoScenario = partitaService.isUltimoScenario(opzioneId);
-            System.out.println("Ultimo scenario? " + isUltimoScenario);
+            boolean isUltimoScenario = partitaService.isUltimoScenario(scenarioCorrenteId);
     
             if (isUltimoScenario) { //Se è l'ultimo scenario la termina
                 partitaService.terminaPartita(partitaId);
+                System.out.println("Termina partita!");
             } else { //Dovrebbe aggiornare lo scenario corrente passando a quello dell'opzione
                 partitaService.faiScelta(partitaId, scenarioCorrenteId, opzioneId, user, inventarioController);
+                System.out.println("Aggiorna nuovo scenario");
             }
     
             return ResponseEntity.ok("Scelta eseguita con successo");
@@ -186,7 +187,7 @@ public class PartitaController {
 
     //Controlla che l'oggetto richiesto sia nell'inventario
     @GetMapping("/gioca/{partitaId}/{scenarioCorrenteId}/controllaOggetto/{oggettoRichiesto}")
-    public Map<String, Boolean> controllaOggetto(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable String oggettoRichiesto) {        
+    public Map<String, Boolean> controllaOggetto(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable String oggettoRichiesto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Utente user = userService.getUser(username);
@@ -203,20 +204,21 @@ public class PartitaController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("possiedeOggetto", possiedeOggetto);
         return response;
-
-        
     }
 
     @PostMapping("/creaPartita/{storiaId}")
     public ResponseEntity<Partita> creaPartita(@PathVariable int storiaId) {
+        System.out.println("STORIA DI PARTITA CONTROLLER 1: " + storiaId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
+        System.out.println("USERNAME DI PARTITA CONTROLLER 2: " + username);
         
         // Creiamo una nuova partita
-        Partita nuovaPartita = partitaService.creaNuovaPartita(storiaId, username);
+        Partita nuovaPartita = partitaService.creaNuovaPartita(storiaId, username); //QUI MI DA ERRORE
+
+        System.out.println("PARTITA DI PARTITA CONTROLLER 3: " + nuovaPartita);
         
         // Ritorna la nuova partita creata
         return ResponseEntity.status(HttpStatus.CREATED).body(nuovaPartita);
     }
-    
 }

@@ -45,7 +45,7 @@
 
         // Funzione per caricare lo scenario e visualizzare le opzioni
         function caricaScenario() {
-            console.log("QUIII?????")
+            console.log("CARICA SCENARIO 1");
             const url = `/api/gioca/${storiaId}/${partitaId}/${scenarioCorrenteId}/start`;
             fetch(url)
                 .then(response => {
@@ -71,7 +71,7 @@
 
                         console.log("1");
 
-                        // Aggiungi qui la logica per gli oggetti rilasciati
+                        // Logica per gli oggetti rilasciati
                         if (data.oggettiRilasciati && data.oggettiRilasciati.length > 0) {
                             releaseObjects(data.oggettiRilasciati);
                         }
@@ -138,16 +138,19 @@
 
         // Funzione per aggiungere gli oggetti rilasciati all'inventario
         function releaseObjects(oggettiRilasciati) {
+            console.log("oggetti");
             const inventarioDiv = document.getElementById('inventario');
             if (!inventarioDiv.innerHTML.includes('Inventario vuoto')) {
                 inventarioDiv.innerHTML = ''; // Pulisce il messaggio di inventario vuoto
             }
 
+            //TODO: Qui non dovrebbe servire il foreach perchè per ogni scenario ci può essere un solo oggetto
             oggetti.forEach(oggetto => {
                 const item = document.createElement('p');
                 item.innerText = oggetto;
                 inventarioDiv.appendChild(item);
                 alert(`Hai trovato un nuovo oggetto: ${oggetto}`);
+                console.log(`Hai trovato un nuovo oggetto: ${oggetto}`);
             });
         }
 
@@ -156,9 +159,6 @@
             if (opzione.richiedeIndovinello) {
                 const domandaIndovinello = opzione.indovinello;
                 const risposta = prompt(`Domanda: ${domandaIndovinello}\n`);
-                console.log("Domanda dell'indovinello: " + domandaIndovinello);
-                console.log("Risposta esatta: " + opzione.rispostaCorrettaIndovinello);
-                console.log("Risposta data: " + risposta);
                 if (risposta.trim().toLowerCase() === opzione.rispostaCorrettaIndovinello.trim().toLowerCase()) {
                     alert(`Risposta esatta!`);
                     eseguiScelta(opzione.id);
@@ -167,9 +167,6 @@
                 }
             } else if (opzione.richiedeOggetto) {
                 const oggettoRichiesto = opzione.oggettoRichiesto;
-                console.log("Partita: " + partitaId);
-                console.log("Scenario corrente: " + scenarioCorrenteId);
-                console.log("Oggetto richiesto: " + oggettoRichiesto);
                 const urlInventario = `/api/gioca/${partitaId}/${scenarioCorrenteId}/controllaOggetto/${oggettoRichiesto}`;
                 alert('Per continuare devi possedere l\'oggetto: ' + oggettoRichiesto);
                 fetch(urlInventario)
@@ -188,12 +185,11 @@
         }
 
         function eseguiScelta(opzioneId) {
-            console.log("ci arriva qui?")
             fetch(`/api/gioca/${partitaId}/${scenarioCorrenteId}/scelta/${opzioneId}`, {
                 method: 'POST'
             }).then(response => {
                 if (response.ok) {
-                    console.log("carica scenario?");
+                    console.log("ESEGUI SCELTA 1");
                     caricaScenario();  // Ricarica lo scenario aggiornato
                 } else {
                     alert('Errore nel processo della scelta');

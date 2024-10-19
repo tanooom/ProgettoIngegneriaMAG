@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.myapp.Model.Inventario;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
@@ -38,6 +39,12 @@ public class MapDBController {
     }
 
     // Endpoint per gestire le partite
+    @PostMapping("/saveInventario")
+    public String saveStoria(@RequestBody Inventario inventario) {
+        mapDBService.saveInventory(inventario);
+        return "Inventario salvato con successo!";
+    }
+
     @PostMapping("/putMatch")
     public String putMatch( @RequestParam int id, 
                             @RequestParam Storia storia,  
@@ -54,18 +61,18 @@ public class MapDBController {
         return mapDBService.getMatchById(id);
     }
 
-    // Endpoint per gestire l'inventario
+    //Endpoint per gestire l'inventario
     @PostMapping("/putInventoryItem")
-    public String putInventoryItem(@RequestParam String key, @RequestParam String value) {
+    public String putInventoryItem(@RequestParam Integer key, @RequestParam Inventario value) {
         mapDBService.putInventoryItem(key, value);
         return "Oggetto dell'inventario aggiunto con successo!";
     }
 
     @GetMapping("/getInventoryItem")
-    public String getInventoryItem(@RequestParam String key) {
+    public Inventario getInventoryItem(@RequestParam Integer key) {
         return mapDBService.getInventoryItem(key);
     }
-
+    
     // Endpoint per esportare i dati in JSON
     @GetMapping("/export")
     public String exportToJson(@RequestParam String filePath) {

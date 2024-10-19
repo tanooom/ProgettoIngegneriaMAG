@@ -35,7 +35,7 @@ public class PartitaService {
 
     public List<Storia> getStorieDisponibili() {
         // Recupera le storie disponibili tramite il controller
-        //TODO: va bene?
+        //TODO: va bene? serve?
         return storiaService.getStorieDisponibili(null, null, null, null);
     }
 
@@ -57,19 +57,25 @@ public class PartitaService {
     }
 
     public Partita getPartita(int partitaId) {
-        return partiteAttive.get(partitaId);
+        return partiteAttive.stream()
+                            .filter(partita -> partita.getId() == partitaId)
+                            .findFirst()
+                            .orElse(null); // Restituisce null se non trovata
     }
 
     public void faiScelta(int partitaId, int scenarioCorrenteId, int opzioneId, Utente user, InventarioController inventarioController) {
-        System.out.println("INVECE QUI?");
-        System.out.println("PARTITA: " + partitaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId);
-        Partita partita = partiteAttive.get(partitaId);
+        System.out.println("FAI SCELTA 1");
+        System.out.println("PARTITA: " + partitaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId + ", con PARTITE ATTIVE: " + partiteAttive);
+        System.out.println("FAI SCELTA 2: "+ getPartita(partitaId));
+        Partita partita = getPartita(partitaId);
+        System.out.println("PARTITA NUOVA DI FAI SCELTA 3: " + partita);
         if (partita != null) {
             Opzione opzione = storiaService.getOpzioneById(partita.getIdScenarioCorrente(), opzioneId);
             if (opzione == null) {
                 throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
             }
             //Aggiorna lo scenario corrente
+            System.out.println("FAI SCELTA 4");
             partita.faiScelta(opzione, inventarioController);
 
         } else {
@@ -93,16 +99,21 @@ public class PartitaService {
 
     // Metodo per CREARE una nuova partita
     public Partita creaNuovaPartita(int storiaId, String username) {
+        System.out.println("USERNAME DI PARTITA SERVICE 1: " + username);
         Storia storia = storiaService.getStoriaById(storiaId); // Supponendo che tu abbia un metodo per ottenere la storia
-        Inventario inventario = inventarioController.creaInventario(partiteAttive.size()+1); // Crea un nuovo inventario
+        int partitaId = partiteAttive.size()+1;
+        System.out.println("PARTITA ID DI PARTITA SERVICE 2: " + partitaId);
+        Inventario inventario = inventarioController.creaInventario(partitaId); // Crea un nuovo inventario -> QUI MI DA ERRORE
         int inventarioId = inventario.getId();
-        System.out.println("ID INVENTARIO CREATO: " + inventarioId);
-        Partita nuovaPartita = new Partita(partiteAttive.size()+1, storia, username, inventarioId, "In corso");
-
+        System.out.println("NUOVO INVENTARIO DI PARTITA SERVICE 2: " + inventarioId);
+        Partita nuovaPartita = new Partita(partitaId, storia, username, inventarioId, "In corso");
+        System.out.println("NUOVA PARTITA DI PARTITA SERVICE 3: " + nuovaPartita);
+        
         // Logica per salvare su MapDB usando MapDBService
         mapDBService.saveMatch(nuovaPartita); 
 
         partiteAttive.add(nuovaPartita); // Aggiungi la nuova partita alla lista delle partite attive
+
         return nuovaPartita;
     }
 
@@ -112,7 +123,4 @@ public class PartitaService {
                            .filter(partita -> partita.getUsername().equalsIgnoreCase(username)) // Ignora il case
                            .collect(Collectors.toList());
     }
-    
-    
-    
 }

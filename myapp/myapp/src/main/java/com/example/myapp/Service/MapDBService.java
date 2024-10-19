@@ -16,6 +16,7 @@ import org.mapdb.HTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.myapp.Model.Inventario;
 import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
@@ -32,7 +33,7 @@ public class MapDBService {
     private HTreeMap<Integer, Storia> storyMap;      
     private HTreeMap<String, String> userMap;         
     private HTreeMap<Integer, Scenario> scenarioMap;   
-    private HTreeMap<String, String> inventoryMap;    
+    private HTreeMap<Integer, Inventario> inventoryMap;    
     private HTreeMap<Integer, Opzione> optionMap;     
     private HTreeMap<Integer, Partita> matchMap;    
 
@@ -59,8 +60,8 @@ public class MapDBService {
 
         // Inizializzazione della mappa dell'inventario
         inventoryMap = db.hashMap("inventoryMap")
-                         .keySerializer(org.mapdb.Serializer.STRING)
-                         .valueSerializer(org.mapdb.Serializer.STRING)
+                         .keySerializer(org.mapdb.Serializer.INTEGER)
+                         .valueSerializer(org.mapdb.Serializer.JAVA)
                          .createOrOpen();
 
         // Inizializzazione della mappa delle opzioni
@@ -155,12 +156,29 @@ public class MapDBService {
         return matchMap.get(id);
     }
 
-    // Metodo per gestire l'inventario
-    public void putInventoryItem(String key, String value) {
+    // Metodo per salvare un inventario
+    public void saveInventory(Inventario inventario) {
+        if (inventario.getId() == 0) {
+            throw new IllegalArgumentException("L'inventario deve avere un ID valido.");
+        }
+        System.out.println("INVENTARIO SALVATO");
+        System.out.println("ID: " + inventario.getId() + " DI: " + inventario);
+        inventoryMap.put(inventario.getId(), inventario); //QUI MI DA ERRORE
+        System.out.println("INVENTARI MAP: " + inventoryMap);
+        db.commit();
+        System.out.println("DB COMMIT");
+    }
+
+    // Metodi per gestire l'inventario
+    public Inventario getInventoryById(int id) {
+        return inventoryMap.get(id);
+    }
+
+    public void putInventoryItem(Integer key, Inventario value) {
         inventoryMap.put(key, value);
     }
 
-    public String getInventoryItem(String key) {
+    public Inventario getInventoryItem(Integer key) {
         return inventoryMap.get(key);
     }
 
@@ -245,6 +263,10 @@ public class MapDBService {
         return new ArrayList<>(matchMap.values()); 
     }
 
+    public List<Inventario> getListAllInventari() { 
+        return new ArrayList<>(inventoryMap.values()); 
+    }
+
     public void deleteAllStories() {
         storyMap.clear();
         db.commit(); 
@@ -262,6 +284,11 @@ public class MapDBService {
 
     public void deleteAllPartite() {
         matchMap.clear();
+        db.commit(); 
+    }
+
+    public void deleteAllInventari() {
+        inventoryMap.clear();
         db.commit(); 
     }
 
