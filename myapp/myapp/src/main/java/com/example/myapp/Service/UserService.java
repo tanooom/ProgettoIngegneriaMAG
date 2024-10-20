@@ -33,6 +33,15 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+    public Utente getUserByEmail(String email) {
+        for (String username : userMap.keySet()) {
+            String userData = userMap.get(username);
+            String[] data = userData.split(";");
+                return new Utente(username, data[0], data[1], data[2], email); // username, password, nome, cognome, mail
+        }
+        return null;
+    }
+    
     // Metodo per registrare un utente
     public Utente register(Utente user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
