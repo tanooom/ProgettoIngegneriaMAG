@@ -38,7 +38,6 @@ public class MapDBController {
         return mapDBService.getScenarioById(id);
     }
 
-    // Endpoint per gestire le partite
     @PostMapping("/saveInventario")
     public String saveStoria(@RequestBody Inventario inventario) {
         mapDBService.saveInventory(inventario);
@@ -61,7 +60,6 @@ public class MapDBController {
         return mapDBService.getMatchById(id);
     }
 
-    //Endpoint per gestire l'inventario
     @PostMapping("/putInventoryItem")
     public String putInventoryItem(@RequestParam Integer key, @RequestParam Inventario value) {
         mapDBService.putInventoryItem(key, value);

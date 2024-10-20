@@ -101,5 +101,4 @@ public class StoriaService {
             .filter(storia -> storia.getUsername().equals(username))
             .collect(Collectors.toList());
     }
-    
 }

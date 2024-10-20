@@ -1,7 +1,5 @@
 package com.example.myapp.Controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,6 @@ import com.example.myapp.Service.UserService;
 
 @Controller
 public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -65,7 +61,6 @@ public class UserController {
             model.addAttribute("username", username);
             return "registrationSuccess"; 
         } catch (Exception e) {
-            logger.error("Si è verificato un errore durante la registrazione", e);
             model.addAttribute("errorMessage", "Si è verificato un errore durante la registrazione: " + e.getMessage());
             return "register";
         }

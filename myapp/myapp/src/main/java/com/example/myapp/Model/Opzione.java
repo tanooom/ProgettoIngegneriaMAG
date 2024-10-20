@@ -12,7 +12,8 @@ public class Opzione implements Serializable{
     private final String indovinello;
     private final String rispostaCorrettaIndovinello;
 
-    public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
+    public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, 
+            boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
         this.id = id;
         this.descrizione = descrizione;
         this.richiedeOggetto = richiedeOggetto;

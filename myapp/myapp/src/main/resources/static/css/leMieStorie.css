@@ -165,14 +165,19 @@ footer {
     padding-bottom: 10px; 
 }
 
-
 /* Adattamento per schermi piccoli */
 @media (max-width: 850px) {
     .form-container {
-        width: 90%; 
+        width: 90%;
+        padding: 0 10px;
     }
 
     header h1 {
-        margin-right: 0; 
+        margin-right: 0;
+        font-size: 1.2em;
+    }
+
+    main {
+        padding: 10px;
     }
 }

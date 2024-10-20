@@ -203,3 +203,52 @@ textarea {
     color: grey; 
     margin-top: 5px; 
 }
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 600px) {
+    header {
+        padding: 10px 10px; 
+    }
+
+    header h1 {
+        font-size: 1.2em; 
+        margin-right: 0; 
+    }
+
+    .form-container {
+        max-width: 95%; 
+        padding: 15px; 
+    }
+
+    body main {
+        padding: 10px; 
+    }
+
+    body input[type="text"],
+    body textarea,
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"] {
+        padding: 8px; 
+    }
+
+    body button,
+    #save-scenario-button,
+    .back-button {
+        width: 100%; 
+        margin: 10px 0; 
+    }
+
+    .option-group {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .option-group label {
+        margin-bottom: 5px; 
+    }
+
+    footer {
+        padding: 10px 0; 
+    }
+}

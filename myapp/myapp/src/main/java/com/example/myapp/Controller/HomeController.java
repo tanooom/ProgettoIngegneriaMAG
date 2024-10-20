@@ -18,7 +18,7 @@ import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Utente;
 import com.example.myapp.Service.UserService;
 import com.example.myapp.Service.MapDBService;
-import com.example.myapp.Service.PartitaService; // Assicurati di importare il tuo PartitaService
+import com.example.myapp.Service.PartitaService;
 
 @Controller
 public class HomeController {
@@ -27,7 +27,7 @@ public class HomeController {
     private UserService userService;
 
     @Autowired
-    private PartitaService partitaService; // Aggiungi questa linea per dichiarare partitaService
+    private PartitaService partitaService;
 
     @Autowired
     private MapDBService mapDBService;
@@ -82,26 +82,19 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
-        // Recupera tutte le partite dell'utente loggato
         List<Partita> partite = partitaService.getPartiteByUsername(username);
-
-        // Aggiungi la lista di partite al modello
         model.addAttribute("partite", partite);
-
-        // Aggiungi un flag per controllare se ci sono partite
         model.addAttribute("hasMatches", !partite.isEmpty());
 
         return "leMiePartite";
     }
 
-    
     @GetMapping("/getPartiteByUsername")
     @ResponseBody
     public List<Partita> getPartiteByUsername(@RequestParam String username) {
         return partitaService.getPartiteByUsername(username);
     }
     
-    // Nuovo endpoint per ottenere tutte le partite
     @GetMapping("/getAllPartite")
     @ResponseBody
     public List<Partita> getAllPartite() {

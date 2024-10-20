@@ -90,5 +90,4 @@ public class Storia implements Serializable{
     public List<Integer> getScenari() {
         return new ArrayList<>(idScenari);
     }
-    
 }

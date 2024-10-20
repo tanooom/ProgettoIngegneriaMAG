@@ -42,7 +42,6 @@ public class StoriaController {
         @RequestParam String titoloStoria,
         @RequestParam int idScenarioIniziale
     ) {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 

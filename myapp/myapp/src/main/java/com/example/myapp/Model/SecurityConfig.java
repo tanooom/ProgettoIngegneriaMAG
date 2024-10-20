@@ -24,10 +24,14 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/").permitAll()
-                .requestMatchers( "/deletePartita", "/getAllPartite","/getPartiteByUsername", "/updateScenarioDescription", "/getScenariByTitle","/deleteStoriaByTitle", "/export", "/deleteUser", 
-                "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions",
-                "/deleteAllPartite", "/deleteDatabase").permitAll()
+                .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/", "/export").permitAll()
+
+                //.requestMatchers( "/getAllPartite","/getPartiteByUsername", "/updateScenarioDescription", "/getScenariByTitle").permitAll()
+
+                //Servono per i comandi da terminale
+                .requestMatchers(/*"/deleteStoriaByTitle",*/ "/deleteUser", "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", 
+                "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions", "/deleteAllPartite", "/deleteDatabase" /* "/deletePartita"*/).permitAll()
+
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login

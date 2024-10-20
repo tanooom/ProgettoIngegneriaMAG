@@ -110,4 +110,21 @@ footer {
     header h1 {
         font-size: 1.5em;
     }
+
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"] {
+        padding: 8px;
+    }
+
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"],
+    form input[type="submit"] {
+        margin: 8px 0;
+    }
+
+    footer {
+        padding: 10px 0;
+    }
 }

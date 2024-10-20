@@ -118,8 +118,22 @@ footer{
 
 /* Adattamento per schermi piccoli */
 @media (max-width: 600px) {
-    .search-box {
-        flex-direction: column;  
-        gap: 5px;               
+    
+    .button,
+    .back-button {
+        width: 100%;
+        padding: 10px; 
+    }
+
+    header h1 {
+        font-size: 1.3em;
+    }
+
+    .container {
+        padding: 10px; 
+    }
+
+    .access-info {
+        font-size: 16px;
     }
 }

@@ -7,6 +7,9 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
 }
 
 /* Intestazione */
@@ -33,11 +36,14 @@ header h1 {
     align-items: center;
     flex-direction: row;
     gap: 10px;
+    flex-wrap: wrap;
+    flex-grow: 1;
 }
 
 /* Box per i pulsanti */
 .box {
-    flex: 1;
+    width: 220px;
+    height: 220px;
     background-color: #007bff;
     color: white;
     text-decoration: none;
@@ -68,6 +74,28 @@ header h1 {
     background-color: #025cbd;
 }
 
+
+/* Stile per il logout */
+.logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    margin-top: 20px;
+    margin-bottom: 40px; 
+}
+
+.logout a {
+    color: #007bff;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.logout a:hover {
+    color: #025cbd;
+    text-decoration: underline;
+}
+
 /* Footer */
 footer {
     background: #333;
@@ -81,31 +109,22 @@ footer {
 }
 
 /* Adattamento per schermi piccoli */
-@media (max-width: 700px) {
+@media (max-width: 945px) {
     .container {
-        flex-direction: row;
+        justify-content: center;
         gap: 20px;
-        align-items: center;
+        margin-bottom: 80px; 
     }
 
     .box {
-        width: 100%;
-        max-width: 300px;
-        padding: 15px;
+        width: 220px;
+        height: 220px;
     }
 }
 
 @media (max-width: 580px) {
-    .container {
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-        margin-bottom: 80px;
-    }
-
     .box {
-        width: 100%;
-        max-width: 300px;
-        padding: 15px;
+        width: 220px; 
+        height: 220px; 
     }
 }

@@ -111,12 +111,14 @@ form {
     color: red;
     padding: 10px; 
     text-align: left;
-    text-decoration: underline;
+    text-decoration: none;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 #delete-account-link:hover {
     color: rgb(225, 0, 0);
+    text-decoration: underline;
 }
 
 /* Pulsante di ritorno */
@@ -163,5 +165,21 @@ footer {
 
     form {
         max-width: 100%;  
+    }
+
+    header h1 {
+        font-size: 1.2em;
+    }
+
+    .back-button img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .profile-field {
+        margin-bottom: 5px;
+    }
+    .button-container {
+        gap: 5px;
     }
 }
