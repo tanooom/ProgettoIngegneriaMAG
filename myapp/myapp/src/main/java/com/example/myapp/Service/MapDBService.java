@@ -347,4 +347,23 @@ public class MapDBService {
             throw new IllegalArgumentException("Storia con titolo '" + title + "' non trovata.");
         }
     }
+
+    public List<Opzione> getOpzioniByScenario(int scenarioId) {
+        Scenario scenario = scenarioMap.get(scenarioId);
+        if (scenario == null) {
+            throw new IllegalArgumentException("Scenario con ID " + scenarioId + " non trovato.");
+        }
+        
+        List<Opzione> opzioni = new ArrayList<>();
+        for (Integer opzioneId : scenario.getOpzioni()) { 
+            Opzione opzione = optionMap.get(opzioneId);
+            if (opzione != null) {
+                opzioni.add(opzione);
+            } else {
+                throw new IllegalArgumentException("Opzione con ID " + opzioneId + " non trovata.");
+            }
+        }
+        return opzioni;
+    }
+    
 }

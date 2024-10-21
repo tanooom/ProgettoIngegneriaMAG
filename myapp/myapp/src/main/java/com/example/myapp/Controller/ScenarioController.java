@@ -29,7 +29,9 @@ public class ScenarioController {
         @RequestParam(required = false) List<Integer> idOpzioni,
         @RequestParam(defaultValue = "no") String rilasciaOggetto,
         @RequestParam String oggettoRilasciato,
-        @RequestParam(required = false) Integer idScenarioPrecedente
+        @RequestParam(required = false) Integer idScenarioPrecedente,
+        @RequestParam(required = false) Integer idOpzionePrecedente
+
     ) {
         int newId = mapDBService.getAllScenari().keySet().stream()
             .mapToInt(Integer::intValue)
@@ -74,6 +76,7 @@ public class ScenarioController {
             idOpzioni,
             oggettoRilasciato,
             idScenarioPrecedente,
+            idOpzionePrecedente,
             idExitScenari,            
             false, 
             false
@@ -90,6 +93,7 @@ public class ScenarioController {
             idOpzioni,
             oggettoRilasciato,
             idScenarioPrecedente,
+            idOpzionePrecedente,
             idExitScenari,
             scenarioIniziale,
             scenarioFinale

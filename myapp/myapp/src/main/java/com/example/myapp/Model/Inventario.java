@@ -3,7 +3,9 @@ package com.example.myapp.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventario {
+import java.io.Serializable;
+
+public class Inventario implements Serializable{
 
     private final int id;
     private final List<String> oggetti;

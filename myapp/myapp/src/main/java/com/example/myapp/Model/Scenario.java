@@ -13,18 +13,20 @@ public class Scenario implements Serializable{
     private final List<Integer> idOpzioni;
     private final String oggettoRaccoglibile;
     private final Integer idScenarioPrecedente;
+    private final Integer idOpzionePrecedente;
     private List<Integer> idExitScenari; 
     private final boolean scenarioIniziale;
     private final boolean scenarioFinale; 
 
     public Scenario(int id, String nome, String descrizione, List<Integer> idOpzioni, String oggettoRaccoglibile, 
-    Integer idScenarioPrecedente, List<Integer> idExitScenari, boolean scenarioIniziale, boolean scenarioFinale) {
+    Integer idScenarioPrecedente, Integer idOpzionePrecedente, List<Integer> idExitScenari, boolean scenarioIniziale, boolean scenarioFinale) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.idOpzioni = idOpzioni != null ? idOpzioni : new ArrayList<>();
         this.oggettoRaccoglibile = oggettoRaccoglibile;
         this.idScenarioPrecedente = idScenarioPrecedente;
+        this.idOpzionePrecedente = idOpzionePrecedente;
         this.idExitScenari = idExitScenari;
         this.scenarioIniziale = scenarioIniziale;
         this.scenarioFinale = scenarioFinale;
@@ -68,6 +70,10 @@ public class Scenario implements Serializable{
         return idScenarioPrecedente;
     }
 
+    public Integer getIdOpzionePrecedente() {
+        return idOpzionePrecedente;
+    }
+
     public List<Integer> getIdExitScenari() {
         return idExitScenari;
     }
@@ -93,6 +99,7 @@ public class Scenario implements Serializable{
                 ", idOpzioni=" + idOpzioni +
                 ", oggettoRaccoglibile=" + oggettoRaccoglibile +
                 ", idScenarioPrecedente=" + idScenarioPrecedente +
+                ", idOpzionePrecedente=" + idOpzionePrecedente +
                 ", ExitScenari=" + idExitScenari +
                 ", scenarioIniziale=" + scenarioIniziale +
                 ", scenarioFinale=" + scenarioFinale +

@@ -64,6 +64,15 @@
                         </th:block>
                     </select>
                 </div>
+                <div>
+                    <label for="opzioni-scenario-precedente">Opzione dello Scenario Precedente che porterà allo scenario che stai creando:</label>
+                    <select id="opzioni-scenario-precedente" name="idOpzionePrecedente">
+                        <option value="" disabled selected>Seleziona lo scenario precedente per visualizzare le opzioni</option>
+                        <th:block th:each="opzione : ${opzioni}">
+                            <option th:value="${opzione.id}" th:text="${opzione.descrizione}"></option>
+                        </th:block>
+                    </select>
+                </div>
                 <button type="submit" id="save-scenario-button">Salva Scenario</button>
             </form>
         </div>
@@ -115,6 +124,36 @@
                 alert('Si è verificato un errore: ' + error);
             });
         });
+
+        document.getElementById('scenario-precedente').addEventListener('change', function() {
+            const scenarioId = this.value;
+            
+            // Effettua una richiesta per ottenere le opzioni dello scenario selezionato
+            fetch(`/getOpzioniByScenario/${scenarioId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const opzioniSelect = document.getElementById('opzioni-scenario-precedente');
+                    opzioniSelect.innerHTML = ''; // Resetta le opzioni precedenti
+
+                    if (data.length > 0) {
+                        data.forEach(opzione => {
+                            const optionElement = document.createElement('option');
+                            optionElement.value = opzione.id;
+                            optionElement.textContent = opzione.descrizione;
+                            opzioniSelect.appendChild(optionElement);
+                        });
+                    } else {
+                        const noOptions = document.createElement('option');
+                        noOptions.value = '';
+                        noOptions.textContent = 'Nessuna opzione disponibile';
+                        opzioniSelect.appendChild(noOptions);
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore nel caricamento delle opzioni:', error);
+                });
+        });
+
     </script>
 </body>
 </html>
