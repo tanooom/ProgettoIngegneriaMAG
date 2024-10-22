@@ -137,6 +137,17 @@ public class MapDBController {
         }
     }
 
+    // Endpoint per eliminare tutti gli inventari
+    @DeleteMapping("/deleteAllInventari")
+    public String deleteAllInventari() {
+        try {
+            mapDBService.deleteAllInventari();
+            return "Tutti gli inventari sono stati rimossi con successo!";
+        } catch (Exception e) {
+            return "Errore durante la rimozione degli scenari: " + e.getMessage();
+        }
+    }
+
     // Endpoint per eliminare tutto il database
     @DeleteMapping("/deleteDatabase")
     public String deleteDatabase() {

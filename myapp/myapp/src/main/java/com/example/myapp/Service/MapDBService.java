@@ -243,6 +243,15 @@ public class MapDBService {
         }
     }
 
+    public void removeInventory(int id) {
+        if (inventoryMap.containsKey(id)) {
+            inventoryMap.remove(id);
+            db.commit();
+        } else {
+            throw new IllegalArgumentException("Inventario con ID " + id + " non trovato.");
+        }
+    }
+
     public Map<Integer, Opzione> getAllOptions() {
         return optionMap;
     }
@@ -284,6 +293,7 @@ public class MapDBService {
 
     public void deleteAllPartite() {
         matchMap.clear();
+        inventoryMap.clear();
         db.commit(); 
     }
 

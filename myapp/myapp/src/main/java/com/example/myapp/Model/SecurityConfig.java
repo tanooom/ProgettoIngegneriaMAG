@@ -31,7 +31,7 @@ public class SecurityConfig {
 
                 //Servono per i comandi da terminale
                 .requestMatchers( "/deleteUser", "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", 
-                "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions", "/deleteAllPartite", "/deleteDatabase").permitAll()
+                "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions", "/deleteAllPartite", "/deleteAllInventari", "/deleteDatabase").permitAll()
 
                 .anyRequest().authenticated()
             )

@@ -3,11 +3,13 @@ package com.example.myapp.Model;
 import java.io.Serializable;
 
 import com.example.myapp.Controller.InventarioController;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Partita implements Serializable {
+    
     private final int id; //autoincrement
     private final Storia storia; //me lo prende da storiaId
-    private final int idScenarioCorrente; //uguale 
+    private int idScenarioCorrente; //uguale 
     private final int inventarioId; //me lo crea dentro api/.../start
     private final String username; // prende l'username dell'utente che sta giocando
     private String stato; // Stato della partita (Non inziata, In corso o Terminata)
@@ -67,25 +69,20 @@ public class Partita implements Serializable {
         return stato;
     }
 
+    @JsonIgnore
     public void iniziaPartita(){
         this.stato = "In corso";
     }
 
+    @JsonIgnore
     public void terminaPartita() {
-        this.stato = "Terminata"; // Metodo per terminare la partita
-    }
-
-    public boolean isNonIniziata() {
-        return "Non iniziata".equals(this.stato);
+        this.stato = "Terminata"; 
     }
     
+    @JsonIgnore
     public boolean isInCorso() {
         return "In corso".equals(this.stato);
-    }
-    
-    public boolean isTerminata() {
-        return "Terminata".equals(this.stato);
-    }    
+    }   
 
     @Override
     public String toString() {
@@ -98,4 +95,9 @@ public class Partita implements Serializable {
                 ", Stato='" + stato + '\'' +
                 '}';
     }
+
+    public void setIdScenarioCorrente(int idScenarioCorrente) {
+        this.idScenarioCorrente = idScenarioCorrente;
+    }   
+    
 }

@@ -105,6 +105,7 @@ public class HomeController {
     public ResponseEntity<String> deleteMatch(@RequestParam int id) {
         try {
             mapDBService.removeMatch(id);
+            mapDBService.removeInventory(id);
             return ResponseEntity.ok("Partita eliminata con successo!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: " + e.getMessage());

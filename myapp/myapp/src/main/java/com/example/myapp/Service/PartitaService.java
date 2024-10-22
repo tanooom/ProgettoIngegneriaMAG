@@ -83,12 +83,42 @@ public class PartitaService {
         }
     }
 
-    //aggiorna su db quando clicco salva ed esci
-    public void salvaPartita(int partitaId, int scenarioCorreteId, Utente user) {
-        Partita partita = partiteAttive.get(partitaId);
+    public void salvaPartita(int partitaId, int scenarioCorrenteId, Utente user) {
+        // Recupera la partita attiva con l'ID fornito
+        Partita partita = partiteAttive.stream()
+                .filter(p -> p.getId() == partitaId && p.getUsername().equals(user.getUsername()))
+                .findFirst()
+                .orElse(null);
+    
         if (partita != null) {
-            //TODO: Logica per salvare la partita sul database o sistema di salvataggio
-            // Aggiorna lo stato della partita e richiamo salvaInventario
+            partita.setIdScenarioCorrente(scenarioCorrenteId);
+    
+            // Recupera lo scenario corrente
+            Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioCorrenteId);
+    
+            if (scenarioCorrente != null) {
+                
+                if (scenarioCorrente.getIdExitScenari().isEmpty()) {
+                    partita.terminaPartita();
+                }
+    
+                // Ottieni l'inventario associato alla partita
+                Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+    
+                // Crea o aggiorna un oggetto Inventario con il nuovo oggetto "chiave"
+                inventario.aggiungiOggetto("chiave");
+    
+                // Inserisci l'oggetto inventario aggiornato nel MapDB
+                mapDBService.putInventoryItem(inventario.getId(), inventario);
+    
+                mapDBService.saveMatch(partita);
+                mapDBService.saveInventory(inventario);
+    
+            } else {
+                throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioCorrenteId);
+            }
+        } else {
+            throw new RuntimeException("Partita non trovata per l'ID: " + partitaId);
         }
     }
 

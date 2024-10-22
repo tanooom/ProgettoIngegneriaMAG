@@ -43,7 +43,11 @@ public class Application {
 	PER RIMUOVERE TUTTE LE STORIE:
 		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllStories"
 
-	PER RIMUOVERE TUTTE LE PARTITE:
+	PER RIMUOVERE TUTTE LE PARTITE (RIMUOVERE ANCHE TUTTI GLI INVENTARI):
 		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllPartite"
+
+	PER RIMUOVERE TUTTI GLI INVENTARI:
+		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllInventari"
 	*/
+	
 }
