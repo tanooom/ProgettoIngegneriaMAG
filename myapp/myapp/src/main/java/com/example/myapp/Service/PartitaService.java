@@ -1,5 +1,6 @@
 package com.example.myapp.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +34,9 @@ public class PartitaService {
         this.mapDBService = mapDBService;
     }
 
+    //TODO: serve?
     public List<Storia> getStorieDisponibili() {
         // Recupera le storie disponibili tramite il controller
-        //TODO: va bene? serve?
         return storiaService.getStorieDisponibili(null, null, null, null);
     }
 
@@ -63,24 +64,45 @@ public class PartitaService {
                             .orElse(null); // Restituisce null se non trovata
     }
 
-    public void faiScelta(int partitaId, int scenarioCorrenteId, int opzioneId, Utente user, InventarioController inventarioController) {
-        System.out.println("FAI SCELTA 1");
-        System.out.println("PARTITA: " + partitaId + ", con SCENARIO: " + scenarioCorrenteId + ", con Opzione: " + opzioneId + ", con PARTITE ATTIVE: " + partiteAttive);
-        System.out.println("FAI SCELTA 2: "+ getPartita(partitaId));
+    public void eseguiScelta(int partitaId, int scenarioCorrenteId, int opzioneId, Utente user, InventarioController inventarioController) {
         Partita partita = getPartita(partitaId);
-        System.out.println("PARTITA NUOVA DI FAI SCELTA 3: " + partita);
         if (partita != null) {
+            // Recupera l'opzione scelta dall'utente
             Opzione opzione = storiaService.getOpzioneById(partita.getIdScenarioCorrente(), opzioneId);
             if (opzione == null) {
                 throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId);
             }
-            //Aggiorna lo scenario corrente
-            System.out.println("FAI SCELTA 4");
-            partita.faiScelta(opzione, inventarioController);
-
+    
+            // Esegue la logica associata alla scelta, incluse azioni su oggetti o indovinelli
+            if (partita.eseguiScelta(opzione, inventarioController)) {
+                // Aggiorna lo scenario corrente con il prossimo scenario
+                Scenario nuovoScenario = getProssimoScenario(opzione.getId());
+                if (nuovoScenario == null) {
+                    throw new RuntimeException("Nessuno scenario successivo trovato per l'opzione scelta.");
+                }
+                int nuovoScenarioId = nuovoScenario.getId();
+                partita.aggiornaScenarioCorrente(nuovoScenarioId);
+            } else {
+                // Gestisci il caso in cui l'utente non possa procedere (es: non ha l'oggetto necessario)
+                throw new RuntimeException("Impossibile fare la scelta, requisiti non soddisfatti.");
+            }
         } else {
             throw new RuntimeException("Partita non trovata per l'ID: " + partitaId);
         }
+    }    
+
+    public Scenario getProssimoScenario(int idOpzione) {
+        // Ottieni tutti gli scenari dal MapDBService
+        List<Scenario> tuttiGliScenari = new ArrayList<>(mapDBService.getAllScenari().values());
+
+        // Usa il metodo definito in Scenario per trovare il prossimo scenario
+        for (Scenario scenario : tuttiGliScenari) {
+            Scenario prossimoScenario = scenario.trovaProssimoScenario(tuttiGliScenari, idOpzione);
+            if (prossimoScenario != null) {
+                return prossimoScenario;
+            }
+        }
+        return null; // Se non c'è un prossimo scenario collegato all'opzione
     }
 
     public void salvaPartita(int partitaId, int scenarioCorrenteId, Utente user) {
@@ -92,7 +114,6 @@ public class PartitaService {
     
         if (partita != null) {
             partita.setIdScenarioCorrente(scenarioCorrenteId);
-    
             // Recupera lo scenario corrente
             Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioCorrenteId);
     
@@ -102,11 +123,12 @@ public class PartitaService {
                     partita.terminaPartita();
                 }
     
+                String oggetto = scenarioCorrente.getOggettoRaccoglibile();
                 // Ottieni l'inventario associato alla partita
                 Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
     
                 // Crea o aggiorna un oggetto Inventario con il nuovo oggetto "chiave"
-                inventario.aggiungiOggetto("chiave");
+                inventario.aggiungiOggetto(oggetto);
     
                 // Inserisci l'oggetto inventario aggiornato nel MapDB
                 mapDBService.putInventoryItem(inventario.getId(), inventario);
@@ -124,20 +146,18 @@ public class PartitaService {
 
     public boolean isUltimoScenario(int scenarioId) {
         Scenario scenario = mapDBController.getScenarioById(scenarioId);
-        return scenario.isScenarioFinale();
+        boolean isUltimoScenario = scenario.isScenarioFinale();
+        System.out.println("Partita service is ultimo scenario: " + isUltimoScenario);
+        return isUltimoScenario;
     }
 
     // Metodo per CREARE una nuova partita
     public Partita creaNuovaPartita(int storiaId, String username) {
-        System.out.println("USERNAME DI PARTITA SERVICE 1: " + username);
         Storia storia = storiaService.getStoriaById(storiaId); // Supponendo che tu abbia un metodo per ottenere la storia
         int partitaId = partiteAttive.size()+1;
-        System.out.println("PARTITA ID DI PARTITA SERVICE 2: " + partitaId);
-        Inventario inventario = inventarioController.creaInventario(partitaId); // Crea un nuovo inventario -> QUI MI DA ERRORE
+        Inventario inventario = inventarioController.creaInventario(partitaId); // Crea un nuovo inventario
         int inventarioId = inventario.getId();
-        System.out.println("NUOVO INVENTARIO DI PARTITA SERVICE 2: " + inventarioId);
         Partita nuovaPartita = new Partita(partitaId, storia, username, inventarioId, "In corso");
-        System.out.println("NUOVA PARTITA DI PARTITA SERVICE 3: " + nuovaPartita);
         
         // Logica per salvare su MapDB usando MapDBService
         mapDBService.saveMatch(nuovaPartita); 

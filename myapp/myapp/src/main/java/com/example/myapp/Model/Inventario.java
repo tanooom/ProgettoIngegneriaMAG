@@ -1,9 +1,8 @@
 package com.example.myapp.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.io.Serializable;
 
 public class Inventario implements Serializable{
 
@@ -28,7 +27,6 @@ public class Inventario implements Serializable{
 
     // Aggiunge un oggetto all'inventario
     public void aggiungiOggetto(String oggetto) {
-        //TODO: controllare, da salvare sul db
         if (!oggetti.contains(oggetto)) {
             oggetti.add(oggetto);
             System.out.println("Oggetto '" + oggetto + "' aggiunto all'inventario.");
@@ -39,7 +37,6 @@ public class Inventario implements Serializable{
 
     // Rimuove un oggetto dall'inventario -> DA IMPLEMENTARE???
     public boolean rimuoviOggetto(String oggetto) {
-        //TODO: controllare, da salvare sul db
         if (oggetti.contains(oggetto)) {
             oggetti.remove(oggetto);
             System.out.println("Oggetto '" + oggetto + "' rimosso dall'inventario.");

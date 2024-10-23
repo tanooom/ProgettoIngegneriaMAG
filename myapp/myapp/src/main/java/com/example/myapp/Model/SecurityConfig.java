@@ -26,9 +26,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/login", "/register", "/user/register", "/error", "/css/**", "/js/**", "/images/", "/export").permitAll()
 
-                //.requestMatchers( "/getAllPartite","/getPartiteByUsername", "/updateScenarioDescription", "/getScenariByTitle"/*"/deleteStoriaByTitle",*/
-                /* "/deletePartita").permitAll() */
-
                 //Servono per i comandi da terminale
                 .requestMatchers( "/deleteUser", "/deleteAllUsers", "/deleteOption", "/deleteScenario", "/deleteStoria", 
                 "/deleteAllStories", "/deleteAllScenari", "/deleteAllOptions", "/deleteAllPartite", "/deleteAllInventari", "/deleteDatabase").permitAll()

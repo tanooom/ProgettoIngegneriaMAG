@@ -161,12 +161,8 @@ public class MapDBService {
         if (inventario.getId() == 0) {
             throw new IllegalArgumentException("L'inventario deve avere un ID valido.");
         }
-        System.out.println("INVENTARIO SALVATO");
-        System.out.println("ID: " + inventario.getId() + " DI: " + inventario);
-        inventoryMap.put(inventario.getId(), inventario); //QUI MI DA ERRORE
-        System.out.println("INVENTARI MAP: " + inventoryMap);
+        inventoryMap.put(inventario.getId(), inventario); 
         db.commit();
-        System.out.println("DB COMMIT");
     }
 
     // Metodi per gestire l'inventario

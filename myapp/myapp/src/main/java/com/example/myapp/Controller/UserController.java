@@ -53,6 +53,7 @@ public class UserController {
             model.addAttribute("errorMessage", "L'username è già in uso. Scegli un altro username.");
             return "register";
         }
+        // Controlla se l'email esiste già nel database
         if (userService.getUserByEmail(mail) != null) {
             model.addAttribute("errorMessage", "L'email è già in uso. Scegli un'altra email.");
             return "register";

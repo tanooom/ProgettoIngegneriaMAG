@@ -32,14 +32,11 @@ public class InventarioController {
     }
 
     public Inventario creaInventario(int partitaId) {
-        System.out.println("CREA INVENTARIO DI INVENTARIO CONTROLLER 1");
         Inventario nuovoInventario = new Inventario(nextId++, partitaId);
-        System.out.println("INVENTARIO DI INVENTARIO CONTROLLER 2: " + nuovoInventario);
         aggiungiInventario(nuovoInventario);
                
         // Logica per salvare su MapDB usando MapDBService
-        mapDBService.saveInventory(nuovoInventario); //QUI MI DA ERRORE
-        System.out.println("INVENTARIO SALVATO SU INVENTARIO CONTROLLER");
+        mapDBService.saveInventory(nuovoInventario);
         return nuovoInventario;
     }
 }

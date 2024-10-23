@@ -25,18 +25,22 @@ public class Partita implements Serializable {
     }
 
     // Metodo per fare una scelta
-    public boolean faiScelta(Opzione opzione, InventarioController inventarioController) {
+    public boolean eseguiScelta(Opzione opzione, InventarioController inventarioController) {
         // Usa l'ID per recuperare l'inventario
-        System.out.println("E QUI?");
         Inventario inventario = inventarioController.getInventarioById(this.inventarioId);
-        
+    
+        // Verifica se l'opzione richiede un oggetto e se l'utente lo possiede
         if (opzione.isRichiedeOggetto() && !inventario.contieneOggetto(opzione.getOggettoRichiesto())) {
-            return false; // L'utente non ha l'oggetto richiesto
+            return false; // L'utente non ha l'oggetto richiesto, non può procedere
         }
-        //this.idScenarioCorrente = opzione.getIdScenarioSuccessivo();
-        //Opzione non ha piu idScenarioSuccessivo
+        // Se tutti i requisiti sono soddisfatti, ritorna true
         return true;
     }
+
+    //TODO: è lo stesso di setIdScenarioCorrente?
+    public void aggiornaScenarioCorrente(int nuovoScenarioId) { 
+        this.idScenarioCorrente = nuovoScenarioId;
+    }      
 
     // Metodo per raccogliere un oggetto
     public void raccogliOggetto(String oggetto, InventarioController inventarioManager) {

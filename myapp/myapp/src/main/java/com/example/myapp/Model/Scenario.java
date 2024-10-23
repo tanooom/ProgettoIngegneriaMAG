@@ -42,6 +42,15 @@ public class Scenario implements Serializable{
         }
     }
 
+    public Scenario trovaProssimoScenario(List<Scenario> tuttiGliScenari, int idOpzione) {
+        for (Scenario scenario : tuttiGliScenari) {
+            if (scenario.getIdOpzionePrecedente() != null && scenario.getIdOpzionePrecedente() == idOpzione) {
+                return scenario;
+            }
+        }
+        return null; // Se non trova lo scenario successivo, restituisce null.
+    }
+
     public int getId() {
         return id;
     }
