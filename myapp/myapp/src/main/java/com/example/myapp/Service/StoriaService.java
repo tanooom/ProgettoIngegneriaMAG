@@ -67,7 +67,7 @@ public class StoriaService {
         if (scenario == null) {
             throw new RuntimeException("Scenario non trovato per l'ID: " + scenarioId);
         }
-        if (!scenario.getOpzioni().contains(opzioneId)) {
+        if (!scenario.getIdOpzioni().contains(opzioneId)) {
             throw new RuntimeException("Opzione non trovata per l'ID: " + opzioneId + " nello scenario ID: " + scenarioId);
         }
         Opzione opzioneCompleta = mapDBService.getOptionById(opzioneId);

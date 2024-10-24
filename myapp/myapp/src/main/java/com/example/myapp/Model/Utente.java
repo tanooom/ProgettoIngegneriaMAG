@@ -1,30 +1,9 @@
 package com.example.myapp.Model;
 
-import java.util.Collection;
-import java.util.Collections;
+public class Utente {
 
-import javax.persistence.Column;
-import javax.persistence.Table;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity
-@Table(name = "utenti")
-public class Utente implements UserDetails {
-
-    @Id
-    private Long id; 
-
-    @Column(name = "username", nullable = false, unique = true)
     private String username;
-
-    @Column(name = "password", nullable = false)
     private String password;
-    
     private String nome;
     private String cognome;
     private String mail;
@@ -39,11 +18,6 @@ public class Utente implements UserDetails {
         this.mail = mail;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
@@ -52,7 +26,6 @@ public class Utente implements UserDetails {
         this.username = username;
     }
     
-    @Override
     public String getPassword() {
         return password;
     }
@@ -83,10 +56,5 @@ public class Utente implements UserDetails {
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
     }
 }

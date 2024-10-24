@@ -67,7 +67,7 @@ public class Scenario implements Serializable{
         this.descrizione = descrizione;
     }
 
-    public List<Integer> getOpzioni() {
+    public List<Integer> getIdOpzioni() {
         return idOpzioni;
     }
     

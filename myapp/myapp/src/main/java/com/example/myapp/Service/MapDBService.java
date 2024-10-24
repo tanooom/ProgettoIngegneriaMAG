@@ -21,6 +21,7 @@ import com.example.myapp.Model.Opzione;
 import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
+import com.example.myapp.Model.Utente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -187,15 +188,22 @@ public class MapDBService {
         return userMap.get(key);
     }
 
-    // Metodo per esportare i dati in un file JSON
     public void exportToJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         Map<String, Object> allData = new HashMap<>();
         allData.put("storyMap", new HashMap<>(storyMap));
-        allData.put("userMap", new HashMap<>(userMap));
+        
+        // Conversione della userMap
+        Map<String, Utente> userMapExport = new HashMap<>();
+        for (Map.Entry<String, String> entry : userMap.entrySet()) {
+            String[] userData = entry.getValue().split(";");
+            Utente utente = new Utente(entry.getKey(), userData[0], userData[1], userData[2], userData[3]);
+            userMapExport.put(entry.getKey(), utente);
+        }
+        
+        allData.put("userMap", userMapExport);
         allData.put("scenarioMap", new HashMap<>(scenarioMap));
         allData.put("inventoryMap", new HashMap<>(inventoryMap));
         allData.put("optionMap", new HashMap<>(optionMap));
@@ -361,7 +369,7 @@ public class MapDBService {
         }
         
         List<Opzione> opzioni = new ArrayList<>();
-        for (Integer opzioneId : scenario.getOpzioni()) { 
+        for (Integer opzioneId : scenario.getIdOpzioni()) { 
             Opzione opzione = optionMap.get(opzioneId);
             if (opzione != null) {
                 opzioni.add(opzione);

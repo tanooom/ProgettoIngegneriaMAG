@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         this.db = db; 
     }
 
-    // Metodo per ottenere tutte le informazioni dell'utente
+    // Verifica se l'username dell'utente è già presente nel database
     public Utente getUser(String username) {
         String userData = userMap.get(username);
         if (userData != null) {
@@ -33,14 +33,21 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+    // Verifica se l'email dell'utente è già presente nel database
     public Utente getUserByEmail(String email) {
         for (String username : userMap.keySet()) {
             String userData = userMap.get(username);
-            String[] data = userData.split(";");
-                return new Utente(username, data[0], data[1], data[2], email); // username, password, nome, cognome, mail
+            if (userData != null) {
+                String[] data = userData.split(";");
+                if (data[3].equals(email)) {
+                    return new Utente(username, data[0], data[1], data[2], email); // username, password, nome, cognome, mail
+                }
+            }
         }
         return null;
     }
+    
+    
     
     // Metodo per registrare un utente
     public Utente register(Utente user) {

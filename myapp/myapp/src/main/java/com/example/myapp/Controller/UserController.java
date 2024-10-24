@@ -45,7 +45,7 @@ public class UserController {
             @RequestParam String password,
             @RequestParam String nome,
             @RequestParam String cognome,
-            @RequestParam String mail,
+            @RequestParam String email,
             Model model) {
                 
         // Controlla se l'username esiste già nel database
@@ -54,12 +54,12 @@ public class UserController {
             return "register";
         }
         // Controlla se l'email esiste già nel database
-        if (userService.getUserByEmail(mail) != null) {
+        if (userService.getUserByEmail(email) != null) {
             model.addAttribute("errorMessage", "L'email è già in uso. Scegli un'altra email.");
             return "register";
         }
         try {
-            Utente user = new Utente(username, password, nome, cognome, mail);
+            Utente user = new Utente(username, password, nome, cognome, email);
             userService.register(user);
             model.addAttribute("nome", nome);
             model.addAttribute("cognome", cognome);
