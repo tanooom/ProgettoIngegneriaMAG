@@ -47,8 +47,6 @@ public class UserService implements UserDetailsService {
         return null;
     }
     
-    
-    
     // Metodo per registrare un utente
     public Utente register(Utente user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

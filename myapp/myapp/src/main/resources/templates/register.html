@@ -20,7 +20,9 @@
             <input type="text" name="cognome" placeholder="Cognome" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="password" placeholder="Password" required 
+                pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                title="La password deve contenere almeno 8 caratteri, inclusa una lettera maiuscola e una minuscola">
             <input type="submit" value="Registrati">
         </form>
     </div>

@@ -41,15 +41,12 @@ public class ScenarioController {
         if ("no".equals(rilasciaOggetto) || (oggettoRilasciato == null || oggettoRilasciato.trim().isEmpty())) {
             oggettoRilasciato = null;
         }
-
         if (idOpzioni == null) {
             idOpzioni = Collections.emptyList();
         }
-
         if (idScenarioPrecedente != null && idScenarioPrecedente == 0) {
             idScenarioPrecedente = null;
         }
-
         List<Integer> idExitScenari = Collections.emptyList();
 
         // aggiorna l'idExitScenari dello scenario precedente

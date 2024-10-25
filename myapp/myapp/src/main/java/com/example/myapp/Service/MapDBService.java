@@ -166,7 +166,7 @@ public class MapDBService {
         db.commit();
     }
 
-    // Metodi per gestire l'inventario
+    // Metodi per ottenere un inventario per ID
     public Inventario getInventoryById(int id) {
         return inventoryMap.get(id);
     }
@@ -179,7 +179,6 @@ public class MapDBService {
         return inventoryMap.get(key);
     }
 
-    // Metodo per gestire gli utenti
     public void putUser(String key, String value) {
         userMap.put(key, value);
     }
