@@ -2,88 +2,206 @@
   "storyMap" : {
     "1" : {
       "id" : 1,
-      "titolo" : "La grande avventura!",
+      "titolo" : "LA STRADA PERDUTA",
       "username" : "Smartis",
-      "lunghezza" : 2,
+      "lunghezza" : 6,
       "idScenarioIniziale" : 1,
-      "idScenari" : [ 1, 2 ],
-      "scenari" : [ 1, 2 ]
+      "idScenari" : [ 1, 2, 3, 4, 5, 6 ]
     },
     "2" : {
       "id" : 2,
-      "titolo" : "Prima storia",
+      "titolo" : "LA PORTA MISTERIOSA",
       "username" : "Smartis",
-      "lunghezza" : 2,
-      "idScenarioIniziale" : 3,
-      "idScenari" : [ 3, 4 ],
-      "scenari" : [ 3, 4 ]
-    }
-  },
-  "matchMap" : {
-    "1" : {
-      "id" : 1,
-      "storia" : {
-        "id" : 1,
-        "titolo" : "La grande avventura!",
-        "username" : "Smartis",
-        "lunghezza" : 2,
-        "idScenarioIniziale" : 1,
-        "idScenari" : [ 1, 2 ],
-        "scenari" : [ 1, 2 ]
-      },
-      "idScenarioCorrente" : 1,
-      "inventarioId" : 1,
+      "lunghezza" : 3,
+      "idScenarioIniziale" : 7,
+      "idScenari" : [ 7, 8, 9 ]
+    },
+    "3" : {
+      "id" : 3,
+      "titolo" : "L'ISOLA DEL TESORO",
+      "username" : "Smartis",
+      "lunghezza" : 5,
+      "idScenarioIniziale" : 10,
+      "idScenari" : [ 10, 11, 13, 12, 14 ]
+    },
+    "4" : {
+      "id" : 4,
+      "titolo" : "LA CHIAVE RITROVATA",
       "username" : "Andre",
-      "stato" : "In corso",
-      "terminata" : false,
-      "nonIniziata" : false,
-      "inCorso" : true
+      "lunghezza" : 3,
+      "idScenarioIniziale" : 7,
+      "idScenari" : [ 7, 8, 9 ]
     }
   },
+  "matchMap" : { },
   "scenarioMap" : {
     "1" : {
       "id" : 1,
       "nome" : "Scenario A",
-      "descrizione" : "C'era una volta",
-      "oggettoRaccoglibile" : "Chiave",
+      "descrizione" : "Il crepuscolo sta scendendo sul bosco mentre ti ritrovi da solo tra alberi altissimi. \r\nSei entrato nel bosco senza pensarci, perso nei tuoi pensieri, ma adesso la strada di casa sembra lontana.\r\nIl sentiero davanti a te si biforca. \r\nDue strade, entrambe sconosciute. \r\nUna porta a casa, l’altra ti condurrà sempre più in profondità nel cuore del bosco.",
+      "idOpzioni" : [ 2, 1 ],
+      "oggettoRaccoglibile" : null,
       "idScenarioPrecedente" : null,
-      "idExitScenari" : [ 2 ],
+      "idOpzionePrecedente" : null,
+      "idExitScenari" : [ 2, 3 ],
       "scenarioIniziale" : true,
-      "scenarioFinale" : false,
-      "opzioni" : [ 2, 1 ]
+      "scenarioFinale" : true
     },
     "2" : {
       "id" : 2,
       "nome" : "Scenario B",
-      "descrizione" : "E poi il nostro eroe...",
-      "oggettoRaccoglibile" : "Chiave",
+      "descrizione" : "I sentieri che prima ti sembravano chiari ora appaiono indistinguibili, e l'oscurità crescente rende difficile orientarsi. \r\nOgni direzione sembra uguale, e un senso di smarrimento si fa strada dentro di te.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : null,
       "idScenarioPrecedente" : 1,
+      "idOpzionePrecedente" : 1,
       "idExitScenari" : [ ],
       "scenarioIniziale" : false,
-      "scenarioFinale" : true,
-      "opzioni" : [ 3, 4 ]
+      "scenarioFinale" : true
     },
     "3" : {
       "id" : 3,
       "nome" : "Scenario C",
-      "descrizione" : "Scenario di prova",
+      "descrizione" : "Ti imbatti in un grande albero caduto che blocca completamente il passaggio. \r\nL'unico modo per andare avanti è decidere: potresti strisciare sotto i rami più bassi o provare a saltare il tronco robusto.",
+      "idOpzioni" : [ 3, 4 ],
       "oggettoRaccoglibile" : "Mappa",
-      "idScenarioPrecedente" : null,
-      "idExitScenari" : [ 4 ],
-      "scenarioIniziale" : true,
-      "scenarioFinale" : false,
-      "opzioni" : [ 2, 1 ]
+      "idScenarioPrecedente" : 1,
+      "idOpzionePrecedente" : 2,
+      "idExitScenari" : [ 4, 5 ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
     },
     "4" : {
       "id" : 4,
       "nome" : "Scenario D",
-      "descrizione" : "Scenario di prova",
-      "oggettoRaccoglibile" : "Chiave",
+      "descrizione" : "Il silenzio del bosco è rotto da un fruscio alle tue spalle. \r\nTi giri di scatto, ma vedi solo un’ombra sfuggente che sembra osservarti tra gli alberi. \r\nIl cuore batte più veloce mentre la figura indistinta si avvicina senza fare rumore.",
+      "idOpzioni" : [ 5 ],
+      "oggettoRaccoglibile" : null,
       "idScenarioPrecedente" : 3,
+      "idOpzionePrecedente" : 3,
+      "idExitScenari" : [ 6 ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "5" : {
+      "id" : 5,
+      "nome" : "Scenario E",
+      "descrizione" : "Finalmente, tra i rami intrecciati e le ombre del bosco, scorgi una luce familiare. La strada sterrata si apre davanti a te, e in lontananza intravedi il tetto della tua casa che si staglia contro il cielo. Un senso di sollievo ti pervade: il viaggio è finito, e la sicurezza di casa è ormai a pochi passi.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 3,
+      "idOpzionePrecedente" : 4,
       "idExitScenari" : [ ],
       "scenarioIniziale" : false,
-      "scenarioFinale" : true,
-      "opzioni" : [ 3, 4 ]
+      "scenarioFinale" : true
+    },
+    "6" : {
+      "id" : 6,
+      "nome" : "Scenario F",
+      "descrizione" : "Noti una piccola costruzione di legno nascosta tra gli alberi: un rifugio.\r\nLe pareti sono coperte di muschio, e una porta socchiusa lascia intravedere un riparo sicuro dal freddo della notte. \r\nÈ il posto perfetto per riposare e recuperare le forze prima di riprendere il cammino.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 4,
+      "idOpzionePrecedente" : 5,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "7" : {
+      "id" : 7,
+      "nome" : "Scenario 1",
+      "descrizione" : "Durante una passeggiata nel parco di fianco a casa, noti una chiave luccicante tra le foglie. \r\nCurioso, la raccogli e scopri una porta misteriosa coperta di muschio.",
+      "idOpzioni" : [ 6, 7 ],
+      "oggettoRaccoglibile" : "Chiave",
+      "idScenarioPrecedente" : null,
+      "idOpzionePrecedente" : null,
+      "idExitScenari" : [ 8, 9 ],
+      "scenarioIniziale" : true,
+      "scenarioFinale" : true
+    },
+    "8" : {
+      "id" : 8,
+      "nome" : "Scenario 2",
+      "descrizione" : "All'interno trovi un libro di magia antica, rilegato in pelle, le cui pagine emanano un profumo di mistero e avventure.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : "Libro antico",
+      "idScenarioPrecedente" : 7,
+      "idOpzionePrecedente" : 6,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "9" : {
+      "id" : 9,
+      "nome" : "Scenario 3",
+      "descrizione" : "Torni a casa, ma il pensiero di ciò che avresti potuto scoprire ti tormenta.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 7,
+      "idOpzionePrecedente" : 7,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "10" : {
+      "id" : 10,
+      "nome" : "Scenario I",
+      "descrizione" : "Ti risvegli su un'isola deserta, con solo una bussola in mano. \r\nLe onde si infrangono bruscamente sulla spiaggia, il sole splende alto nel cielo.\r\nAccanto a te, una palma offre un po’ d’ombra e riparo dal caldo. Cosa fai?",
+      "idOpzioni" : [ 8, 9 ],
+      "oggettoRaccoglibile" : "Bussola",
+      "idScenarioPrecedente" : null,
+      "idOpzionePrecedente" : null,
+      "idExitScenari" : [ 11, 13 ],
+      "scenarioIniziale" : true,
+      "scenarioFinale" : true
+    },
+    "11" : {
+      "id" : 11,
+      "nome" : "Scenario II",
+      "descrizione" : "Decidi di arrampicarti su una palma. Dall'alto, il panorama ti sorprende: tra le fronde scorgi una vecchia pala abbandonata.",
+      "idOpzioni" : [ 10 ],
+      "oggettoRaccoglibile" : "Pala",
+      "idScenarioPrecedente" : 10,
+      "idOpzionePrecedente" : 8,
+      "idExitScenari" : [ 12 ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "12" : {
+      "id" : 12,
+      "nome" : "Scenario IV",
+      "descrizione" : "Dopo pochi istanti di lavoro, la pala colpisce qualcosa di solido. \r\nCon un ultimo sforzo, scopri un antico scrigno pieno di oro e gemme scintillanti.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : "Tesoro",
+      "idScenarioPrecedente" : 11,
+      "idOpzionePrecedente" : 10,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "13" : {
+      "id" : 13,
+      "nome" : "Scenario III",
+      "descrizione" : "Decidi di andare verso nord. Dopo una lunga camminata, trovi una civiltà nascosta tra gli alberi. \r\nLa gente ti guarda con curiosità, ma ti catturano poco dopo.\r\nIl grande saggio si presenta davanti a te, e ti pone un'indovinello.",
+      "idOpzioni" : [ 11 ],
+      "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 10,
+      "idOpzionePrecedente" : 9,
+      "idExitScenari" : [ 14 ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
+    },
+    "14" : {
+      "id" : 14,
+      "nome" : "Scenario V",
+      "descrizione" : "Pronunci la risposta giusta. Il grande saggio annuisce. \r\nImmediatamente, le corde che ti legano si allentano e sei finalmente libero. \r\nGli abitanti della civiltà, prima scettici, ora ti guardano con ammirazione. \r\nUn nuovo capitolo della tua avventura sta per iniziare.",
+      "idOpzioni" : [ ],
+      "oggettoRaccoglibile" : null,
+      "idScenarioPrecedente" : 13,
+      "idOpzionePrecedente" : 11,
+      "idExitScenari" : [ ],
+      "scenarioIniziale" : false,
+      "scenarioFinale" : true
     }
   },
   "inventoryMap" : { },
@@ -93,27 +211,27 @@
       "descrizione" : "Gira a destra",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
-      "richiedeIndovinello" : true,
-      "indovinello" : "Come va?",
-      "rispostaCorrettaIndovinello" : "Bene"
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
     },
     "2" : {
       "id" : 2,
       "descrizione" : "Gira a sinistra",
-      "richiedeOggetto" : true,
-      "oggettoRichiesto" : "Chiave",
-      "richiedeIndovinello" : false,
-      "indovinello" : null,
-      "rispostaCorrettaIndovinello" : null
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : true,
+      "indovinello" : "Nel bosco io vivo, invisibile e leggero. Nessuno mi vede, ma tutti mi sentono. Mi muovo tra gli alberi, porto frescura o tempesta. Chi sono?",
+      "rispostaCorrettaIndovinello" : "Vento"
     },
     "3" : {
       "id" : 3,
       "descrizione" : "Salta",
       "richiedeOggetto" : false,
       "oggettoRichiesto" : null,
-      "richiedeIndovinello" : true,
-      "indovinello" : "Di che colore è il cavallo bianco di Napoleone?",
-      "rispostaCorrettaIndovinello" : "Bianco"
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
     },
     "4" : {
       "id" : 4,
@@ -123,10 +241,92 @@
       "richiedeIndovinello" : false,
       "indovinello" : null,
       "rispostaCorrettaIndovinello" : null
+    },
+    "5" : {
+      "id" : 5,
+      "descrizione" : "Corri veloce",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : true,
+      "indovinello" : "Non sono vivo, ma cresco. Non ho polmoni, ma respiro. Non ho bocca, eppure posso divorar tutto. Chi sono?",
+      "rispostaCorrettaIndovinello" : "Fuoco"
+    },
+    "6" : {
+      "id" : 6,
+      "descrizione" : "Entri",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Chiave",
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "7" : {
+      "id" : 7,
+      "descrizione" : "Non entri",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "8" : {
+      "id" : 8,
+      "descrizione" : "Arrampicati",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "9" : {
+      "id" : 9,
+      "descrizione" : "Trova il nord",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Bussola",
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "10" : {
+      "id" : 10,
+      "descrizione" : "Scava",
+      "richiedeOggetto" : true,
+      "oggettoRichiesto" : "Pala",
+      "richiedeIndovinello" : false,
+      "indovinello" : null,
+      "rispostaCorrettaIndovinello" : null
+    },
+    "11" : {
+      "id" : 11,
+      "descrizione" : "Indovinello",
+      "richiedeOggetto" : false,
+      "oggettoRichiesto" : null,
+      "richiedeIndovinello" : true,
+      "indovinello" : "Senza di me, non puoi vedere, nel buio più profondo ti posso accompagnare. Cosa sono?",
+      "rispostaCorrettaIndovinello" : "Luce"
     }
   },
   "userMap" : {
-    "Andre" : "$2a$10$T/xd8EA6qGCfoH/eLln6gu5vAlRjEmShKFroBuhDIe.5uNByDiq7C;Andrea;Trotta;andre.trotta@gmail.com",
-    "Smartis" : "$2a$10$PxAJZRzQJ9EZ69eBRtBRL.FNeMWqk7CdDpWRU5NvcJXeVwLE8Ip6K;Martina;Samorè;marti.samore@gmail.com"
+    "Smartis" : {
+      "username" : "Smartis",
+      "password" : "$2a$10$GDmfOqe/w1JmEIS.3h0MEOHW4gLpTuMXVGAAB2fbRigImVhQvUf7W",
+      "nome" : "Martina",
+      "cognome" : "Samorè",
+      "mail" : "marti.samore@gmail.com"
+    },
+    "Tano" : {
+      "username" : "Tano",
+      "password" : "$2a$10$lJH2E/I4FwuGVOh77IMgN.mX4eZSrMnEdgiRMxOZPsFOnJXFMdyl6",
+      "nome" : "Gaetano",
+      "cognome" : "Muscarello",
+      "mail" : "tano.muscarello@gmail.com"
+    },
+    "Andre" : {
+      "username" : "Andre",
+      "password" : "$2a$10$azpIw0KIro9LD5aePsotbOIXbywnwzx/tgVJX2JdN9VsQRDw8ihHC",
+      "nome" : "Andrea",
+      "cognome" : "Trotta",
+      "mail" : "andre.trotta@gmail.com"
+    }
   }
 }
