@@ -76,14 +76,12 @@
                             <div class="scenario">
                                 <h3>${scenario.nome}</h3>
                                 <p><strong>Descrizione:</strong> <span id="descrizione-${scenario.id}">${scenario.descrizione}</span></p>
-                                <button onclick="modificaDescrizione(${scenario.id})">Modifica descrizione</button>
+                                <button class="modifica-descrizione" onclick="modificaDescrizione(${scenario.id})">Modifica descrizione</button>
                                 <div id="modifica-descrizione-${scenario.id}" style="display:none;">
                                     <input type="text" id="nuova-descrizione-${scenario.id}" value="${scenario.descrizione}">
-                                    <button onclick="salvaDescrizione(${scenario.id}, '${titoloStoria}')">Salva</button>
+                                    <button class="salva-descrizione" onclick="salvaDescrizione(${scenario.id}, '${titoloStoria}')">Salva</button>
                                 </div>
                                 <p><strong>Oggetto raccoglibile:</strong> ${scenario.oggettoRaccoglibile || 'Nessun oggetto'}</p>
-                                <!--<p><strong>ID Opzioni:</strong> ${(scenario.idOpzioni && scenario.idOpzioni.length > 0) ? scenario.idOpzioni.join(', ') : 'Nessuna opzione'}</p>-->
-                                <!--<p><strong>ID Scenario Precedente:</strong> ${scenario.idScenarioPrecedente || 'Nessuno'}</p>-->
                                 <p><strong>Scenario Iniziale:</strong> ${scenario.scenarioIniziale ? 'Sì' : 'No'}</p>
                                 <p><strong>Scenario Finale:</strong> ${scenario.scenarioFinale ? 'Sì' : 'No'}</p>
                             </div>

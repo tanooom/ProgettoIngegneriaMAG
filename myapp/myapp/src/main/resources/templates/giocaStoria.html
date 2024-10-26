@@ -40,7 +40,6 @@
 
         // Funzione per caricare lo scenario e visualizzare le opzioni
         function caricaScenario() {
-            console.log("CARICA SCENARIO: " + scenarioCorrenteId);
             const url = `/api/gioca/${storiaId}/${partitaId}/${scenarioCorrenteId}/start`;
             fetch(url)
                 .then(response => {
@@ -55,39 +54,24 @@
                         document.getElementById('titoloScenario').innerText = data.scenarioCorrente.nome;
                         document.getElementById('descrizioneScenario').innerText = data.scenarioCorrente.descrizione;
 
-                        console.log("Partita id: " + partitaId);
-                        getOpzioni(data.scenarioCorrente.opzioni);
-                        getInventario(data.inventario);
+                        getOpzioni(data.scenarioCorrente.idOpzioni);
 
                         // Logica per gli oggetti rilasciati
                         if (data.oggettoRilasciato && data.oggettoRilasciato.length > 0) {
                             releaseObjects(data.oggettoRilasciato);
-                            console.log("release object: " + data.oggettoRilasciato);
+                            getInventario(data.inventario);
                         }
-
-                        //TODO: DA TOGLIERE -> Se la partita è conclusa, mostra "The End"
-                        /*if (data.partitaConclusa) {
-                            //opzioniDiv.innerHTML = '<p>The End</p>';
-                            document.querySelectorAll('button').forEach(button => button.disabled = true); // Disabilita pulsanti
-                            console.log("esci");
-                            //window.location.href = 'visualizzaStoria'; // Reindirizza alla pagina di visualizzazione della storia
-                        }*/
                         if(data.isUltimoScenario){
-                            console.log("ULTIMO SCENARIO? " + data.isUltimoScenario);
                             const opzioniDiv = document.getElementById('opzioni');
                             opzioniDiv.innerHTML = '';
-                            console.log("THE END");
-                            //document.querySelectorAll('button').forEach(button => button.disabled = true); // Disabilita pulsanti
                             
-                            //Aggiungi il pulsante "The End"
+                            // Pulsante "The End"
                             const endButton = document.createElement('button');
                             endButton.innerText = 'The End';
-                            endButton.onclick = () => salvaEdEsci();  // Chiama la funzione per salvare ed uscire
+                            endButton.classList.add('end-button');
+                            endButton.onclick = () => salvaEdEsci();
                             opzioniDiv.appendChild(endButton);
                         }
-
-                    } else {
-                        console.log("Nessuna opzione disponibile");
                     }
                 })
                 .catch(error => {
@@ -98,9 +82,10 @@
 
         function getOpzioni(opzioniIds) {
             const opzioniDiv = document.getElementById('opzioni');
+            opzioniDiv.innerHTML = '';
             if (opzioniIds.length === 0) {
                 opzioniDiv.innerHTML = '<p>Nessuna opzione disponibile.</p>';
-                return; // Esce dalla funzione se non ci sono opzioni
+                return;
             } 
             const opzioniPromises = opzioniIds.map(opzioneId => {
                 return fetch(`/api/gioca/${partitaId}/${scenarioCorrenteId}/${opzioneId}`)
@@ -113,53 +98,66 @@
             });
 
             Promise.all(opzioniPromises)
-                .then(opzioni => {
-                    opzioni.forEach(opzione => {
-                        const button = document.createElement('button');
-                        button.innerText = opzione.descrizione;
-                        button.onclick = () => faiScelta(opzione);
-                        opzioniDiv.appendChild(button);
-                    });
-                })
-                .catch(error => {
-                    console.error('Si è verificato un errore nel recupero delle opzioni:', error);
-                    opzioniDiv.innerHTML = '<p>Si è verificato un errore nel recupero delle opzioni.</p>'; // Messaggio di errore
+            .then(opzioni => {
+                opzioni.forEach(opzione => {
+                    const button = document.createElement('button');
+                    button.innerText = opzione.descrizione;
+                    button.classList.add('opzione-button');
+                    button.onclick = () => faiScelta(opzione);
+                    opzioniDiv.appendChild(button);
                 });
-        }
-
-        function getInventario(inventario) {
-            const inventarioDiv = document.getElementById('inventario');
-            inventarioDiv.innerHTML = inventario.length ? '' : 'Inventario vuoto'; // Mostra messaggio se vuoto
-
-            inventario.forEach(oggetto => {
-                const item = document.createElement('p');
-                item.innerText = oggetto;
-                inventarioDiv.appendChild(item);
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore nel recupero delle opzioni:', error);
+                opzioniDiv.innerHTML = '<p>Si è verificato un errore nel recupero delle opzioni.</p>';
             });
         }
 
         // Funzione per aggiungere gli oggetti rilasciati all'inventario
         function releaseObjects(oggettoRilasciato) {
-            console.log("Oggetto rilasciato: " + oggettoRilasciato);
             const inventarioDiv = document.getElementById('inventario');
             if (!inventarioDiv.innerHTML.includes('Inventario vuoto')) {
-                inventarioDiv.innerHTML = ''; // Pulisce il messaggio di inventario vuoto
+                inventarioDiv.innerHTML = '';
             }
 
             const item = document.createElement('p');
             item.innerText = oggettoRilasciato;
             inventarioDiv.appendChild(item);
             alert(`Hai trovato un nuovo oggetto: ${oggettoRilasciato}`);
-            console.log(`Hai trovato un nuovo oggetto: ${oggettoRilasciato}`);
 
-            /*TODO: Qui non dovrebbe servire il foreach perchè per ogni scenario ci può essere un solo oggetto
-            oggetti.forEach(oggetto => {
+            fetch(`/api/gioca/${partitaId}/aggiungiOggetto/${encodeURIComponent(oggettoRilasciato)}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nell\'aggiunta dell\'oggetto all\'inventario');
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Errore durante l\'aggiunta dell\'oggetto all\'inventario:', error);
+            });
+        }
+
+        function getInventario(inventario) {
+            const inventarioDiv = document.getElementById('inventario');
+            inventarioDiv.innerHTML = inventario.length ? '' : 'Inventario vuoto';
+
+            if (!inventario || inventario.length === 0) {
+                inventarioDiv.innerHTML = 'Inventario vuoto';
+                return; 
+            } else {
+                inventarioDiv.innerHTML = '';
+            }
+
+            inventario.forEach(oggetto => {
                 const item = document.createElement('p');
                 item.innerText = oggetto;
                 inventarioDiv.appendChild(item);
-                alert(Hai trovato un nuovo oggetto: ${oggetto});
-                console.log(Hai trovato un nuovo oggetto: ${oggetto});
-            });*/
+            });
         }
 
         function faiScelta(opzione) {
@@ -198,26 +196,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                
                 scenarioCorrenteId = data.nuovoScenarioId;
-                console.log("Scenario aggiornato: " + scenarioCorrenteId);
-                //console.log("Scenario finale: " + data.isUltimoScenario);
-                caricaScenario(); //Ricarica lo scenario aggiornato
-
-                /* Se la partita è conclusa, mostra "The End"
-                if(data.isUltimoScenario){
-                    const opzioniDiv = document.getElementById('opzioni');
-                    opzioniDiv.innerHTML = '';
-                    
-                    /* Aggiungi il pulsante "The End"
-                    const endButton = document.createElement('button');
-                    endButton.innerText = 'The End';
-                    endButton.onclick = () => salvaEdEsci();  // Chiama la funzione per salvare ed uscire
-                    opzioniDiv.appendChild(endButton);
-                    //alert("La partita è conclusa! The End.");
-                    //Disabilita i pulsanti precedenti
-                    //document.querySelectorAll('button').forEach(button => button.disabled = true);
-                }*/
+                caricaScenario();
             })
             .catch(error => {
                 console.error('Errore durante l\'esecuzione della scelta:', error);
@@ -225,13 +205,7 @@
             });
         }
 
-        //TODO: Serve?
-        function theEnd(){
-            console.log("The end!");
-        }
-
         function salvaEdEsci() {
-            console.log("scenario corrente su salva: " + scenarioCorrenteId);
             fetch(`/api/gioca/${partitaId}/${scenarioCorrenteId}/salva`, {
                 method: 'POST'
             }).then(() => window.location.href = 'visualizzaStoria');

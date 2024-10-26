@@ -12,6 +12,7 @@ public class Opzione implements Serializable{
     private final String indovinello;
     private final String rispostaCorrettaIndovinello;
 
+    // Costruttore
     public Opzione(int id, String descrizione, boolean richiedeOggetto, String oggettoRichiesto, 
             boolean richiedeIndovinello, String indovinello, String rispostaCorrettaIndovinello) {
         this.id = id;
@@ -23,6 +24,7 @@ public class Opzione implements Serializable{
         this.rispostaCorrettaIndovinello = rispostaCorrettaIndovinello;
     }
 
+    // Getter
     public String getDescrizione() {
         return descrizione;
     }
@@ -39,15 +41,15 @@ public class Opzione implements Serializable{
         return id;
     }
 
-    public boolean isRichiedeIndovinello() {
-        return richiedeIndovinello;
-    }
-
     public String getIndovinello() {
         return indovinello;
     }
 
     public String getRispostaCorrettaIndovinello() {
         return rispostaCorrettaIndovinello;
+    }
+    
+    public boolean isRichiedeIndovinello() {
+        return richiedeIndovinello;
     }
 }

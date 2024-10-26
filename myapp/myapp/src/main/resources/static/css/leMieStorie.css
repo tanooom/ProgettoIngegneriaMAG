@@ -118,6 +118,44 @@ main {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+/* Pulsanti di modifica e salvataggio */
+.modifica-descrizione {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.salva-descrizione {
+    height: 30px;
+    padding: 0 20px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    border-radius: 4px;
+    cursor: pointer;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.modifica-descrizione:hover, .salva-descrizione:hover {
+    background-color: #025cbd;
+}
+
+.scenario input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
 /* Footer */
 footer {
     background: #333;

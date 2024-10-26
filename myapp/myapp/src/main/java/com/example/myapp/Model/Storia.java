@@ -16,6 +16,7 @@ public class Storia implements Serializable{
     private int idScenarioIniziale;
     private final List<Integer> idScenari;
 
+    // Costruttore
     public Storia(int id, String titolo, String username, int lunghezza, 
     int idScenarioIniziale, List<Integer> idScenari) {
         this.id = id;
@@ -30,12 +31,9 @@ public class Storia implements Serializable{
         this.idScenari.add(scenarioId);
     }
 
+    // Getter
     public int getId() {
         return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public List<Integer> getIdScenari() {
@@ -54,14 +52,6 @@ public class Storia implements Serializable{
         return titolo;
     }
 
-     public void setIdScenarioIniziale(int idScenario) {
-        if (idScenari.contains(idScenario)) {
-            this.idScenarioIniziale = idScenario;
-        } else {
-            throw new RuntimeException("Scenario non trovato nella lista.");
-        }
-    }
-
     public int getIdScenarioIniziale() {
         return this.idScenarioIniziale;
     }
@@ -76,21 +66,23 @@ public class Storia implements Serializable{
 
     public int getOpzioneId(int opzioneId) {
         return opzioneId;
-    }    
-
-    @Override
-    public String toString() {
-        return "Storia{" +
-                "id=" + id +
-                ", titolo='" + titolo + '\'' +
-                ", username='" + username + '\'' +
-                ", lunghezza=" + lunghezza +
-                ", idScenari=" + idScenari.toString() +
-                '}';
     }
 
     @JsonIgnore
     public List<Integer> getScenari() {
         return new ArrayList<>(idScenari);
+    }
+    
+    // Setter
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setIdScenarioIniziale(int idScenario) {
+        if (idScenari.contains(idScenario)) {
+            this.idScenarioIniziale = idScenario;
+        } else {
+            throw new RuntimeException("Scenario non trovato nella lista.");
+        }
     }
 }

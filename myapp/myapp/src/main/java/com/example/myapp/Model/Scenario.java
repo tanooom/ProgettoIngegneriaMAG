@@ -18,6 +18,7 @@ public class Scenario implements Serializable{
     private final boolean scenarioIniziale;
     private final boolean scenarioFinale; 
 
+    // Costruttore
     public Scenario(int id, String nome, String descrizione, List<Integer> idOpzioni, String oggettoRaccoglibile, 
     Integer idScenarioPrecedente, Integer idOpzionePrecedente, List<Integer> idExitScenari, boolean scenarioIniziale, boolean scenarioFinale) {
         this.id = id;
@@ -48,9 +49,10 @@ public class Scenario implements Serializable{
                 return scenario;
             }
         }
-        return null; // Se non trova lo scenario successivo, restituisce null.
+        return null;
     }
 
+    // Getter
     public int getId() {
         return id;
     }
@@ -61,10 +63,6 @@ public class Scenario implements Serializable{
 
     public String getDescrizione() {
         return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
     }
 
     public List<Integer> getIdOpzioni() {
@@ -87,6 +85,15 @@ public class Scenario implements Serializable{
         return idExitScenari;
     }
 
+    public boolean getScenarioFinale() {
+        return scenarioFinale;
+    }
+
+    // Setter
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+    
     public void setIdExitScenari(List<Integer> idExitScenari) {
         this.idExitScenari = idExitScenari;
     }
@@ -98,20 +105,4 @@ public class Scenario implements Serializable{
     public boolean isScenarioFinale() {
         return this.idExitScenari.isEmpty();
     }
-
-    @Override
-    public String toString() {
-        return "Scenario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                ", idOpzioni=" + idOpzioni +
-                ", oggettoRaccoglibile=" + oggettoRaccoglibile +
-                ", idScenarioPrecedente=" + idScenarioPrecedente +
-                ", idOpzionePrecedente=" + idOpzionePrecedente +
-                ", ExitScenari=" + idExitScenari +
-                ", scenarioIniziale=" + scenarioIniziale +
-                ", scenarioFinale=" + scenarioFinale +
-            '}';
-    };
 }

@@ -1,5 +1,6 @@
 package com.example.myapp.Controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.example.myapp.Model.Partita;
 import com.example.myapp.Model.Scenario;
 import com.example.myapp.Model.Storia;
 import com.example.myapp.Model.Utente;
+import com.example.myapp.Service.MapDBService;
 import com.example.myapp.Service.PartitaService;
 import com.example.myapp.Service.StoriaService;
 import com.example.myapp.Service.UserService;
@@ -39,16 +41,20 @@ public class PartitaController {
     private final UserService userService;
 
     @Autowired
+    private final MapDBService mapDBService;
+
+    @Autowired
     private final MapDBController mapDBController;
 
     @Autowired
     private final InventarioController inventarioController;
 
     // Costruttore
-    public PartitaController(PartitaService partitaService, StoriaService storiaService, UserService userService, MapDBController mapDBController, InventarioController inventarioController) {
+    public PartitaController(PartitaService partitaService, StoriaService storiaService, UserService userService, MapDBService mapDBService, MapDBController mapDBController, InventarioController inventarioController) {
         this.partitaService = partitaService;
         this.storiaService = storiaService;
         this.userService = userService;
+        this.mapDBService = mapDBService;
         this.mapDBController = mapDBController;
         this.inventarioController = inventarioController;
     }
@@ -58,6 +64,17 @@ public class PartitaController {
         return partitaService.getStorieDisponibili();
     }
 
+    // Implementa la funzione giocaStoria() di visualizzaStoria
+    @PostMapping("/creaPartita/{storiaId}")
+    public ResponseEntity<Partita> creaPartita(@PathVariable int storiaId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        
+        Partita nuovaPartita = partitaService.creaNuovaPartita(storiaId, username);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuovaPartita);
+    }
+
     // Implementa la funzione caricaScenario() di giocaStoria
     @GetMapping("/gioca/{storiaId}/{partitaId}/{scenarioCorrenteId}/start")
     public Map<String, Object> giocaStoria(@PathVariable int storiaId, @PathVariable int partitaId, @PathVariable Integer scenarioCorrenteId) {
@@ -65,38 +82,27 @@ public class PartitaController {
         String username = auth.getName();
         Utente user = userService.getUser(username);
         
-        // Carica la partita esistente o ne crea una nuova
-        Partita partita = partitaService.caricaPartita(storiaId, user); //Creo l'oggetto partita
-        
-        //TODO: non dovrebbe servire!
-        if (partita == null) {
+        Partita partita = partitaService.caricaPartita(partitaId, user); 
+
+        if (partita == null) { 
             partita = partitaService.creaNuovaPartita(storiaId, username);
         }
-        
-        // Recupera l'ID dello scenario corrente
         if (scenarioCorrenteId == null) {
             scenarioCorrenteId = partita.getIdScenarioCorrente();
         }
-       
-        // Ottiene lo scenario corrente
         Scenario scenarioCorrente = mapDBController.getScenarioById(scenarioCorrenteId);
         if (scenarioCorrente == null) {
             throw new RuntimeException("Scenario non trovato per ID: " + scenarioCorrenteId);
         }
 
-        // Ottiene l'oggetto rilasciato dallo scenario
         String oggettoRilasciato = scenarioCorrente.getOggettoRaccoglibile();
-
-        // Recupera l'inventario della partita
         Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
 
-        // Aggiunge l'oggetto all'inventario
         if (oggettoRilasciato != null && !oggettoRilasciato.isEmpty()) {
             inventario.aggiungiOggetto(oggettoRilasciato);
         }
 
         boolean isUltimoScenario = partitaService.isUltimoScenario(scenarioCorrente.getId());
-        System.out.println("Is ultimo scenario? " + isUltimoScenario);
 
         Map<String, Object> response = new HashMap<>();
         response.put("titolo", partita.getStoria().getTitolo());
@@ -105,6 +111,27 @@ public class PartitaController {
         response.put("oggettoRilasciato", oggettoRilasciato);
         response.put("isUltimoScenario", isUltimoScenario);
         return response;
+    }
+
+    // Implementa la funzione releaseObject() di giocaStoria
+    @PostMapping("/gioca/{partitaId}/aggiungiOggetto/{oggetto}")
+    public ResponseEntity<Map<String, String>> aggiungiOggettoAlInventario(@PathVariable int partitaId, @PathVariable String oggetto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+        
+        Partita partita = partitaService.caricaPartita(partitaId, user);
+        Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+        
+        if (inventario != null) {
+            inventario.aggiungiOggetto(oggetto);
+            mapDBService.putInventoryItem(inventario.getId(), inventario);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Oggetto aggiunto all'inventario");
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", "Inventario non trovato"));
+        }
     }
 
     // Implementa la funzione getOpzione() di giocaStoria
@@ -119,9 +146,28 @@ public class PartitaController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (Exception e) {
-            System.out.println("Errore durante il recupero dell'opzione: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    // Implementa la funzione faiScelta() di giocaStoria
+    @GetMapping("/gioca/{partitaId}/{scenarioCorrenteId}/controllaOggetto/{oggettoRichiesto}")
+    public Map<String, Boolean> controllaOggetto(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable String oggettoRichiesto) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Utente user = userService.getUser(username);
+    
+        Partita partita = partitaService.caricaPartita(partitaId, user);
+        if (partita == null) {
+            throw new IllegalArgumentException("Partita non trovata per l'utente: " + user.getUsername() + " e partitaId: " + partitaId);
+        }
+    
+        Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
+        boolean possiedeOggetto = inventario.contieneOggetto(oggettoRichiesto);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("possiedeOggetto", possiedeOggetto);
+        return response;
     }
 
     // Implementa la funzione eseguiScelta() di giocaStoria
@@ -133,47 +179,25 @@ public class PartitaController {
             String username = auth.getName();
             Utente user = userService.getUser(username);
 
-            // Aggiorna lo scenario corrente passando a quello dell'opzione
             partitaService.eseguiScelta(partitaId, scenarioCorrenteId, opzioneId, user, inventarioController);
 
-            // Carica il nuovo scenario corrente
             Partita partita = partitaService.getPartita(partitaId);
             Scenario nuovoScenario = mapDBController.getScenarioById(partita.getIdScenarioCorrente());
-
-            // Ritorna il nuovo scenario aggiornato
-            response.put("nuovoScenarioId", nuovoScenario.getId());
+            int nuovoScenarioId = nuovoScenario.getId();
+            
+            response.put("nuovoScenarioId", nuovoScenarioId);
 
             boolean isUltimoScenario = partitaService.isUltimoScenario(nuovoScenario.getId());
-            System.out.println("Is ultimo scenario? " + isUltimoScenario);
             response.put("isUltimoScenario", isUltimoScenario);
             
-            if (isUltimoScenario) { // Se è l'ultimo scenario, termina la partita
+            if (isUltimoScenario) { 
                 partitaService.terminaPartita(partitaId);
                 response.put("finePartita", true);
             }
-
-            /*boolean isUltimoScenario = partitaService.isUltimoScenario(scenarioCorrenteId);
-            if (isUltimoScenario) { // Se è l'ultimo scenario, termina la partita
-                partitaService.terminaPartita(partitaId);
-                //response.put("partitaConclusa", true);
-                //System.out.println("Termina partita!");
-            } else { // Aggiorna lo scenario corrente passando a quello dell'opzione
-                partitaService.eseguiScelta(partitaId, scenarioCorrenteId, opzioneId, user, inventarioController);
-
-                // Carica il nuovo scenario corrente
-                Partita partita = partitaService.getPartita(partitaId);
-                Scenario nuovoScenario = mapDBController.getScenarioById(partita.getIdScenarioCorrente());
-
-                // Ritorna il nuovo scenario aggiornato
-                response.put("nuovoScenarioId", nuovoScenario.getId());
-                //response.put("partitaConclusa", false);
-                System.out.println("Aggiorna nuovo scenario");
-            } */
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("Errore nel processo della scelta: " + e.getMessage());
             response.put("errore", "Errore durante il processo della scelta: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // Ritorna la mappa
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
@@ -185,54 +209,5 @@ public class PartitaController {
         Utente user = userService.getUser(username);
         
         partitaService.salvaPartita(partitaId, scenarioCorrenteId, user);
-    }
-
-
-    //TODO: Serve questo metodo?
-    @GetMapping("/gioca/{partitaId}/scenario")
-    public Map<String, Object> caricaScenario(@PathVariable int storiaId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Utente user = userService.getUser(username);
-        Partita partita = partitaService.caricaPartita(storiaId, user);
-        
-        Map<String, Object> response = new HashMap<>();
-        response.put("titolo", partita.getStoria().getTitolo());
-        response.put("scenarioCorrente", partita.getIdScenarioCorrente());
-        response.put("inventario", partita.getInventarioId());
-        return response;
-    }
-
-    //Controlla che l'oggetto richiesto sia nell'inventario
-    @GetMapping("/gioca/{partitaId}/{scenarioCorrenteId}/controllaOggetto/{oggettoRichiesto}")
-    public Map<String, Boolean> controllaOggetto(@PathVariable int partitaId, @PathVariable int scenarioCorrenteId, @PathVariable String oggettoRichiesto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Utente user = userService.getUser(username);
-    
-        // Carica la partita dell'utente
-        Partita partita = partitaService.caricaPartita(partitaId, user);
-    
-        // Ottieni l'inventario associato alla partita
-        Inventario inventario = inventarioController.getInventarioById(partita.getInventarioId());
-        // Controlla se l'inventario contiene l'oggetto richiesto
-        boolean possiedeOggetto = inventario.contieneOggetto(oggettoRichiesto);
-
-        // Risposta con il risultato
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("possiedeOggetto", possiedeOggetto);
-        return response;
-    }
-
-    @PostMapping("/creaPartita/{storiaId}")
-    public ResponseEntity<Partita> creaPartita(@PathVariable int storiaId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        
-        // Creiamo una nuova partita
-        Partita nuovaPartita = partitaService.creaNuovaPartita(storiaId, username);
-        
-        // Ritorna la nuova partita creata
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuovaPartita);
     }
 }

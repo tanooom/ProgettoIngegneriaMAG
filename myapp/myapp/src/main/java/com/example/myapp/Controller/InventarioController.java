@@ -24,18 +24,17 @@ public class InventarioController {
 
     public void aggiungiInventario(Inventario inventario) {
         inventari.put(inventario.getId(), inventario);
-        System.out.println(inventari);
     }
 
     public Inventario getInventarioById(int id) {
         return inventari.get(id);
     }
 
+    // Logica per creare un inventario
     public Inventario creaInventario(int partitaId) {
         Inventario nuovoInventario = new Inventario(nextId++, partitaId);
         aggiungiInventario(nuovoInventario);
                
-        // Logica per salvare su MapDB usando MapDBService
         mapDBService.saveInventory(nuovoInventario);
         return nuovoInventario;
     }

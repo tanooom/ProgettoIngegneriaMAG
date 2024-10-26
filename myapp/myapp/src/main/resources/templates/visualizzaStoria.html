@@ -37,7 +37,7 @@
 
     <script>
         let storie = [];
-        let usernames = []; // Array per memorizzare gli username
+        let usernames = [];
 
         // Fetch delle storie
         fetch('/api/storie')
@@ -79,7 +79,7 @@
         function populateUsernameFilter(usernames) {
             if (!Array.isArray(usernames)) {
                 console.error('usernames non è un array:', usernames);
-                return; // Previene ulteriori esecuzioni se non è un array
+                return;
             }
             const filterUsername = document.getElementById('filterUsername');
             usernames.forEach(username => {
@@ -93,7 +93,7 @@
         // Funzione per visualizzare le storie
         function displayStorie(storieDaVisualizzare) {
             const container = document.getElementById('storieContainer');
-            container.innerHTML = ''; // Svuota il container
+            container.innerHTML = '';
 
             if (storieDaVisualizzare.length === 0) {
                 container.innerHTML = '<p class="no-storie-message">Nessuna storia trovata.</p>';
@@ -105,9 +105,8 @@
                 storiaDiv.className = 'storia-box';
                 let descrizioneScenarioIniziale;
 
-                // Aggiungi la logica per ottenere la descrizione dello scenario iniziale
                 if (storia.idScenarioIniziale) {
-                    fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione') // Assicurati di avere l'endpoint corretto
+                    fetch('/api/storie/'+storia.id+'/scenario-iniziale/descrizione')
                     .then(response => {
                             if (!response.ok) {
                                 throw new Error('Errore nel recupero dello scenario iniziale');
@@ -133,9 +132,8 @@
                                     ` : ''}
                                 </div>
                             </div>
-                            
                         `;
-                        container.appendChild(storiaDiv); // Append l'elemento dopo aver recuperato la descrizione
+                        container.appendChild(storiaDiv);
                     })
                     .catch(error => {
                         console.error('Errore durante il recupero della descrizione dello scenario iniziale:', error);
@@ -163,7 +161,6 @@
             const username = document.getElementById('filterUsername').value;
             const lunghezza = document.getElementById('filterLunghezza').value;
 
-            // Costruisci la query string con i filtri
             let query =`/api/storieFiltrate?`;
             if (searchTerm) query += `searchTerm=${encodeURIComponent(searchTerm)}&`;
             if (username) query += `username=${encodeURIComponent(username)}&`;
@@ -173,7 +170,7 @@
             } else if (lunghezza === "5-10") {
                 query += `lunghezza=range5-10&`;
             } else if (lunghezza === "10+") {
-                query += `lunghezza=range10+&`;  // Questo invia un parametro per il range 10+
+                query += `lunghezza=range10+&`; 
             }
 
             // Fetch delle storie con i filtri applicati
@@ -189,17 +186,16 @@
                         displayStorie(data);
                     } else {
                         console.error("Errore: I dati ricevuti non sono un array.", data);
-                        displayStorie([]); // Mostra un messaggio che non ci sono storie
+                        displayStorie([]);
                     }
                 })
                 .catch(error => {
                     console.error('Errore durante il recupero delle storie filtrate:', error);
-                    displayStorie([]); // Mostra un messaggio che non ci sono storie
+                    displayStorie([]);
                 });
         }
        
         function giocaStoria(storiaId, idScenarioIniziale) {
-            // Chiamata al backend per creare una nuova partita
             fetch(`/api/creaPartita/${storiaId}`, {
                 method: 'POST',
                 headers: {
@@ -210,10 +206,10 @@
                 if (!response.ok) {
                     throw new Error('Errore durante la creazione della partita');
                 }
-                return response.json();  // Otteniamo la risposta con la partita creata
+                return response.json();
             })
             .then(data => {
-                const partitaId = data.id;  // Prendi l'ID della nuova partita
+                const partitaId = data.id;
                 window.location.href = `/giocaStoria?storiaId=${storiaId}&partitaId=${partitaId}&scenarioCorrenteId=${idScenarioIniziale}`;
             })
             .catch(error => {
@@ -232,7 +228,6 @@
                     method: 'DELETE'
                 }).then(() => {
                     alert('Partita eliminata con successo');
-                    // Ricarica le storie dopo l'eliminazione
                     fetch('/api/storie')
                         .then(response => response.json())
                         .then(data => {

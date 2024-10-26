@@ -11,11 +11,6 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
-	//TODO: alla fine sistema tutti i @media dei css
-	//TODO: alla fine togli tutti i console log e i system.out.println() di debug
-	//TODO: alla fine controlla i metodi/funzioni che non sono mai stati utilizzati ed eliminali
-	//TODO: sistema i commenti
 
 	/*
 	PER AGGIORGNARE IL JSON DEL DATABASE: 
@@ -49,5 +44,4 @@ public class Application {
 	PER RIMUOVERE TUTTI GLI INVENTARI:
 		Invoke-RestMethod -Method Delete -Uri "http://localhost:8080/deleteAllInventari"
 	*/
-	
 }

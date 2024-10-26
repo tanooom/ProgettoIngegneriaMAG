@@ -99,8 +99,7 @@ public class StoriaController {
     @GetMapping("/api/storieFiltrate")
     public ResponseEntity<List<Storia>> getStorieFiltrate(  @RequestParam(required = false) String searchTerm,
                                                             @RequestParam(required = false) String username,
-                                                            @RequestParam(required = false) String lunghezza) { 
-                                                            //@RequestParam(required = false) String stato) {
+                                                            @RequestParam(required = false) String lunghezza) {
     
         List<Storia> storie = storiaService.getAllStorie();
         List<Storia> storieResult = new ArrayList<>();
@@ -109,28 +108,20 @@ public class StoriaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(storie);
         }
     
-        // Normalizzazione dei parametri di input
         if (searchTerm != null) searchTerm = searchTerm.trim().toLowerCase();
         if (username != null) username = username.trim().toLowerCase();
-        //if (stato != null) stato = stato.trim().toLowerCase();
     
-        // Verifica delle storie in base ai filtri
         for (Storia storia : storie) {
-            boolean matches = true;  // Flag per tenere traccia dei filtri soddisfatti
+            boolean matches = true; 
     
-            // Filtro per searchTerm (titolo)
             if (searchTerm != null && !storia.getTitolo().trim().toLowerCase().contains(searchTerm)) {
                 matches = false;
             }
-    
-            // Filtro per username
             if (username != null && !storia.getUsername().trim().toLowerCase().equals(username)) {
                 matches = false;
             }
-    
-            // Filtro per lunghezza (range 0-5, 5-10, 10+)
             if (lunghezza != null) {
-                int numScenari = storia.getLunghezza();  // Assumo che lunghezza sia il numero di scenari
+                int numScenari = storia.getLunghezza();
                 switch (lunghezza) {
                     case "range0-5" -> {
                         if (numScenari < 0 || numScenari > 5) { matches = false; }
@@ -144,18 +135,10 @@ public class StoriaController {
                     default -> matches = false;
                 }
             }
-    
-            /*// Filtro per stato
-            if (stato != null && !storia.getStato().trim().toLowerCase().equals(stato)) {
-                matches = false;
-            }*/
-    
-            // Se la storia soddisfa tutti i filtri, viene aggiunta alla lista dei risultati
             if (matches) {
                 storieResult.add(storia);
             }
         }
-    
         return ResponseEntity.ok(storieResult);
     }
 
@@ -163,7 +146,7 @@ public class StoriaController {
     public String visualizzaStoria(@PathVariable int id, Model model) {
         Storia storia = storiaService.getStoriaById(id);
         model.addAttribute("storia", storia);
-        return "visualizzaStoria"; // Nome del template HTML senza estensione
+        return "visualizzaStoria";
     }
 
     @GetMapping("/api/usernames")
@@ -209,13 +192,10 @@ public class StoriaController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
-            // Recupera tutte le storie dell'utente loggato
+        // Recupera tutte le storie dell'utente loggato
         List<Storia> storie = storiaService.getStorieByUsername(username);
 
-        // Aggiungi la lista di storie al modello
         model.addAttribute("storie", storie);
-
-        // Aggiungi un flag per controllare se ci sono storie
         model.addAttribute("hasStories", !storie.isEmpty());
 
         return "leMieStorie";
@@ -223,14 +203,11 @@ public class StoriaController {
 
     @DeleteMapping("/deleteStoriaByTitle")
     public ResponseEntity<String> deleteStoria(@RequestParam String title) {
-        // Logica per trovare e rimuovere la storia in base al titolo
-        // Assicurati di implementare la logica per cercare la storia nel tuo servizio
         try {
             mapDBService.removeStoriaByTitle(title);
             return ResponseEntity.ok("Storia eliminata con successo.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build(); // 404 se la storia non è trovata
+            return ResponseEntity.notFound().build();
         }
     }
-
 }
