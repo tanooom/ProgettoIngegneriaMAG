@@ -85,6 +85,10 @@ main {
     margin-right: 10px; 
 }
 
+.visualizza-scenari, .elimina-storia{
+    margin-bottom: 10px;
+}
+
 .back-button:hover, .visualizza-scenari:hover {
     background-color: #025cbd; 
 }
@@ -207,7 +211,7 @@ footer {
 }
 
 .scenario {
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 }
 
 /* Adattamento per schermi piccoli */

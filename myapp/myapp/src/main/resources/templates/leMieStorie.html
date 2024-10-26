@@ -34,8 +34,7 @@
                 <button class="elimina-storia"
                     th:data-title="${storia.titolo}"onclick="eliminaStoria(this)">Elimina Storia</button>
 
-                <div class="scenari-details"  th:id="'scenari-' + ${storia.titolo}" style="display:none;">
-                </div>
+                <div class="scenari-details"  th:id="'scenari-' + ${storia.titolo}" style="display:none;"></div>
             </div>
         </div>
     </main>
@@ -71,6 +70,8 @@
                         return;
                     }
 
+                    scenariDetailsDiv.innerHTML += '<hr>';
+
                     scenari.forEach((scenario, index) => {
                         scenariDetailsDiv.innerHTML += `
                             <div class="scenario">
@@ -79,7 +80,7 @@
                                 <button class="modifica-descrizione" onclick="modificaDescrizione(${scenario.id})">Modifica descrizione</button>
                                 <div class="modifica-container" id="modifica-descrizione-${scenario.id}" style="display:none;">
                                     <input type="text" id="nuova-descrizione-${scenario.id}" value="${scenario.descrizione}">
-                                    <button class="salva-descrizione" onclick="salvaDescrizione(${scenario.id}, '${titoloStoria}')">Salva</button>
+                                    <button class="salva-descrizione" data-scenario-id="${scenario.id}" data-titolo-storia="${titoloStoria}" onclick="salvaDescrizione(this)">Salva</button>
                                 </div>
                                 <p><strong>Oggetto raccoglibile:</strong> ${scenario.oggettoRaccoglibile || 'Nessun oggetto'}</p>
                                 <p><strong>Scenario Iniziale:</strong> ${scenario.scenarioIniziale ? 'Sì' : 'No'}</p>
@@ -105,7 +106,9 @@
             modificaDiv.style.display = 'block';
         }
 
-        function salvaDescrizione(scenarioId) {
+        function salvaDescrizione(buttonElement) {
+            const scenarioId = buttonElement.getAttribute('data-scenario-id');
+            const titoloStoria = buttonElement.getAttribute('data-titolo-storia');
             let nuovaDescrizione = document.getElementById(`nuova-descrizione-${scenarioId}`).value;
             nuovaDescrizione = encodeURIComponent(nuovaDescrizione);
 
