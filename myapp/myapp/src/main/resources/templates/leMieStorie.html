@@ -28,11 +28,11 @@
                 <h2 class="storia-title" th:text="${storia.titolo}"></h2>
                 <div class="storia-details">Numero di scenari: <span th:text="${storia.lunghezza}"></span></div>
 
-                <button class="visualizza-scenari" 
-                    th:onclick="visualizzaScenari('[[${storia.titolo}]]')">Visualizza Scenari</button>
-
+                <button class="visualizza-scenari"
+                    th:data-title="${storia.titolo}" onclick="visualizzaScenari(this)">Visualizza Scenari</button>
+       
                 <button class="elimina-storia"
-                    th:onclick="eliminaStoria('[[${storia.titolo}]]')">Elimina Storia</button>
+                    th:data-title="${storia.titolo}"onclick="eliminaStoria(this)">Elimina Storia</button>
 
                 <div class="scenari-details"  th:id="'scenari-' + ${storia.titolo}" style="display:none;">
                 </div>
@@ -45,8 +45,8 @@
     </footer>
 
     <script>
-        function visualizzaScenari(titoloStoria) {
-            titoloStoria = titoloStoria.replace(/"/g, ''); 
+        function visualizzaScenari(buttonElement) {
+            const titoloStoria = buttonElement.getAttribute('data-title');
 
             const scenariDetailsDiv = document.getElementById(`scenari-${titoloStoria}`);
             if (!scenariDetailsDiv) {
@@ -74,10 +74,10 @@
                     scenari.forEach((scenario, index) => {
                         scenariDetailsDiv.innerHTML += `
                             <div class="scenario">
-                                <h3>${scenario.nome}</h3>
+                                <h3><strong>Titolo: </strong>${scenario.nome}</h3>
                                 <p><strong>Descrizione:</strong> <span id="descrizione-${scenario.id}">${scenario.descrizione}</span></p>
                                 <button class="modifica-descrizione" onclick="modificaDescrizione(${scenario.id})">Modifica descrizione</button>
-                                <div id="modifica-descrizione-${scenario.id}" style="display:none;">
+                                <div class="modifica-container" id="modifica-descrizione-${scenario.id}" style="display:none;">
                                     <input type="text" id="nuova-descrizione-${scenario.id}" value="${scenario.descrizione}">
                                     <button class="salva-descrizione" onclick="salvaDescrizione(${scenario.id}, '${titoloStoria}')">Salva</button>
                                 </div>
@@ -124,8 +124,8 @@
             });
         }
 
-        function eliminaStoria(titoloStoria) {
-            titoloStoria = titoloStoria.replace(/"/g, ''); 
+        function eliminaStoria(buttonElement) {
+            const titoloStoria = buttonElement.getAttribute('data-title');
     
             if (confirm("Sei sicuro di voler eliminare la storia " + titoloStoria + "?")) {
                 $.ajax({

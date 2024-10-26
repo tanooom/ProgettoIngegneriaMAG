@@ -120,7 +120,7 @@ main {
 
 /* Pulsanti di modifica e salvataggio */
 .modifica-descrizione {
-    background-color: #007bff;
+    background-color: #b0b0b0;
     color: white;
     border: none;
     padding: 10px 20px; 
@@ -130,11 +130,10 @@ main {
 }
 
 .salva-descrizione {
-    height: 30px;
     padding: 0 20px;
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: #007bff;
+    background-color: #b0b0b0;
     color: white;
     border: none;
     padding: 10px 20px; 
@@ -145,15 +144,23 @@ main {
 }
 
 .modifica-descrizione:hover, .salva-descrizione:hover {
-    background-color: #025cbd;
+    background-color: #9c9b9b;
 }
 
 .scenario input[type="text"] {
-    width: 100%;
+    width: calc(100% - 120px);
+    flex: 1;
     padding: 8px;
     font-size: 16px;
     box-sizing: border-box;
+}
+
+.modifica-container {
     margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    flex-direction: row;
 }
 
 /* Footer */
@@ -204,7 +211,7 @@ footer {
 }
 
 /* Adattamento per schermi piccoli */
-@media (max-width: 850px) {
+@media (max-width: 600px) {
     .form-container {
         width: 90%;
         padding: 0 10px;
@@ -217,5 +224,15 @@ footer {
 
     main {
         padding: 10px;
+    }
+
+    .salva-descrizione {
+        margin-top: 5px;
+    }
+}
+
+@media (min-width: 600px) {
+    .salva-descrizione {
+        margin-top: 5px;
     }
 }
